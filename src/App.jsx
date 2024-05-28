@@ -23,10 +23,11 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+        <Route path="/" element={<Dashboard/>}/>
           <Route path="/login" element={<Login />} />
           <Route path="/calendar" element={<MyCalendar/>}/>
           <Route path="/profile" element={<Profile/>}/>
-          <Route path="/dashboard" element={<Dashboard/>}/>
+         
           <Route path="/projects" element={<Projects/>  }/>
           <Route path="/add-projects" element={<AddProjects/>}/>
           <Route path="/tasks" element={<Tasks/>}/>
