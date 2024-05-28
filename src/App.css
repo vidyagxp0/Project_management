@@ -47,7 +47,8 @@
 .group-input input:not([type="radio"]):not([type="checkbox"]),
 .group-input select,
 .group-input textarea {
-  border-bottom: 1px solid grey;
+  border: 1px solid grey;
+  border-radius: 5px;
   padding: 5px 15px;
   display: block;
   width: 100%;

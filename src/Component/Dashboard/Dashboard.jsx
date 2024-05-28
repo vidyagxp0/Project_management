@@ -20,14 +20,17 @@ import { Avatar, Checkbox } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-const navigate=useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div>
       <Header />
       <div className="p-3">
         <div className="grid grid-cols-4 gap-5">
-          <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-lg shadow-xl " onClick={()=>navigate("/projects")}>
+          <div
+            className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-lg shadow-xl "
+            onClick={() => navigate("/projects")}
+          >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <BsWindowStack size={35} />
               <span className="text-[22px]">Projects</span>
@@ -41,7 +44,10 @@ const navigate=useNavigate()
               </div>
             </div>
           </div>
-          <div className="bg-gradient-to-r from-red-500 from-10% via-violet-500 via-30% to-yellow-500 to-90% rounded-lg shadow-xl " onClick={()=>navigate("/tasks")}>
+          <div
+            className="bg-gradient-to-r from-red-500 from-10% via-violet-500 via-30% to-yellow-500 to-90% rounded-lg shadow-xl "
+            onClick={() => navigate("/tasks")}
+          >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <BsUiRadios size={35} />
               <span className="text-[22px]">Tasks</span>
@@ -56,7 +62,10 @@ const navigate=useNavigate()
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-pink-500 from-10% via-orange-500 via-30% to-rose-500 to-90% rounded-lg shadow-xl ">
+          <div
+            className="bg-gradient-to-r from-pink-500 from-10% via-orange-500 via-30% to-rose-500 to-90% rounded-lg shadow-xl "
+            onClick={() => navigate("/defects")}
+          >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <LiaTradeFederation size={35} />
               <span className="text-[22px]">Defects</span>
@@ -71,7 +80,10 @@ const navigate=useNavigate()
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-orange-500 via-rose-500 to-pink-500 rounded-lg shadow-xl ">
+          <div
+            className="bg-gradient-to-r from-orange-500 via-rose-500 to-pink-500 rounded-lg shadow-xl "
+            onClick={() => navigate("/incidents")}
+          >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <RiIndentIncrease size={35} />
               <span className="text-[22px]">Incidents</span>
@@ -86,7 +98,10 @@ const navigate=useNavigate()
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-violet-500 from-10% via-yellow-500 via-30% to-red-500 to-90% rounded-lg shadow-xl ">
+          <div
+            className="bg-gradient-to-r from-violet-500 from-10% via-yellow-500 via-30% to-red-500 to-90% rounded-lg shadow-xl "
+            onClick={() => navigate("/estimates")}
+          >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <WiBarometer size={35} />
               <span className="text-[22px]">Estimates</span>
@@ -101,7 +116,7 @@ const navigate=useNavigate()
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-green-500 from-10% via-cyan-500 via-30% to-violet-500 to-90%rounded-lg shadow-xl ">
+          <div className="bg-gradient-to-r from-green-500 from-10% via-cyan-500 via-30% to-violet-500 to-90%rounded-lg shadow-xl " onClick={()=>navigate("/invoices")}>
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <FaFileInvoice size={35} />
               <span className="text-[22px]">Invoices</span>
