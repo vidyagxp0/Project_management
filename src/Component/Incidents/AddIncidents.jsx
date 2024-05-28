@@ -129,7 +129,7 @@ const AddIncidents = () => {
         <div className="p-2 shadow-2xl">
           <div className="py-2 border border-b-gray-500">Description</div>
           <div className="py-3 group-input">
-            <label>Description</label>
+            <label>Description</label>  
             <textarea></textarea>
           </div>
         </div>

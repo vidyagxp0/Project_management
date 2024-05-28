@@ -77,7 +77,7 @@ const Projects = () => {
           <span>/</span>
           <span>Projects</span>
         </div>
-        <div className="p-4 shadow-2xl">
+        <div className="p-4shadow-2xl">
           <div className="flex justify-between p-2">
             <div className="text-[22px] font-semibold">Projects</div>
             <div className="flex gap-4">

@@ -18,7 +18,7 @@ const navigate=useNavigate()
 
 
   return (
-    <div className='bg-white grid grid-cols-5 p-4  shadow-2xl'>
+    <div className='bg-white grid grid-cols-5 p-4 shadow-2xl'>
       <img src='/headerlogo.png' className='h-[40px] flex items-center col-span-4 cursor-pointer' onClick={()=>navigate("/dashboard")}/>
       <div className='flex justify-end  items-center  gap-8'>
         {/* <Tooltip title="To Do"> */}

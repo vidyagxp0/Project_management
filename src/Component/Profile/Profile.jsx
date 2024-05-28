@@ -25,7 +25,7 @@ const Profile = () => {
   return (
     <div className="bg-gray-20">
       <Header />
-      <div className="p-8 shadow-2xl">
+      <div className="p-8shadow-2xl">
         <div className="flex gap-4 items-center">
           <FaHome />
           <div>/</div>
@@ -34,7 +34,7 @@ const Profile = () => {
           <div>Profile</div>
         </div>
 
-        <div className="p-2 flex justify-end mt-3 gap-8 shadow-2xl">
+        <div className="p-2 flex justify-end mt-3 gap-8shadow-2xl">
           <div className=" flex flex-col justify-center  ">
             <span className="text-[20px] font-medium pt-5">Pankaj</span>
             <span className="pt-2">acv002</span>
@@ -44,7 +44,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="py-6 px-2 shadow-2xl grid grid-cols-4 gap-4">
+        <div className="py-6 px-2shadow-2xl grid grid-cols-4 gap-4">
           <div className="bg-gray-100 rounded-full p-3 flex gap-8">
             <div className="rounded-full bg-green-600 text-white p-4 h-[5px] w-[5px] flex items-center justify-center cursor-pointer hover:bg-green-900">
               8

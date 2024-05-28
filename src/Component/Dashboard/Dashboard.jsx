@@ -202,17 +202,17 @@ const Dashboard = () => {
         </div>
 
         <div className="grid grid-cols-3 gap-5 py-3">
-          <div className="shadow-2xl">
+          <div className=" shadow-2xl">
             <MyLineChart title={"Task Status"} />
           </div>
-          <div className="shadow-2xl">
+          <div className=" shadow-2xl">
             <MyLineChart title={"Project Status"} chartType="bar" />
           </div>
-          <div className="shadow-2xl">
+          <div className=" shadow-2xl">
             <MyLineChart title={"Monthly Report 2024"} />
           </div>
 
-          <div className="pt-8 p-2 shadow-2xl">
+          <div className="pt-8 p-2  shadow-2xl">
             <div className="flex justify-between p-4 items-center ">
               <div className="text-[20px] font-medium">Projects</div>
               <div className="flex gap-5">
@@ -291,7 +291,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="pt-8 p-2 shadow-2xl">
+          <div className="pt-8 p-2  shadow-2xl">
             <div className="flex justify-between p-4 items-center ">
               <div className="text-[20px] font-medium">Tasks</div>
               <div className="flex gap-5">
@@ -370,7 +370,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="pt-8 p-2 shadow-2xl">
+          <div className="pt-8 p-2  shadow-2xl">
             <div className="flex justify-between p-4 items-center ">
               <div className="text-[20px] font-medium">Defects</div>
               <div className="flex gap-5">
@@ -383,7 +383,7 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="border border-b-gray-500"></div>
-            <div className="p-4 shadow-2xl">
+            <div className="p-4  shadow-2xl">
               <div className="border-l-4 border-yellow-500  p-3  ">
                 <div className="flex ">
                   <span className="text-green-400">DEF002</span>-
@@ -399,7 +399,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="p-4 shadow-2xl">
+            <div className="p-4  shadow-2xl">
               <div className="border-l-4 border-yellow-500  p-3  ">
                 <div className="flex ">
                   <span className="text-green-400">DEF01</span>-
@@ -415,7 +415,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="p-4 shadow-2xl">
+            <div className="p-4  shadow-2xl">
               <div className="border-l-4 border-yellow-500  p-3  ">
                 <div className="flex ">
                   <span className="text-green-400">DEF0011</span>-
@@ -431,7 +431,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="p-4 shadow-2xl">
+            <div className="p-4  shadow-2xl">
               <div className="border-l-4 border-yellow-500  p-3  ">
                 <div className="flex ">
                   <span className="text-green-400">DEF001</span>-
