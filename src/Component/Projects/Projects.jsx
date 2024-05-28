@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "../Header/Header";
 import { FaFile, FaHome, FaUpload } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { CiFileOn } from "react-icons/ci";
 import { RiAddFill } from "react-icons/ri";
 import { Avatar, AvatarGroup, LinearProgress } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -63,7 +62,7 @@ const Projects = () => {
   };
 
   const handleEdit = () => {
-  navigate('/')
+  navigate('/add-projects')
   };
 
   const handleDelete = () => {
@@ -82,14 +81,14 @@ const Projects = () => {
           <div className="flex justify-between p-2">
             <div className="text-[22px] font-semibold">Projects</div>
             <div className="flex gap-4">
-              <div className="bg-emerald-100 p-2 rounded text-emerald-500">
+              <div className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer">
                 <FaFile />
               </div>
-              <div className="bg-emerald-100 p-2 rounded text-emerald-500">
+              <div className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer ">
                 <FaUpload />
               </div>
-              <div className="bg-emerald-100 p-2 rounded text-emerald-500">
-                <RiAddFill />
+              <div className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer">
+                <RiAddFill onClick={()=>navigate("/add-projects")} />
               </div>
             </div>
           </div>

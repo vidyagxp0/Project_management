@@ -41,7 +41,7 @@ const navigate=useNavigate()
               </div>
             </div>
           </div>
-          <div className="bg-gradient-to-r from-red-500 from-10% via-violet-500 via-30% to-yellow-500 to-90% rounded-lg shadow-xl ">
+          <div className="bg-gradient-to-r from-red-500 from-10% via-violet-500 via-30% to-yellow-500 to-90% rounded-lg shadow-xl " onClick={()=>navigate("/tasks")}>
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <BsUiRadios size={35} />
               <span className="text-[22px]">Tasks</span>
