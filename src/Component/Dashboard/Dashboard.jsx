@@ -18,13 +18,14 @@ import PieChart from "../Chart/PieChart";
 import { IoMdAdd } from "react-icons/io";
 import { Avatar, Checkbox } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import SideBar from "../SideBar/SideBar";
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <Header />
+    <div className="w-full">
+      
       <div className="p-3">
         <div className="grid grid-cols-4 gap-5">
           <div
@@ -131,7 +132,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-lg shadow-xl ">
+          <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-lg shadow-xl cursor-pointer " onClick={()=>navigate("/payments")}>
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <GiPayMoney size={35} />
               <span className="text-[22px]">Payments</span>
@@ -851,7 +852,9 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+     
     </div>
+    
   );
 };
 

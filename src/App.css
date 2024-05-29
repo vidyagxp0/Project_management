@@ -162,3 +162,25 @@ table tbody tr:nth-child(2n) {
   box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
   /* box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset; */
 }
+
+.login-container{
+  background: url("https://cdn.leantime.io/wp-content/uploads/2023/12/benefits-of-using-project-management-software.jpg?x43393") no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  /* width: 100vw; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card{
+  box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.4);
+  background-color: rgba(255, 255, 255, 0.906);
+}
+.fixed-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+}

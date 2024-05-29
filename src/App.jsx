@@ -17,31 +17,38 @@ import Estimates from "./Component/Estimates/Estimates";
 import AddEstimates from "./Component/Estimates/AddEstimates";
 import Invoices from "./Component/Invoices/Invoices";
 import AddInvoices from "./Component/Invoices/AddInvoices";
+import Payments from "./Component/Payments/Payments";
+import PaymentMethods from "./Component/Payments/PaymentMethods";
+import Wrapper from "./Component/Wrapper/Wrapper";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-        <Route path="/" element={<Dashboard/>}/>
-          <Route path="/login" element={<Login />} />
-          <Route path="/calendar" element={<MyCalendar/>}/>
-          <Route path="/profile" element={<Profile/>}/>
-         
-          <Route path="/projects" element={<Projects/>  }/>
-          <Route path="/add-projects" element={<AddProjects/>}/>
-          <Route path="/tasks" element={<Tasks/>}/>
-          <Route path="/add-task" element={<AddTasks/>}/>
-          <Route path="/defects" element={<Defects/>}/>
-          <Route path="/add-defects" element={<AddDefects/>}/>
-          <Route path="/incidents" element={<Incidents/>}/>
-          <Route path="/add-incidents" element={<AddIncidents/>}/>
-          <Route path="/estimates" element={<Estimates/>}/>
-          <Route path="/add-estimates" element={<AddEstimates/>}/>
-          <Route path="/invoices" element={<Invoices/>}/>
-          <Route path="/add-invoices" element={<AddInvoices/>}/>
 
-        </Routes>
+          
+          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Wrapper/>} >
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/calendar" element={<MyCalendar />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/add-projects" element={<AddProjects />} />
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/add-task" element={<AddTasks />} />
+          <Route path="/defects" element={<Defects />} />
+          <Route path="/add-defects" element={<AddDefects />} />
+          <Route path="/incidents" element={<Incidents />} />
+          <Route path="/add-incidents" element={<AddIncidents />} />
+          <Route path="/estimates" element={<Estimates />} />
+          <Route path="/add-estimates" element={<AddEstimates />} />
+          <Route path="/invoices" element={<Invoices />} />
+          <Route path="/add-invoices" element={<AddInvoices />} />
+          <Route path="/payments" element={<Payments />} />
+          <Route path="/payment-methods" element={<PaymentMethods/>}/>
+          </Route>
+          </Routes>
       </BrowserRouter>
     </>
   );
