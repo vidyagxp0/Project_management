@@ -40,7 +40,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
 
   const isMasterActive = () => {
     const masterPaths = [
-      "/department-master",
+      "/roles",
       "/designation-master",
       "/role-master",
       "/application-master",
@@ -102,26 +102,26 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                 <div className="flex flex-col gap-5 text-gray-700 ">
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/department-master"
+                      "/roles"
                     )}`}
-                    onClick={() => handleNavigation("/department-master")}
+                    onClick={() => handleNavigation("/roles")}
                   >
                     <FcDepartment /> Roles
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/designation-master"
+                      "/departments"
                     )}`}
-                    onClick={() => handleNavigation("/designation-master")}
+                    onClick={() => handleNavigation("/departments")}
                   >
                     <SiRotaryinternational />
                    Departments
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/role-master"
+                      "/teams"
                     )}`}
-                    onClick={() => handleNavigation("/role-master")}
+                    onClick={() => handleNavigation("/teams")}
                   >
                     <SiCriticalrole /> Teams
                   </p>
@@ -153,17 +153,17 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                 >
                   <p
                     className={`hover:list-disc hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/active-users-list"
+                      "/users"
                     )}`}
-                    onClick={() => handleNavigation("/active-users-list")}
+                    onClick={() => handleNavigation("/users")}
                   >
                   <FaUserCheck />  Users
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/request-Hrm"
+                      "/leaves"
                     )}`}
-                    onClick={() => handleNavigation("/request-Hrm")}
+                    onClick={() => handleNavigation("/leaves")}
                   >
                    <IoMdGitPullRequest /> Leaves
                   </p>
