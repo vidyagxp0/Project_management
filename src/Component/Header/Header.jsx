@@ -1,9 +1,5 @@
 
 
-
-
-
-
 import React, { useEffect, useRef, useState } from "react";
 import { IoMenu, IoNotifications } from "react-icons/io5";
 import { FaWifi } from "react-icons/fa";
@@ -54,37 +50,39 @@ const Header = ({onMenuClick }) => {
 
   return (
     <div className="w-full px-4 py-2 bg-white shadow-md">
-  <div className="flex items-center justify-between">
+  <div className=" items-center ">
   
 
     <div className="flex items-center gap-3">
-      <div
+      
+     
+    </div>
+    <div className=' grid grid-cols-5 p-4'>
+   <div className="flex gap-3 col-span-4">
+   <div
         onClick={onMenuClick}
         className="bg-gray-100 p-2 text-2xl text-[#000000] rounded-lg cursor-pointer hover:bg-gray-500 hover:text-white"
       >
         <IoMenu />
       </div>
-     
-    </div>
-    <div className=' grid grid-cols-5 p-4'>
-      <img src='/headerlogo.png' className='h-[40px] flex items-center col-span-4 cursor-pointer' onClick={()=>navigate("/dashboard")}/>
+      <img src='/headerlogo.png' className='h-[40px] flex items-center  cursor-pointer' onClick={()=>navigate("/dashboard")}/>
+   </div>
       <div className='flex justify-end  items-center  gap-8'>
-        {/* <Tooltip title="To Do"> */}
+    
           <FcTodoList size={30}/>
-        {/* </Tooltip> */}
-        {/* <Tooltip title="Calendar"> */}
+     
           <BsCalendar2Check size={30} onClick={()=>navigate("/calendar")}/>
-        {/* </Tooltip> */}
+      
         <IoNotifications size={30}/>
         <div>
-          {/* <Tooltip title="Avatar"> */}
+        
             <div className="cursor-pointer" onClick={handleAvatarClick}>
               <Avatar
                 alt="Remy Sharp"
                 src="/static/images/avatar/1.jpg"
               />
             </div>
-          {/* </Tooltip> */}
+   
           {isDropdownOpen && (
             <div className="absolute top-16 right-2 bg-white border rounded shadow-md">
               <ul>

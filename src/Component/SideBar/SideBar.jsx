@@ -1,28 +1,28 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AiOutlineDashboard } from "react-icons/ai";
-import { FaList } from "react-icons/fa6";
-import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
+import { AiFillProduct, AiOutlineDashboard } from "react-icons/ai";
+import { FaList, FaPeopleGroup, FaUserGroup } from "react-icons/fa6";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoMdGitPullRequest } from "react-icons/io";
-import { FcDepartment } from "react-icons/fc";
-import { SiRotaryinternational } from "react-icons/si";
-import { SiCriticalrole } from "react-icons/si";
-import { IoIdCardOutline } from "react-icons/io5";
-import { TbAsset } from "react-icons/tb";
-import { MdOutlineQuickreply } from "react-icons/md";
-import { SiConsul } from "react-icons/si";
-import { FaUserCheck } from "react-icons/fa";
-import { MdInventory } from "react-icons/md";
+import { FcDepartment, FcSalesPerformance } from "react-icons/fc";
+import { SiRotaryinternational, SiCriticalrole, SiKnowledgebase } from "react-icons/si";
+import { IoIdCardOutline, IoSettingsSharp } from "react-icons/io5";
+import { MdInventory, MdMeetingRoom } from "react-icons/md";
 import { PiUserListBold } from "react-icons/pi";
-import { TbFileReport } from "react-icons/tb";
-import { FaUserGroup } from "react-icons/fa6";
+import { FaBusinessTime, FaFile, FaUserCheck,  } from "react-icons/fa";
 import { AiOutlineAudit } from "react-icons/ai";
+import { BsUiRadios, BsWindowStack } from "react-icons/bs";
+import { LiaTradeFederation } from "react-icons/lia";
+import { RiIndentIncrease } from "react-icons/ri";
+import { WiBarometer } from "react-icons/wi";
+import { TbReport } from "react-icons/tb";
+import { CiGrid41 } from "react-icons/ci";
+import { FiUser } from "react-icons/fi";
 
 const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
   const [masters, setMasters] = useState(false);
-  const [report, setReport] = useState(false);
-  const [CFR, setCFR] = useState(false);
+  const [Hrm, setHrm] = useState(false);
+  const [sales, setsales] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,8 +34,8 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
     navigate(path);
   };
 
-  const isActive = (path) => {
-    return location.pathname === path ? "text-blue-500" : "";
+  const isActive = (path, isActiveState) => {
+    return (isActiveState || (path === "/dashboard" && location.pathname === "/")) ? "text-blue-500" : "";
   };
 
   const isMasterActive = () => {
@@ -51,41 +51,37 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
     return masterPaths.some((path) => location.pathname === path);
   };
 
-  const isReportActive = () => {
-    const reportPaths = [
+  const isHrmActive = () => {
+    const HrmPaths = [
       "/active-users-list",
-      "/request-report",
+      "/request-Hrm",
       "/assets-inventory",
       "/gxp-inventory",
       "/user-list",
-      "/sign-up-report",
+      "/sign-up-Hrm",
     ];
-    return reportPaths.some((path) => location.pathname === path);
+    return HrmPaths.some((path) => location.pathname === path);
   };
 
-  const isCFRActive = () => {
-    const CFRPaths = ["/user-management", "/audit-trail"];
-    return CFRPaths.some((path) => location.pathname === path);
+  const issalesActive = () => {
+    const salesPaths = ["/user-management", "/audit-trail"];
+    return salesPaths.some((path) => location.pathname === path);
   };
 
   return (
     <div className="">
       {sidebarOpen && (
-        <div className="fixed top-[90px] w-64 flex flex-col gap-10  bg-gray-100 p-4 " style={{zIndex:1, overflowY:"auto",height:"calc(100vh - 5rem)"}}>
+        <div className="fixed top-[90px] w-64 flex flex-col gap-5  bg-gray-100 p-4 " style={{zIndex:1, overflowY:"auto",height:"calc(100vh - 5rem)"}}>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/dashboard"
+              "/dashboard",
+              true
             )}`}
             onClick={() => handleNavigation("/dashboard")}
           >
             <AiOutlineDashboard size={25} />
             Dashboard
           </div>
-
-
-
-
-
 
           <div
             className={`items-center pl-1 cursor-pointer ${
@@ -94,7 +90,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
             onClick={() => setMasters(!masters)}
           >
             <p className="flex   gap-5 items-center">
-              <FaList size={22} /> Masters{" "}
+              <CiGrid41 size={22} /> Administration{" "}
               {masters ? <IoIosArrowUp /> : <IoIosArrowDown />}{" "}
             </p>
 
@@ -110,7 +106,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     )}`}
                     onClick={() => handleNavigation("/department-master")}
                   >
-                    <FcDepartment /> Department Master
+                    <FcDepartment /> Roles
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
@@ -119,7 +115,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     onClick={() => handleNavigation("/designation-master")}
                   >
                     <SiRotaryinternational />
-                    Designation Master
+                   Departments
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
@@ -127,70 +123,30 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     )}`}
                     onClick={() => handleNavigation("/role-master")}
                   >
-                    <SiCriticalrole /> Role Master
+                    <SiCriticalrole /> Teams
                   </p>
-                  <p
-                    className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/application-master"
-                    )}`}
-                    onClick={() => handleNavigation("/application-master")}
-                  >
-                    <IoIdCardOutline /> Application Master
-                  </p>
-                  <p
-                    className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/assets-master"
-                    )}`}
-                    onClick={() => handleNavigation("/assets-master")}
-                  >
-                    <TbAsset /> Assets Master
-                  </p>
-                  <p
-                    className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/equipment-master"
-                    )}`}
-                    onClick={() => handleNavigation("/equipment-master")}
-                  >
-                    <MdOutlineQuickreply /> Equipment/Instrument Master
-                  </p>
-                  <p
-                    className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/consolidate-master"
-                    )}`}
-                    onClick={() => handleNavigation("/consolidate-master")}
-                  >
-                    <SiConsul /> Consolidate Master
-                  </p>
+                  
                 </div>
               )}
             </div>
           </div>
-          <div
-            className={`flex gap-5 items-center cursor-pointer ${isActive(
-              "/user-management-request"
-            )}`}
-            onClick={() => handleNavigation("/user-management-request")}
-          >
-            <IoMdGitPullRequest size={22} />
-            User Management Request
-          </div>
 
           <div
             className={`items-center pl-1 cursor-pointer ${
-              isReportActive() ? "text-blue-500" : ""
+              isHrmActive() ? "text-blue-500" : ""
             }`}
-            onClick={() => setReport(!report)}
+            onClick={() => setHrm(!Hrm)}
           >
             <p className="flex   gap-5 items-center">
-              <FaList size={22} /> Report{" "}
-              {report ? <IoIosArrowUp /> : <IoIosArrowDown />}{" "}
+              <FiUser size={22} /> HRM{" "}
+              {Hrm ? <IoIosArrowUp /> : <IoIosArrowDown />}{" "}
             </p>
 
             <div
               className="px-5 flex pt-3 cursor-pointer text-md"
               onClick={stopPropagation}
             >
-              {report && (
+              {Hrm && (
                 <div
                   className="flex flex-col gap-5 text-gray-700 "
                   onClick={stopPropagation}
@@ -201,31 +157,24 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     )}`}
                     onClick={() => handleNavigation("/active-users-list")}
                   >
-                  <FaUserCheck />  Active Users List
+                  <FaUserCheck />  Users
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/request-report"
+                      "/request-Hrm"
                     )}`}
-                    onClick={() => handleNavigation("/request-report")}
+                    onClick={() => handleNavigation("/request-Hrm")}
                   >
-                   <IoMdGitPullRequest /> Request Report
+                   <IoMdGitPullRequest /> Leaves
                   </p>
-                  <p
-                    className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/assets-inventory"
-                    )}`}
-                    onClick={() => handleNavigation("/assets-inventory")}
-                  >
-                   <TbAsset /> Assets Inventory
-                  </p>
+                 
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
                       "/gxp-inventory"
                     )}`}
                     onClick={() => handleNavigation("/gxp-inventory")}
                   >
-                  <MdInventory />  GxP Inventory
+                  <MdInventory />  Holidays
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
@@ -233,45 +182,56 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     )}`}
                     onClick={() => handleNavigation("/user-list")}
                   >
-                   <PiUserListBold /> User List
+                   <PiUserListBold /> Timesheet
                   </p>
-                  <p
-                    className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/sign-up-report"
-                    )}`}
-                    onClick={() => handleNavigation("/sign-up-report")}
-                  >
-                   <TbFileReport /> Sign-Up Report
-                  </p>
+               
                 </div>
               )}
             </div>
           </div>
           <div
             className={`items-center pl-1 cursor-pointer ${
-              isCFRActive() ? "text-blue-500" : ""
+              issalesActive() ? "text-blue-500" : ""
             }`}
-            onClick={() => setCFR(!CFR)}
+            onClick={() => setsales(!sales)}
           >
             <p className="flex   gap-5 items-center">
-              <FaList size={22} /> 21 CFR Part 11{" "}
-              {CFR ? <IoIosArrowUp /> : <IoIosArrowDown />}{" "}
+              <FcSalesPerformance size={22} />  Sales{" "}
+              {sales ? <IoIosArrowUp /> : <IoIosArrowDown />}{" "}
             </p>
 
             <div
               className="px-5 flex pt-3 cursor-pointer text-md"
               onClick={stopPropagation}
             >
-              {CFR && (
+              {sales && (
                 <div className="flex flex-col gap-5 text-gray-700 ">
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/user-management"
+                      "/estimates"
                     )}`}
-                    onClick={() => handleNavigation("/user-management")}
+                    onClick={() => handleNavigation("/estimates")}
                   >
                     {" "}
-                    <FaUserGroup />  User Management{" "}
+                    <FaUserGroup/>  Estimates{" "}
+                  </p>
+                  <p
+                    className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
+                      "/invoices"
+                    )}`}
+                    onClick={() => handleNavigation("/invoices")}
+                  >
+                    {" "}
+                    <AiOutlineAudit /> Invoices{" "}
+                  </p>
+                  <p
+                    className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
+                      "/payments"
+                    )}`}
+                    onClick={() => handleNavigation("/payments")}
+                  >
+                    {" "}
+                    <AiOutlineAudit /> Payments{" "}
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
@@ -280,12 +240,144 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     onClick={() => handleNavigation("/audit-trail")}
                   >
                     {" "}
-                    <AiOutlineAudit /> Audit Trail{" "}
+                    <AiOutlineAudit /> Items{" "}
+                  </p>
+                  <p
+                    className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
+                      "/audit-trail"
+                    )}`}
+                    onClick={() => handleNavigation("/audit-trail")}
+                  >
+                    {" "}
+                    <AiOutlineAudit /> Taxes{" "}
                   </p>
                 </div>
               )}
             </div>
           </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/dashboard",
+              false
+            )}`}
+            onClick={() => handleNavigation("/dashboard")}
+          >
+            <AiFillProduct size={25} />
+            Project Planner
+          </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/projects",
+              false
+            )}`}
+            onClick={() => handleNavigation("/projects")}
+          >
+            <BsWindowStack size={25} />
+            Projects
+          </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/tasks",
+              false
+            )}`}
+            onClick={() => handleNavigation("/tasks")}
+          >
+            <BsUiRadios size={25} />
+            Tasks
+          </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/dashboard",
+              false
+            )}`}
+            onClick={() => handleNavigation("/dashboard")}
+          >
+            <LiaTradeFederation size={25} />
+            Defects
+          </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/incidents",
+              false
+            )}`}
+            onClick={() => handleNavigation("/incidents")}
+          >
+            <RiIndentIncrease size={25} />
+            Incidents
+          </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/dashboard",
+              false
+            )}`}
+            onClick={() => handleNavigation("/dashboard")}
+          >
+            <MdMeetingRoom size={25} />
+            Meetings
+          </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/dashboard",
+              false
+            )}`}
+            onClick={() => handleNavigation("/dashboard")}
+          >
+            <FaBusinessTime size={25} />
+            Appointments
+          </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/dashboard",
+              false
+            )}`}
+            onClick={() => handleNavigation("/dashboard")}
+          >
+            <FaPeopleGroup size={25} />
+            Clients
+          </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/dashboard",
+              false
+            )}`}
+            onClick={() => handleNavigation("/dashboard")}
+          >
+            <FaFile size={25} />
+            File Manager
+          </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/dashboard",
+              false
+            )}`}
+            onClick={() => handleNavigation("/dashboard")}
+          >
+            <SiKnowledgebase size={25} />
+            Knowledge Base
+          </div>
+
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/dashboard",
+              false
+            )}`}
+            onClick={() => handleNavigation("/dashboard")}
+          >
+            <TbReport size={25} />
+           Reports
+          </div>
+
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/dashboard",
+              false
+            )}`}
+            onClick={() => handleNavigation("/dashboard")}
+          >
+            <IoSettingsSharp size={25} />
+            Settings
+          </div>
+       
         </div>
       )}
     </div>

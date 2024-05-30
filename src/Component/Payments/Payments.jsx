@@ -76,10 +76,8 @@
       // Implement delete functionality
     };
     return (
-      <div className='flex'>
-        <div className="w-64">
-      <SideBar sidebarOpen={true}/>
-      </div>
+     
+      
       <div>
          
       <Header />
@@ -208,7 +206,7 @@
       </div>
      
     </div>
-    </div>
+
     )
   }
 
