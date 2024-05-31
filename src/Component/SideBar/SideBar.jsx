@@ -178,9 +178,9 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/user-list"
+                      "/timesheet"
                     )}`}
-                    onClick={() => handleNavigation("/user-list")}
+                    onClick={() => handleNavigation("/timesheet")}
                   >
                    <PiUserListBold /> Timesheet
                   </p>
@@ -235,18 +235,18 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/audit-trail"
+                      "/items"
                     )}`}
-                    onClick={() => handleNavigation("/audit-trail")}
+                    onClick={() => handleNavigation("/items")}
                   >
                     {" "}
                     <AiOutlineAudit /> Items{" "}
                   </p>
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/audit-trail"
+                      "/taxes"
                     )}`}
-                    onClick={() => handleNavigation("/audit-trail")}
+                    onClick={() => handleNavigation("/taxes")}
                   >
                     {" "}
                     <AiOutlineAudit /> Taxes{" "}
