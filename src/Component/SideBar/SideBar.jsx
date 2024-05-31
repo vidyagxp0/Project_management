@@ -170,9 +170,9 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                  
                   <p
                     className={`hover:text-blue-500 flex items-center gap-3 ${isActive(
-                      "/gxp-inventory"
+                      "/holidays"
                     )}`}
-                    onClick={() => handleNavigation("/gxp-inventory")}
+                    onClick={() => handleNavigation("/holidays")}
                   >
                   <MdInventory />  Holidays
                   </p>

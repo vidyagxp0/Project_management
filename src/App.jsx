@@ -27,6 +27,11 @@ import TeamBoard from "./Component/Teams/TeamBoard";
 import Users from "./Component/Users/Users";
 import AddUsers from "./Component/Users/AddUsers";
 import Leaves from "./Component/Leaves/Leaves";
+import LeaveType from "./Component/Leaves/LeaveType";
+import LeaveRequest from "./Component/Leaves/LeaveRequest";
+import LeaveReport from "./Component/Leaves/LeaveReport";
+import Holidays from "./Component/Holidays/Holidays";
+import Timesheet from "./Component/TimeSheet/Timesheet";
 
 function App() {
   return (
@@ -59,6 +64,12 @@ function App() {
             <Route path="/users" element={<Users />} />
             <Route path="/add-users" element={<AddUsers />} />
             <Route path="/leaves" element={<Leaves/>}/>
+            <Route path="/leave-type" element={<LeaveType/>}/>
+            <Route path="/leave-request" element={<LeaveRequest/>}/>
+            <Route path="/leave-report" element={<LeaveReport/>}/>
+            <Route path="/holidays" element={<Holidays/>}/>
+            <Route path="/timesheet" element={<Timesheet/>}/>
+
           </Route>
         </Routes>
       </BrowserRouter>
