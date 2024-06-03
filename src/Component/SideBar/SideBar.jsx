@@ -287,10 +287,10 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/dashboard",
+              "/defects",
               false
             )}`}
-            onClick={() => handleNavigation("/dashboard")}
+            onClick={() => handleNavigation("/defects")}
           >
             <LiaTradeFederation size={25} />
             Defects
@@ -307,30 +307,30 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/dashboard",
+              "/meetings",
               false
             )}`}
-            onClick={() => handleNavigation("/dashboard")}
+            onClick={() => handleNavigation("/meetings")}
           >
             <MdMeetingRoom size={25} />
             Meetings
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/dashboard",
+              "/appointments",
               false
             )}`}
-            onClick={() => handleNavigation("/dashboard")}
+            onClick={() => handleNavigation("/appointments")}
           >
             <FaBusinessTime size={25} />
             Appointments
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/dashboard",
+              "/clients",
               false
             )}`}
-            onClick={() => handleNavigation("/dashboard")}
+            onClick={() => handleNavigation("/clients")}
           >
             <FaPeopleGroup size={25} />
             Clients

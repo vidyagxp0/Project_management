@@ -36,6 +36,12 @@ import Items from "./Component/Items/Items";
 import Taxes from "./Component/Taxes/Taxes";
 import ProjectPlanner from "./Component/ProjectPlanner/ProjectPlanner";
 import ProjectDetail from "./Component/ProjectPlanner/ProjectDetail";
+import Meetings from "./Component/Meetings/Meetings";
+import Appointments from "./Component/Appointments/Appointments";
+import Providers from "./Component/Appointments/Providers";
+import Clients from "./Component/Clients/Clients";
+import AddClients from "./Component/Clients/AddClients";
+import Reports from "./Component/Reports/Reports";
 
 function App() {
   return (
@@ -75,8 +81,14 @@ function App() {
             <Route path="/timesheet" element={<Timesheet />} />
             <Route path="/items" element={<Items />} />
             <Route path="/taxes" element={<Taxes />} />
-            <Route path="/project-planner" element={<ProjectPlanner/>}/>
-            <Route path="/project-detail" element={<ProjectDetail/>}/>
+            <Route path="/project-planner" element={<ProjectPlanner />} />
+            <Route path="/project-detail" element={<ProjectDetail />} />
+            <Route path="/meetings" element={<Meetings />} />
+            <Route path="/appointments" element={<Appointments />} />
+            <Route path="/providers" element={<Providers />} />
+            <Route path="/clients" element={<Clients />} />
+            <Route path="/add-clients" element={<AddClients />} />
+            <Route path="/reports" element={<Reports />} />
           </Route>
         </Routes>
       </BrowserRouter>
