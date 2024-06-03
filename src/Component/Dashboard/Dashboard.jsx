@@ -117,7 +117,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-green-500 from-10% via-cyan-500 via-30% to-violet-500 to-90%rounded-lg shadow-xl " onClick={()=>navigate("/invoices")}>
+          <div className="bg-gradient-to-r from-green-500 from-10% via-cyan-500 via-30% to-violet-500 to-90% rounded-lg shadow-xl " onClick={()=>navigate("/invoices")}>
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <FaFileInvoice size={35} />
               <span className="text-[22px]">Invoices</span>

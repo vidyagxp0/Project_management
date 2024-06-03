@@ -78,7 +78,7 @@ const Header = ({onMenuClick }) => {
         
             <div className="cursor-pointer" onClick={handleAvatarClick}>
               <Avatar
-                alt="Remy Sharp"
+                alt="P Sharp"
                 src="/static/images/avatar/1.jpg"
               />
             </div>
@@ -87,7 +87,7 @@ const Header = ({onMenuClick }) => {
             <div className="absolute top-16 right-2 bg-white border rounded shadow-md">
               <ul>
                 <li className="py-2 px-4 cursor-pointer hover:bg-gray-200">
-                  <Avatar sx={{width:100,height:100}}></Avatar>
+                  <Avatar alt="Pankaj" src="/static" sx={{width:100,height:100}}></Avatar>
                 </li>
                 <li className="py-4 px-6 flex gap-2 items-center cursor-pointer hover:bg-gray-200 "  onClick={()=>navigate("/profile")}>
                   <ImProfile/>
@@ -97,7 +97,7 @@ const Header = ({onMenuClick }) => {
                   <MdForwardToInbox/>
                   My Inbox
                 </li>
-                <li className="py-4 flex gap-2 border border-t-slate-600 px-6 items-center cursor-pointer hover:bg-gray-200 " onClick={()=>navigate("/")} >
+                <li className="py-4 flex gap-2 border border-t-slate-600 px-6 items-center cursor-pointer hover:bg-red-500 hover:text-white " onClick={()=>navigate("/")} >
                   <IoMdLogOut/>
                  LogOut
                 </li>

@@ -358,10 +358,10 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
 
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/dashboard",
+              "/reports",
               false
             )}`}
-            onClick={() => handleNavigation("/dashboard")}
+            onClick={() => handleNavigation("/reports")}
           >
             <TbReport size={25} />
            Reports

@@ -19,7 +19,7 @@ const Login = () => {
     };
 
     return (
-        <div className='login-container h-full flex flex-col'>
+        <div className='login-container  flex flex-col'>
             <div className='flex gap-2 justify-end items-center h-full'>
                 <div className='h-[500px] w-[470px] bg-white flex justify-center items-center border border-black rounded card'>
                     <div>
