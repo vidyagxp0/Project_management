@@ -168,7 +168,7 @@ const Taxes = () => {
           <div className="p-4">
             <div className="dual-group-input">
               <div className="group-input">
-                <label>Tax NAme</label>
+                <label>Tax Name</label>
                 <input />
               </div>
 

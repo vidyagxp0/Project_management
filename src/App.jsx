@@ -34,6 +34,8 @@ import Holidays from "./Component/Holidays/Holidays";
 import Timesheet from "./Component/TimeSheet/Timesheet";
 import Items from "./Component/Items/Items";
 import Taxes from "./Component/Taxes/Taxes";
+import ProjectPlanner from "./Component/ProjectPlanner/ProjectPlanner";
+import ProjectDetail from "./Component/ProjectPlanner/ProjectDetail";
 
 function App() {
   return (
@@ -73,6 +75,8 @@ function App() {
             <Route path="/timesheet" element={<Timesheet />} />
             <Route path="/items" element={<Items />} />
             <Route path="/taxes" element={<Taxes />} />
+            <Route path="/project-planner" element={<ProjectPlanner/>}/>
+            <Route path="/project-detail" element={<ProjectDetail/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
