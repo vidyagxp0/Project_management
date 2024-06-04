@@ -25,7 +25,6 @@ const Dashboard = () => {
 
   return (
     <div className="w-full mt-[100px]">
-      
       <div className="p-3">
         <div className="grid grid-cols-4 gap-5">
           <div
@@ -117,7 +116,10 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-green-500 from-10% via-cyan-500 via-30% to-violet-500 to-90% rounded-lg shadow-xl " onClick={()=>navigate("/invoices")}>
+          <div
+            className="bg-gradient-to-r from-green-500 from-10% via-cyan-500 via-30% to-violet-500 to-90% rounded-lg shadow-xl "
+            onClick={() => navigate("/invoices")}
+          >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <FaFileInvoice size={35} />
               <span className="text-[22px]">Invoices</span>
@@ -132,7 +134,10 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-lg shadow-xl cursor-pointer " onClick={()=>navigate("/payments")}>
+          <div
+            className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-lg shadow-xl cursor-pointer "
+            onClick={() => navigate("/payments")}
+          >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <GiPayMoney size={35} />
               <span className="text-[22px]">Payments</span>
@@ -852,9 +857,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-     
     </div>
-    
   );
 };
 

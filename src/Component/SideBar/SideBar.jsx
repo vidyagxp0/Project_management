@@ -337,10 +337,10 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/dashboard",
+              "/file-manager",
               false
             )}`}
-            onClick={() => handleNavigation("/dashboard")}
+            onClick={() => handleNavigation("/file-manager")}
           >
             <FaFile size={25} />
             File Manager
@@ -369,10 +369,10 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
 
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/dashboard",
+              "/settings",
               false
             )}`}
-            onClick={() => handleNavigation("/dashboard")}
+            onClick={() => handleNavigation("/settings")}
           >
             <IoSettingsSharp size={25} />
             Settings

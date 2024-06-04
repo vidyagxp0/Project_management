@@ -42,6 +42,8 @@ import Providers from "./Component/Appointments/Providers";
 import Clients from "./Component/Clients/Clients";
 import AddClients from "./Component/Clients/AddClients";
 import Reports from "./Component/Reports/Reports";
+import Settings from "./Component/Settings/Settings";
+import FileManager from "./Component/FileManager/FileManager";
 
 function App() {
   return (
@@ -89,6 +91,8 @@ function App() {
             <Route path="/clients" element={<Clients />} />
             <Route path="/add-clients" element={<AddClients />} />
             <Route path="/reports" element={<Reports />} />
+            <Route path="/settings" element={<Settings/>}/>
+            <Route path="/file-manager" element={<FileManager/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
