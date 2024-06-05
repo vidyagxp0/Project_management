@@ -5,11 +5,11 @@ import { FaList, FaPeopleGroup, FaUserGroup } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoMdGitPullRequest } from "react-icons/io";
 import { FcDepartment, FcSalesPerformance } from "react-icons/fc";
-import { SiRotaryinternational, SiCriticalrole, SiKnowledgebase } from "react-icons/si";
+import { SiRotaryinternational, SiCriticalrole } from "react-icons/si";
 import { IoIdCardOutline, IoSettingsSharp } from "react-icons/io5";
 import { MdInventory, MdMeetingRoom } from "react-icons/md";
 import { PiUserListBold } from "react-icons/pi";
-import { FaBusinessTime, FaFile, FaUserCheck,  } from "react-icons/fa";
+import { FaBusinessTime, FaFile, FaUserCheck } from "react-icons/fa";
 import { AiOutlineAudit } from "react-icons/ai";
 import { BsUiRadios, BsWindowStack } from "react-icons/bs";
 import { LiaTradeFederation } from "react-icons/lia";
@@ -34,48 +34,17 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
     navigate(path);
   };
 
-  const isActive = (path, isActiveState) => {
-    return (isActiveState || (path === "/dashboard" && location.pathname === "/")) ? "text-blue-500" : "";
-  };
-
-  const isMasterActive = () => {
-    const masterPaths = [
-      "/roles",
-      "/designation-master",
-      "/role-master",
-      "/application-master",
-      "/assets-master",
-      "/equipment-master",
-      "/consolidate-master",
-    ];
-    return masterPaths.some((path) => location.pathname === path);
-  };
-
-  const isHrmActive = () => {
-    const HrmPaths = [
-      "/active-users-list",
-      "/request-Hrm",
-      "/assets-inventory",
-      "/gxp-inventory",
-      "/user-list",
-      "/sign-up-Hrm",
-    ];
-    return HrmPaths.some((path) => location.pathname === path);
-  };
-
-  const issalesActive = () => {
-    const salesPaths = ["/user-management", "/audit-trail"];
-    return salesPaths.some((path) => location.pathname === path);
+  const isActive = (path) => {
+    return location.pathname === path ? "text-blue-600" : "";
   };
 
   return (
     <div className="">
       {sidebarOpen && (
-        <div className="fixed top-[90px] w-64 flex flex-col gap-5  bg-gray-100 p-4 " style={{zIndex:1, overflowY:"auto",height:"calc(100vh - 5rem)"}}>
+        <div className="fixed top-[90px] w-64 flex flex-col gap-5 bg-gray-100 p-4 " style={{zIndex:1, overflowY:"auto",height:"calc(100vh - 5rem)"}}>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/dashboard",
-              true
+              "/dashboard"
             )}`}
             onClick={() => handleNavigation("/dashboard")}
           >
@@ -85,11 +54,11 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
 
           <div
             className={`items-center pl-1 cursor-pointer ${
-              isMasterActive() ? "text-blue-500" : ""
+              isActive("/roles") ? "text-blue-500" : ""
             }`}
             onClick={() => setMasters(!masters)}
           >
-            <p className="flex   gap-5 items-center">
+            <p className="flex gap-5 items-center">
               <CiGrid41 size={22} /> Administration{" "}
               {masters ? <IoIosArrowUp /> : <IoIosArrowDown />}{" "}
             </p>
@@ -133,11 +102,11 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
 
           <div
             className={`items-center pl-1 cursor-pointer ${
-              isHrmActive() ? "text-blue-500" : ""
+              isActive("/users") ? "text-blue-500" : ""
             }`}
             onClick={() => setHrm(!Hrm)}
           >
-            <p className="flex   gap-5 items-center">
+            <p className="flex gap-5 items-center">
               <FiUser size={22} /> HRM{" "}
               {Hrm ? <IoIosArrowUp /> : <IoIosArrowDown />}{" "}
             </p>
@@ -191,11 +160,11 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`items-center pl-1 cursor-pointer ${
-              issalesActive() ? "text-blue-500" : ""
+              isActive("/user-management") ? "text-blue-500" : ""
             }`}
             onClick={() => setsales(!sales)}
           >
-            <p className="flex   gap-5 items-center">
+            <p className="flex gap-5 items-center">
               <FcSalesPerformance size={22} />  Sales{" "}
               {sales ? <IoIosArrowUp /> : <IoIosArrowDown />}{" "}
             </p>
@@ -257,8 +226,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/project-planner",
-              false
+              "/project-planner"
             )}`}
             onClick={() => handleNavigation("/project-planner")}
           >
@@ -267,8 +235,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/projects",
-              false
+              "/projects"
             )}`}
             onClick={() => handleNavigation("/projects")}
           >
@@ -277,8 +244,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/tasks",
-              false
+              "/tasks"
             )}`}
             onClick={() => handleNavigation("/tasks")}
           >
@@ -287,8 +253,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/defects",
-              false
+              "/defects"
             )}`}
             onClick={() => handleNavigation("/defects")}
           >
@@ -297,8 +262,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/incidents",
-              false
+              "/incidents"
             )}`}
             onClick={() => handleNavigation("/incidents")}
           >
@@ -307,8 +271,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/meetings",
-              false
+              "/meetings"
             )}`}
             onClick={() => handleNavigation("/meetings")}
           >
@@ -317,8 +280,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/appointments",
-              false
+              "/appointments"
             )}`}
             onClick={() => handleNavigation("/appointments")}
           >
@@ -327,8 +289,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/clients",
-              false
+              "/clients"
             )}`}
             onClick={() => handleNavigation("/clients")}
           >
@@ -337,8 +298,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/file-manager",
-              false
+              "/file-manager"
             )}`}
             onClick={() => handleNavigation("/file-manager")}
           >
@@ -347,30 +307,17 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/dashboard",
-              false
-            )}`}
-            onClick={() => handleNavigation("/dashboard")}
-          >
-            <SiKnowledgebase size={25} />
-            Knowledge Base
-          </div>
-
-          <div
-            className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/reports",
-              false
+              "/reports"
             )}`}
             onClick={() => handleNavigation("/reports")}
           >
             <TbReport size={25} />
-           Reports
+            Reports
           </div>
 
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
-              "/settings",
-              false
+              "/settings"
             )}`}
             onClick={() => handleNavigation("/settings")}
           >
@@ -385,3 +332,4 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
 };
 
 export default SideBar;
+

@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoMenu, IoNotifications } from "react-icons/io5";
-import { FaWifi } from "react-icons/fa";
-import { IoSettingsOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { FcTodoList } from "react-icons/fc";
 import { BsCalendar2Check } from "react-icons/bs";
-import { Avatar } from "@mui/material";
+import { Avatar, Tooltip } from "@mui/material";
 import { ImProfile } from "react-icons/im";
 import { MdForwardToInbox } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
@@ -17,7 +15,6 @@ const Header = ({ onMenuClick }) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // State to manage sidebar open/close
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
@@ -65,8 +62,9 @@ const Header = ({ onMenuClick }) => {
             />
           </div>
           <div className="flex justify-end  items-center  gap-8">
-            <FcTodoList size={30} />
-
+            <Tooltip title="ToDo" placement="bottom">
+              <FcTodoList size={30} onClick={() => navigate("/to-do")} />
+            </Tooltip>
             <BsCalendar2Check size={30} onClick={() => navigate("/calendar")} />
 
             <IoNotifications size={30} />

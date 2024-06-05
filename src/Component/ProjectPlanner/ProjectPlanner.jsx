@@ -19,7 +19,7 @@ const ProjectPlanner = () => {
     <div>
       <Header />
       <div className="p-4">
-        <div className="flex gap-2 items-center text-cyan-500 cursor-pointer">
+        <div className="flex gap-2 items-center text-cyan-500 cursor-pointer pb-3">
           <FaHome onClick={() => navigate("/dashboard")} />
           <span>/</span>
           <span>Project Planner</span>
@@ -41,8 +41,7 @@ const ProjectPlanner = () => {
         <div className="flex gap-4 pt-4">
           <div className="flex hover:shadow-2xl cursor-pointer">
             <div className="bg-cyan-500  py-1 text-white px-6 rounded-l-lg">
-              {" "}
-              open{" "}
+              open
             </div>
             <div className="border border-cyan-500 px-3 flex items-center justify-center rounded-r-lg">
               70
@@ -50,8 +49,7 @@ const ProjectPlanner = () => {
           </div>
           <div className="flex hover:shadow-2xl cursor-pointer ">
             <div className="bg-yellow-500  py-1 text-white px-6 rounded-l-lg">
-              {" "}
-              In Progress{" "}
+              In Progress
             </div>
             <div className="border border-yellow-500 px-3 flex items-center justify-center rounded-r-lg">
               82
@@ -59,8 +57,7 @@ const ProjectPlanner = () => {
           </div>
           <div className="flex hover:shadow-2xl cursor-pointer">
             <div className="bg-gray-500  py-1 text-white px-6 rounded-l-lg">
-              {" "}
-              On Hold{" "}
+              On Hold
             </div>
             <div className="border border-gray-500 px-3 flex items-center justify-center rounded-r-lg">
               04
@@ -68,7 +65,7 @@ const ProjectPlanner = () => {
           </div>
           <div className="flex hover:shadow-2xl cursor-pointer">
             <div className="bg-rose-500  py-1 text-white px-6 rounded-l-lg">
-              Cancel{" "}
+              Cancel
             </div>
             <div className="border border-rose-500 px-3 flex items-center justify-center rounded-r-lg">
               30
@@ -76,8 +73,7 @@ const ProjectPlanner = () => {
           </div>
           <div className="flex hover:shadow-2xl cursor-pointer">
             <div className="bg-green-500  py-1 text-white px-6 rounded-l-lg">
-              {" "}
-              Completed{" "}
+              Completed
             </div>
             <div className="border border-green-500 px-3 flex items-center justify-center rounded-r-lg">
               54
@@ -85,19 +81,23 @@ const ProjectPlanner = () => {
           </div>
           <div className="flex hover:shadow-2xl cursor-pointer">
             <div className="bg-red-500  py-1 text-white px-6 rounded-l-lg">
-              {" "}
-              Overdue{" "}
+              Overdue
             </div>
             <div className="border border-red-500 px-3 flex items-center justify-center rounded-r-lg">
-              198{" "}
+              198
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-5 py-3">
-          <div className="p-3 shadow-2xl flex flex-col gap-2">
+          <div className="p-8 shadow-2xl flex flex-col gap-2">
             <div className="flex gap-3">
-              <span className="text-cyan-500 cursor-pointer" onClick={()=>navigate("/project-detail")}>#P001</span>
+              <span
+                className="text-cyan-500 cursor-pointer"
+                onClick={() => navigate("/project-detail")}
+              >
+                #P001
+              </span>
               <span>- Pankaj Jat</span>
             </div>
             <div className="flex justify-between">
@@ -113,17 +113,14 @@ const ProjectPlanner = () => {
 
             <div className="flex gap-2  text-[18px]">
               <div className="flex items-center gap-1">
-                {" "}
                 <span>1</span>
                 <CgTemplate />
               </div>
               <div className="flex items-center gap-1">
-                {" "}
                 <span>3</span>
                 <VscTasklist />
               </div>
               <div className="flex items-center gap-1">
-                {" "}
                 <span>0</span>
                 <MdOutlineStorage />
               </div>
@@ -133,14 +130,22 @@ const ProjectPlanner = () => {
               <div className="bg-yellow-400 px-2 hover:bg-yellow-700 text-white rounded flex items-center">
                 Inprogress
               </div>
-              <button className="bg-cyan-400 px-2 hover:bg-cyan-700  text-white rounded" onClick={()=>navigate("/project-detail")}>
+              <button
+                className="bg-cyan-400 px-2 hover:bg-cyan-700  text-white rounded"
+                onClick={() => navigate("/project-detail")}
+              >
                 View More
               </button>
             </div>
           </div>
-          <div className="p-3 shadow-2xl flex flex-col gap-2">
+          <div className="p-8 shadow-2xl flex flex-col gap-2">
             <div className="flex gap-3">
-              <span className="text-cyan-500 cursor-pointer" onClick={()=>navigate("/project-detail")}>#P002</span>
+              <span
+                className="text-cyan-500 cursor-pointer"
+                onClick={() => navigate("/project-detail")}
+              >
+                #P002
+              </span>
               <span>- Pankaj Jat</span>
             </div>
             <div className="flex justify-between">
@@ -156,17 +161,14 @@ const ProjectPlanner = () => {
 
             <div className="flex gap-2 text-[18px]">
               <div className="flex items-center gap-1">
-                {" "}
                 <span>1</span>
                 <CgTemplate />
               </div>
               <div className="flex items-center gap-1">
-                {" "}
                 <span>3</span>
                 <VscTasklist />
               </div>
               <div className="flex items-center gap-1">
-                {" "}
                 <span>0</span>
                 <MdOutlineStorage />
               </div>
@@ -176,7 +178,10 @@ const ProjectPlanner = () => {
               <div className="bg-green-400 px-2 hover:bg-green-700 text-white rounded flex items-center">
                 Completed
               </div>
-              <button className="bg-cyan-400 px-2 hover:bg-cyan-700  text-white rounded" onClick={()=>navigate("/project-detail")}>
+              <button
+                className="bg-cyan-400 px-2 hover:bg-cyan-700  text-white rounded"
+                onClick={() => navigate("/project-detail")}
+              >
                 View More
               </button>
             </div>
@@ -260,7 +265,7 @@ const ProjectPlanner = () => {
               </div>
 
               <div className="group-input">
-                <label>Billing Type </label>
+                <label>Billing Type</label>
                 <select>
                   <option>Fixed Rate</option>
                   <option>Hourly Rate</option>

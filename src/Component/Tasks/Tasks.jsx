@@ -87,14 +87,17 @@ const Tasks = () => {
           <div className="flex justify-between p-2">
             <div className="text-[22px] font-semibold">Tasks</div>
             <div className="flex gap-4">
-              <div className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer">
+            <div className="bg-emerald-100 p-2 flex items-center rounded text-emerald-500 cursor-pointer" onClick={()=>navigate("/task-boards")}>
+                <span>Kanban</span>
+              </div>
+              <div className="bg-emerald-100 p-2 flex items-center rounded text-emerald-500 cursor-pointer">
                 <FaFile />
               </div>
-              <div className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer">
+              <div className="bg-emerald-100 p-2 flex items-center rounded text-emerald-500 cursor-pointer">
                 <FaUpload />
               </div>
-              <div className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer">
-                <RiAddFill onClick={() => navigate("/add-task")} />
+              <div className="bg-emerald-100 p-2 flex items-center rounded text-emerald-500 cursor-pointer" onClick={() => navigate("/add-task")}>
+                <RiAddFill  />
               </div>
             </div>
           </div>

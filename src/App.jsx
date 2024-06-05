@@ -44,6 +44,8 @@ import AddClients from "./Component/Clients/AddClients";
 import Reports from "./Component/Reports/Reports";
 import Settings from "./Component/Settings/Settings";
 import FileManager from "./Component/FileManager/FileManager";
+import TaskBoards from "./Component/Tasks/TaskBoards";
+import ToDo from "./Component/ToDo/ToDo";
 
 function App() {
   return (
@@ -58,6 +60,7 @@ function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/add-projects" element={<AddProjects />} />
             <Route path="/tasks" element={<Tasks />} />
+            <Route path="/task-boards" element={<TaskBoards/>}/>
             <Route path="/add-task" element={<AddTasks />} />
             <Route path="/defects" element={<Defects />} />
             <Route path="/add-defects" element={<AddDefects />} />
@@ -93,6 +96,7 @@ function App() {
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings/>}/>
             <Route path="/file-manager" element={<FileManager/>}/>
+            <Route path="/to-do" element={<ToDo/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

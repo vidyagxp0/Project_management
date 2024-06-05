@@ -1,32 +1,29 @@
-import React from 'react';
-import { Pie } from 'react-chartjs-2';
+import React from "react";
+import { Chart } from "react-google-charts";
 
-const PieChart = () => {
-    // Data for the chart
-    const data = {
-        labels: [
-          'Red',
-          'Blue',
-          'Yellow'
-        ],
-        datasets: [{
-          label: 'My First Dataset',
-          data: [300, 50, 100],
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ],
-          hoverOffset: 4
-        }]
-      };
+export const data = [
+  ["Task", "Hours per Day"],
+  ["Open", 11],
+  ["Overdue", 2],
+  ["inProgress", 2],
+  ["Completed", 2],
+  ["Stuck", 7],
+];
 
-    return (
-        <div>
-            <h2>Pie Chart Example</h2>
-            <Pie data={data} />
-        </div>
-    );
+export const options = {
+  title: "Task Status",
 };
+
+ const PieChart =()=> {
+  return (
+    <Chart
+      chartType="PieChart"
+      data={data}
+      options={options}
+      width={"100%"}
+      height={"600px"}
+    />
+  );
+}
 
 export default PieChart;

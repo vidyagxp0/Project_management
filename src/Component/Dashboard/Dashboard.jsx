@@ -18,7 +18,6 @@ import PieChart from "../Chart/PieChart";
 import { IoMdAdd } from "react-icons/io";
 import { Avatar, Checkbox } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import SideBar from "../SideBar/SideBar";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const Dashboard = () => {
       <div className="p-3">
         <div className="grid grid-cols-4 gap-5">
           <div
-            className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-lg shadow-xl "
+            className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-lg shadow-xl cursor-pointer "
             onClick={() => navigate("/projects")}
           >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
@@ -45,7 +44,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div
-            className="bg-gradient-to-r from-red-500 from-10% via-violet-500 via-30% to-yellow-500 to-90% rounded-lg shadow-xl "
+            className="bg-gradient-to-r from-red-500 from-10% via-violet-500 via-30% to-yellow-500 to-90% rounded-lg shadow-xl cursor-pointer"
             onClick={() => navigate("/tasks")}
           >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
@@ -63,7 +62,7 @@ const Dashboard = () => {
           </div>
 
           <div
-            className="bg-gradient-to-r from-pink-500 from-10% via-orange-500 via-30% to-rose-500 to-90% rounded-lg shadow-xl "
+            className="bg-gradient-to-r from-pink-500 from-10% via-orange-500 via-30% to-rose-500 to-90% rounded-lg shadow-xl cursor-pointer"
             onClick={() => navigate("/defects")}
           >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
@@ -81,7 +80,7 @@ const Dashboard = () => {
           </div>
 
           <div
-            className="bg-gradient-to-r from-orange-500 via-rose-500 to-pink-500 rounded-lg shadow-xl "
+            className="bg-gradient-to-r from-orange-500 via-rose-500 to-pink-500 rounded-lg shadow-xl cursor-pointer"
             onClick={() => navigate("/incidents")}
           >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
@@ -99,7 +98,7 @@ const Dashboard = () => {
           </div>
 
           <div
-            className="bg-gradient-to-r from-violet-500 from-10% via-yellow-500 via-30% to-red-500 to-90% rounded-lg shadow-xl "
+            className="bg-gradient-to-r from-violet-500 from-10% via-yellow-500 via-30% to-red-500 to-90% rounded-lg shadow-xl cursor-pointer"
             onClick={() => navigate("/estimates")}
           >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
@@ -117,7 +116,7 @@ const Dashboard = () => {
           </div>
 
           <div
-            className="bg-gradient-to-r from-green-500 from-10% via-cyan-500 via-30% to-violet-500 to-90% rounded-lg shadow-xl "
+            className="bg-gradient-to-r from-green-500 from-10% via-cyan-500 via-30% to-violet-500 to-90% rounded-lg shadow-xl cursor-pointer"
             onClick={() => navigate("/invoices")}
           >
             <div className="p-4 flex gap-3 items-center justify-center text-white">
@@ -152,7 +151,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500  rounded-lg shadow-xl ">
+          <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500  rounded-lg shadow-xl cursor-pointer">
             <div className="p-4 flex gap-3 items-center justify-center text-white">
               <FcLeave size={35} />
               <span className="text-[22px]">Leaves</span>
@@ -167,7 +166,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="flex rounded-lg shadow-xl p-4  gap-10">
+          <div className="flex rounded-lg shadow-xl p-4 cursor-pointer gap-10">
             <div className="py-3 px-5 bg-cyan-500 text-white rounded-xl flex items-center justify-center">
               <FaUser size={40} />
             </div>
@@ -177,7 +176,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="flex rounded-lg shadow-xl p-4  gap-10">
+          <div className="flex rounded-lg shadow-xl p-4 cursor-pointer gap-10">
             <div className="py-3 px-5 bg-green-500 text-white rounded-xl flex items-center justify-center">
               <FaUserAlt size={40} />
             </div>
@@ -187,7 +186,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="flex rounded-lg shadow-xl p-4  gap-10">
+          <div className="flex rounded-lg shadow-xl p-4 cursor-pointer gap-10">
             <div className="py-3 px-5 bg-indigo-500 text-white rounded-xl flex items-center justify-center">
               <FaChild size={40} />
             </div>
@@ -196,7 +195,7 @@ const Dashboard = () => {
               <div className="text-[20px]">Teams</div>
             </div>
           </div>
-          <div className="flex rounded-lg shadow-xl p-4  gap-10">
+          <div className="flex rounded-lg shadow-xl p-4 cursor-pointer  gap-10">
             <div className="py-3 bg-rose-500 text-white rounded-xl flex items-center justify-center px-5">
               <GrArticle size={40} />
             </div>
@@ -209,7 +208,8 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-3 gap-5 py-3">
           <div className=" shadow-2xl">
-            <MyLineChart title={"Task Status"} />
+            {/* <MyLineChart title={"Task Status"} /> */}
+            <PieChart />
           </div>
           <div className=" shadow-2xl">
             <MyLineChart title={"Project Status"} chartType="bar" />
@@ -310,66 +310,68 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="border border-b-gray-500"></div>
-            <div className="p-4 shadow-2xl">
-              <div className="border-l-4 border-yellow-500  p-3  ">
-                <div className="flex ">
-                  <span className="text-green-400">T001</span>-
-                  <span>admin</span>
-                </div>
-                <div className="flex justify-between pt-2">
-                  <Avatar></Avatar>
-                  <div></div>
-                  <div className="flex items-center justify-center bg-yellow-500 text-white rounded-full  px-3 py-1 text-[12px]">
-                    {" "}
-                    In Progress
+            <div style={{ maxHeight: "500px", overflowY: "auto" }} className="">
+              <div className="p-4 shadow-2xl">
+                <div className="border-l-4 border-yellow-500  p-3  ">
+                  <div className="flex ">
+                    <span className="text-green-400">T001</span>-
+                    <span>admin</span>
+                  </div>
+                  <div className="flex justify-between pt-2">
+                    <Avatar></Avatar>
+                    <div></div>
+                    <div className="flex items-center justify-center bg-yellow-500 text-white rounded-full  px-3 py-1 text-[12px]">
+                      {" "}
+                      In Progress
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="p-4 shadow-2xl">
-              <div className="border-l-4 border-yellow-500  p-3  ">
-                <div className="flex ">
-                  <span className="text-green-400">T001</span>-
-                  <span>Web Page</span>
-                </div>
-                <div className="flex justify-between pt-2">
-                  <Avatar></Avatar>
-                  <div></div>
-                  <div className="flex items-center justify-center bg-yellow-500 text-white rounded-full  px-3 py-1 text-[12px]">
-                    {" "}
-                    In Progress
+              <div className="p-4 shadow-2xl">
+                <div className="border-l-4 border-yellow-500  p-3  ">
+                  <div className="flex ">
+                    <span className="text-green-400">T001</span>-
+                    <span>Web Page</span>
+                  </div>
+                  <div className="flex justify-between pt-2">
+                    <Avatar></Avatar>
+                    <div></div>
+                    <div className="flex items-center justify-center bg-yellow-500 text-white rounded-full  px-3 py-1 text-[12px]">
+                      {" "}
+                      In Progress
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="p-4 shadow-2xl">
-              <div className="border-l-4 border-yellow-500  p-3  ">
-                <div className="flex ">
-                  <span className="text-green-400">T001</span>-
-                  <span>Company</span>
-                </div>
-                <div className="flex justify-between pt-2">
-                  <Avatar></Avatar>
-                  <div></div>
-                  <div className="flex items-center justify-center bg-yellow-500 text-white rounded-full  px-3 py-1 text-[12px]">
-                    {" "}
-                    In Progress
+              <div className="p-4 shadow-2xl">
+                <div className="border-l-4 border-yellow-500  p-3  ">
+                  <div className="flex ">
+                    <span className="text-green-400">T001</span>-
+                    <span>Company</span>
+                  </div>
+                  <div className="flex justify-between pt-2">
+                    <Avatar></Avatar>
+                    <div></div>
+                    <div className="flex items-center justify-center bg-yellow-500 text-white rounded-full  px-3 py-1 text-[12px]">
+                      {" "}
+                      In Progress
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="p-4 shadow-2xl">
-              <div className="border-l-4 border-yellow-500  p-3  ">
-                <div className="flex ">
-                  <span className="text-green-400">T001</span>-
-                  <span>Validation</span>
-                </div>
-                <div className="flex justify-between pt-2">
-                  <Avatar></Avatar>
-                  <div></div>
-                  <div className="flex items-center justify-center bg-yellow-500 text-white rounded-full  px-3 py-1 text-[12px]">
-                    {" "}
-                    In Progress
+              <div className="p-4 shadow-2xl">
+                <div className="border-l-4 border-yellow-500  p-3  ">
+                  <div className="flex ">
+                    <span className="text-green-400">T001</span>-
+                    <span>Validation</span>
+                  </div>
+                  <div className="flex justify-between pt-2">
+                    <Avatar></Avatar>
+                    <div></div>
+                    <div className="flex items-center justify-center bg-yellow-500 text-white rounded-full  px-3 py-1 text-[12px]">
+                      {" "}
+                      In Progress
+                    </div>
                   </div>
                 </div>
               </div>
