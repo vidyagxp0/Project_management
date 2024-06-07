@@ -5,49 +5,52 @@ import Header from "../Header/Header";
 import { Avatar, AvatarGroup, Dialog } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
+import Paginations from "../Pagination/Paginations";
 
 const Meetings = () => {
   const [showMenu, setShowMenu] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
-  const data = [
-    {
-      title: "",
-      organizer: "",
-      invitePeoples: "",
-      start: "14-06-2024",
-      end: "14-06-2024",
-      hours: "2.30",
-      status: "Scheduled",
-    },
-    {
-      title: "",
-      organizer: "",
-      invitePeoples: "",
-      start: "04-06-2024",
-      end: "04-06-2024",
-      hours: "2",
-      status: "In Progress",
-    },
-    {
-      title: "",
-      organizer: "",
-      invitePeoples: "",
-      start: "24-06-2024",
-      end: "24-06-2024",
-      hours: "3",
-      status: "Completed",
-    },
-    {
-      title: "",
-      organizer: "",
-      invitePeoples: "",
-      start: "",
-      end: "",
-      hours: "",
-      status: "Scheduled",
-    },
-  ];
+  const [currentPage,setCurrentPage]=useState(1)
+const [data,setData]=useState([
+  {
+    title: "",
+    organizer: "",
+    invitePeoples: "",
+    start: "14-06-2024",
+    end: "14-06-2024",
+    hours: "2.30",
+    status: "Scheduled",
+  },
+  {
+    title: "",
+    organizer: "",
+    invitePeoples: "",
+    start: "04-06-2024",
+    end: "04-06-2024",
+    hours: "2",
+    status: "In Progress",
+  },
+  {
+    title: "",
+    organizer: "",
+    invitePeoples: "",
+    start: "24-06-2024",
+    end: "24-06-2024",
+    hours: "3",
+    status: "Completed",
+  },
+  {
+    title: "",
+    organizer: "",
+    invitePeoples: "",
+    start: "",
+    end: "",
+    hours: "",
+    status: "Scheduled",
+  },
+])
+const itemsPerPage=3;
+   const totalItems=Math.ceil(data.length/itemsPerPage)
   const handleMenuClick = (index) => {
     setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
   };
@@ -56,12 +59,18 @@ const Meetings = () => {
     navigate("/add-task");
   };
 
-  const handleDelete = () => {
-    // Implement delete functionality
+  const handleDelete = (index) => {
+   const newData =[...data]
+   newData.splice(index,1)
+   setData(newData)
+   setShowMenu(null)
   };
   const handleClose = () => {
     setIsOpen(false);
   };
+  const handlePageChange=(newPage)=>{
+    setCurrentPage(newPage)
+  }
   return (
     <div>
       <Header />
@@ -163,7 +172,7 @@ const Meetings = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
+                {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                   return (
                     <tr>
                       <td>M00{index + 1}</td>
@@ -210,7 +219,7 @@ const Meetings = () => {
                           </div>
                           {/* Menu */}
                           {showMenu === index && (
-                            <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <div
                                 className="py-1 px-2 "
                                 role="menu"
@@ -242,6 +251,7 @@ const Meetings = () => {
               </tbody>
             </table>
           </div>
+          <Paginations totalItems={totalItems} onPageChange={handlePageChange} currentPage={currentPage}/>
         </div>
       </div>
       <Dialog open={isOpen} onClose={handleClose}>

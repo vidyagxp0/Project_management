@@ -6,14 +6,14 @@ import { RiAddFill } from 'react-icons/ri';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import { RxCross1 } from 'react-icons/rx';
+import Paginations from '../Pagination/Paginations';
 
 const Teams = () => {
     const navigate=useNavigate()
     const [showMenu, setShowMenu] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
-    const [isDark, setIsDark] = useState(false);
-    const data = [
+const [currentPage,setCurrentPage]=useState(1)
+    const [data, setData] = useState([
       {
         id: "abc001",
         teamName: "Next js ",
@@ -45,7 +45,8 @@ const Teams = () => {
         leader: "",
       
       },
-    ];
+    ]);
+   
   
     const handleMenuClick = (index) => {
       setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
@@ -55,12 +56,20 @@ const Teams = () => {
       navigate("/add-defects");
     };
   
-    const handleDelete = () => {
-      // Implement delete functionality
+    const handleDelete = (index) => {
+      const newData=[...data]
+      newData.splice(index, 1)
+      setData(newData)
+      setShowMenu(null)
     };
+    const handlePageChange=(newPage)=>{
+      setCurrentPage(newPage)
+    }
     const handleClose = () => {
         setIsOpen(false);
       };
+      const itemsPerPage=3;
+      const totalItems=Math.ceil(data.length/itemsPerPage)
   return (
     <div>
     <Header />
@@ -112,7 +121,7 @@ const Teams = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => {
+              {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                 return (
                   <tr>
                     <td>{item.id}</td>
@@ -176,6 +185,7 @@ const Teams = () => {
             </tbody>
           </table>
         </div>
+        <Paginations onPageChange={handlePageChange} totalItems={totalItems} currentPage={currentPage}/>
       </div>
     </div>
     <Dialog open={isOpen} onClose={handleClose}>

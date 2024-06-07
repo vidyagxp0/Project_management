@@ -322,7 +322,7 @@ const ProjectDetail = () => {
                               </div>
                               {/* Menu */}
                               {showMenu === index && (
-                                <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                   <div
                                     className="py-1 px-2 "
                                     role="menu"

@@ -4,70 +4,80 @@ import { FaHome } from 'react-icons/fa';
 import { RiAddFill } from 'react-icons/ri';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
+import Paginations from '../Pagination/Paginations';
 
 const Invoices = () => {
     const navigate=useNavigate()
     const [showMenu, setShowMenu] = useState(null);
-  
-    const data = [
-      {
-        id: "abc001",
-        customer: "Pankaj ",
-        date: "22-05-2024",
-        validTill: "25-05-2024",
-        amount: 5,
-       
-        status: "Paid",
-      },
-      {
-        id: "abc002",
-        customer: "Amit Patel ",
-        date: "22-05-2024",
-        validTill: "25-05-2024",
-        amount: 10,
-       
-        status: "Unpaid",
-      },
-      {
-        id: "abc003",
-        customer: "Mayank",
-        date: "22-05-2024",
-        validTill: "25-05-2024",
-        amount: 25,
-       
-        status: "Partially Paid",
-      },
-      {
-        id: "abc004",
-        customer: "Gaurav",
-        date: "22-05-2024",
-        validTill: "25-05-2024",
-        amount: 50,
-       
-        status: "Paid",
-      },
-      {
-        id: "abc005",
-        customer: "Shubham",
-        date: "22-05-2024",
-        validTill: "25-05-2024",
-        amount: 33,
+    const [currentPage,setCurrentPage]=useState(1)
+  const [data,setData]=useState( [
+    {
+      id: "abc001",
+      customer: "Pankaj ",
+      date: "22-05-2024",
+      validTill: "25-05-2024",
+      amount: 5,
      
-        status: "Unpaid",
-      },
-    ];
+      status: "Paid",
+    },
+    {
+      id: "abc002",
+      customer: "Amit Patel ",
+      date: "22-05-2024",
+      validTill: "25-05-2024",
+      amount: 10,
+     
+      status: "Unpaid",
+    },
+    {
+      id: "abc003",
+      customer: "Mayank",
+      date: "22-05-2024",
+      validTill: "25-05-2024",
+      amount: 25,
+     
+      status: "Partially Paid",
+    },
+    {
+      id: "abc004",
+      customer: "Gaurav",
+      date: "22-05-2024",
+      validTill: "25-05-2024",
+      amount: 50,
+     
+      status: "Paid",
+    },
+    {
+      id: "abc005",
+      customer: "Shubham",
+      date: "22-05-2024",
+      validTill: "25-05-2024",
+      amount: 33,
+   
+      status: "Unpaid",
+    },
+  ])
+    
   
     const handleMenuClick = (index) => {
       setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
     };
   
     const handleEdit = () => {
-      navigate("/add-estimates");
+      // navigate("/add-estimates");
     };
   
-    const handleDelete = () => {
-      // Implement delete functionality
+    const handleDelete = (index) => {
+    const newData=[...data]
+    newData.splice(index,1)
+    setData(newData)
+    setShowMenu(null)
     };
+    const itemsPerPage=3;
+    const totalItems=Math.ceil(data.length/itemsPerPage)
+    const handlePageChange=(newPage)=>{
+      setCurrentPage(newPage)
+    }
   return (
     <div>
     <Header />
@@ -118,7 +128,7 @@ const Invoices = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => {
+              {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                 return (
                   <tr>
                     <td>{item.id}</td>
@@ -191,6 +201,7 @@ const Invoices = () => {
             </tbody>
           </table>
         </div>
+        <Paginations onPageChange={handlePageChange} currentPage={currentPage} totalItems={totalItems}/>
       </div>
     </div>
   </div>

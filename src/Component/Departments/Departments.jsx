@@ -11,13 +11,12 @@ const Departments = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
-  const AdministrationData = [
-    { d1: "1", designation: "Admin" },
-    { d1: "1", designation: "sales employee" },
-    { d1: "1", designation: "Manager" },
-    { d1: "1", designation: "HR" },
-  ];
+const [data,setData]=useState([{ d1: "1", designation: "Admin" },
+{ d1: "1", designation: "sales employee" },
+{ d1: "1", designation: "Manager" },
+{ d1: "1", designation: "HR" },])
+   
+   
   const roles = [
     { role: "Admin" },
     { role: "Sales Employee" },
@@ -43,8 +42,11 @@ const Departments = () => {
   const handleClose = () => {
     setIsOpen(false);
   };
-  const handleDelete = () => {
-    // Implement delete functionality
+  const handleDelete = (index) => {
+   const newData=[...data]
+   newData.splice(index,1)
+   setData(newData)
+   setShowMenu(null)
   };
   return (
     <div>
@@ -88,7 +90,7 @@ const Departments = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {AdministrationData.map((item, index) => {
+       {   data.map((item, index) => {
                     return (
                       <tr>
                         <td>{item.d1}</td>
@@ -106,7 +108,7 @@ const Departments = () => {
                             </div>
                             {/* Menu */}
                             {showMenu === index && (
-                              <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <div
                                   className="py-1 px-2 "
                                   role="menu"

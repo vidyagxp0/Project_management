@@ -6,10 +6,12 @@ import { RiAddFill } from "react-icons/ri";
 import { Avatar } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaCodePullRequest } from "react-icons/fa6";
+import Paginations from "../Pagination/Paginations";
 
 const LeaveReport = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(null);
+  const [currentPage,setCurrentPage]=useState(1)
   const data = [
     {
       id: "1",
@@ -19,49 +21,49 @@ const LeaveReport = () => {
       taken: 0,
     },
     {
-      id: "1",
+      id: "2",
       user: "Gaurav ",
       Pending: 1,
       approved: 2,
       taken: 0,
     },
     {
-      id: "1",
+      id: "3",
       user: " Mayank ",
       Pending: 1,
       approved: 2,
       taken: 0,
     },
     {
-      id: "1",
+      id: "4",
       user: "Pankaj Jat ",
       Pending: 1,
       approved: 2,
       taken: 0,
     },
     {
-      id: "1",
+      id: "5",
       user: "Manish  ",
       Pending: 1,
       approved: 2,
       taken: 0,
     },
     {
-      id: "1",
+      id: "6",
       user: "Shubham  ",
       Pending: 1,
       approved: 2,
       taken: 0,
     },
     {
-      id: "1",
+      id: "7",
       user: " Shivam ",
       Pending: 1,
       approved: 2,
       taken: 0,
     },
     {
-      id: "1",
+      id: "8",
       user: "Pankaj Jat ",
       Pending: 1,
       approved: 2,
@@ -79,6 +81,11 @@ const LeaveReport = () => {
   const handleDelete = () => {
     // Implement delete functionality
   };
+  const itemsPerPage=3;
+  const totalItems=Math.ceil(data.length/itemsPerPage)
+  const handlePageChange=(newPage)=>{
+    setCurrentPage(newPage)
+  }
   return (
     <div>
       <Header />
@@ -126,7 +133,7 @@ const LeaveReport = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
+                {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                   return (
                     <tr>
                       <td>{index + 1}</td>
@@ -161,6 +168,7 @@ const LeaveReport = () => {
               </tbody>
             </table>
           </div>
+          <Paginations onPageChange={handlePageChange} totalItems={totalItems} currentPage={currentPage}/>
         </div>
       </div>
     </div>

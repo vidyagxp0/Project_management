@@ -6,49 +6,51 @@ import { RiAddFill } from "react-icons/ri";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Dialog } from "@mui/material";
 import { RxCross1 } from "react-icons/rx";
+import Paginations from "../Pagination/Paginations";
 
 const Holidays = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
-  const data = [
-    {
-      date: "15-05-2024",
-      day: " Monday ",
-      eventName: "Pongal",
-      location: "Hydrabad",
-      color: "gray",
-    },
-    {
-      date: "28-10-2024",
-      day: "Friday ",
-      eventName: "Diwali",
-      location: "All India",
-      color: "rose",
-    },
-    {
-      date: "22-03-2025",
-      day: "Tuesday",
-      eventName: "Holi",
-      location: "South India",
-      color: "red",
-    },
-    {
-      date: "24-06-2024",
-      day: "Saturday",
-      eventName: "Mahatma Gandhi Jayanti",
-      location: "Delhi",
-      color: "indigo",
-    },
-    {
-      date: "30-08-2024",
-      day: "Sunday",
-      eventName: "Ganesh chaturthi",
-      location: "Mumbai",
-      color: "emerald",
-    },
-  ];
+  const [currentPage,setCurrentPage]=useState(1)
+const [data,setData]=useState(  [
+  {
+    date: "15-05-2024",
+    day: " Monday ",
+    eventName: "Pongal",
+    location: "Hydrabad",
+    color: "gray",
+  },
+  {
+    date: "28-10-2024",
+    day: "Friday ",
+    eventName: "Diwali",
+    location: "All India",
+    color: "rose",
+  },
+  {
+    date: "22-03-2025",
+    day: "Tuesday",
+    eventName: "Holi",
+    location: "South India",
+    color: "red",
+  },
+  {
+    date: "24-06-2024",
+    day: "Saturday",
+    eventName: "Mahatma Gandhi Jayanti",
+    location: "Delhi",
+    color: "indigo",
+  },
+  {
+    date: "30-08-2024",
+    day: "Sunday",
+    eventName: "Ganesh chaturthi",
+    location: "Mumbai",
+    color: "emerald",
+  },
+])
+ 
 
   const handleMenuClick = (index) => {
     setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
@@ -58,12 +60,20 @@ const Holidays = () => {
     navigate("/add-defects");
   };
 
-  const handleDelete = () => {
-    // Implement delete functionality
+  const handleDelete = (index) => {
+  const newData=[...data]
+  newData.splice(index,1)
+  setData(newData)
+  setShowMenu(null)
   };
   const handleClose = () => {
     setIsOpen(false);
   };
+  const itemsPerPage=3;
+  const totalItems=Math.ceil(data.length/itemsPerPage)
+  const handlePageChange=(newPage)=>{
+    setCurrentPage(newPage)
+  }
   return (
     <div>
       <Header />
@@ -113,7 +123,7 @@ const Holidays = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
+                {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                   return (
                     <tr>
                       <td>{item.date}</td>
@@ -142,7 +152,7 @@ const Holidays = () => {
                           </div>
                           {/* Menu */}
                           {showMenu === index && (
-                            <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <div
                                 className="py-1 px-2 "
                                 role="menu"
@@ -174,6 +184,7 @@ const Holidays = () => {
               </tbody>
             </table>
           </div>
+<Paginations onPageChange={handlePageChange} totalItems={totalItems} currentPage={currentPage}/>
         </div>
       </div>
       <Dialog open={isOpen} onClose={handleClose}>

@@ -5,58 +5,60 @@ import { RiAddFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import Paginations from '../Pagination/Paginations';
 
 const Estimates = () => {
   const navigate=useNavigate()
   const [showMenu, setShowMenu] = useState(null);
-  const [isDark, setIsDark] = useState(false);
-  const data = [
-    {
-      id: "abc001",
-      customer: "Pankaj ",
-      date: "22-05-2024",
-      validTill: "25-05-2024",
-      amount: 5,
-     
-      status: "Sent",
-    },
-    {
-      id: "abc002",
-      customer: "Amit Patel ",
-      date: "22-05-2024",
-      validTill: "25-05-2024",
-      amount: 10,
-     
-      status: "Accepted",
-    },
-    {
-      id: "abc003",
-      customer: "Mayank",
-      date: "22-05-2024",
-      validTill: "25-05-2024",
-      amount: 25,
-     
-      status: "Accepted",
-    },
-    {
-      id: "abc004",
-      customer: "Gaurav",
-      date: "22-05-2024",
-      validTill: "25-05-2024",
-      amount: 50,
-     
-      status: "Declined",
-    },
-    {
-      id: "abc005",
-      customer: "Shubham",
-      date: "22-05-2024",
-      validTill: "25-05-2024",
-      amount: 33,
+const [currentPage,setCurrentPage]=useState(1)
+const [data,setData]=useState([
+  {
+    id: "abc001",
+    customer: "Pankaj ",
+    date: "22-05-2024",
+    validTill: "25-05-2024",
+    amount: 5,
    
-      status: "Sent",
-    },
-  ];
+    status: "Sent",
+  },
+  {
+    id: "abc002",
+    customer: "Amit Patel ",
+    date: "22-05-2024",
+    validTill: "25-05-2024",
+    amount: 10,
+   
+    status: "Accepted",
+  },
+  {
+    id: "abc003",
+    customer: "Mayank",
+    date: "22-05-2024",
+    validTill: "25-05-2024",
+    amount: 25,
+   
+    status: "Accepted",
+  },
+  {
+    id: "abc004",
+    customer: "Gaurav",
+    date: "22-05-2024",
+    validTill: "25-05-2024",
+    amount: 50,
+   
+    status: "Declined",
+  },
+  {
+    id: "abc005",
+    customer: "Shubham",
+    date: "22-05-2024",
+    validTill: "25-05-2024",
+    amount: 33,
+ 
+    status: "Sent",
+  },
+])
+   
 
   const handleMenuClick = (index) => {
     setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
@@ -66,9 +68,18 @@ const Estimates = () => {
     navigate("/add-estimates");
   };
 
-  const handleDelete = () => {
-    // Implement delete functionality
+  const handleDelete = (index) => {
+  const newData=[...data]
+  newData.splice(index,1)
+  setData(newData)
+  setShowMenu(null)
   };
+
+  const handlePageChange=(newPage)=>{
+    setCurrentPage(newPage)
+  }
+  const itemsPerPage=3;
+  const totalItems=Math.ceil(data.length/itemsPerPage)
   return (
     <div>
     <Header />
@@ -119,7 +130,7 @@ const Estimates = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => {
+              {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                 return (
                   <tr>
                     <td>{item.id}</td>
@@ -153,14 +164,14 @@ const Estimates = () => {
                           <button
                             onClick={() => handleMenuClick(index)}
                             type="button"
-                            className="flex items-center justify-center hover:border border-gray-200 rounded-full h-5 focus:outline-none"
+                            className="flex items-center z-10 justify-center hover:border border-gray-200 rounded-full h-5 focus:outline-none"
                           >
                             <BsThreeDotsVertical />
                           </button>
                         </div>
                         {/* Menu */}
                         {showMenu === index && (
-                          <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div
                               className="py-1 px-2 "
                               role="menu"
@@ -192,6 +203,7 @@ const Estimates = () => {
             </tbody>
           </table>
         </div>
+        <Paginations onPageChange={handlePageChange} currentPage={currentPage} totalItems={totalItems}/>
       </div>
     </div>
   </div>

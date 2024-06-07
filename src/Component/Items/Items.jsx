@@ -6,51 +6,54 @@ import { BsPersonRaisedHand, BsThreeDotsVertical } from 'react-icons/bs';
 import { RiAddFill } from 'react-icons/ri';
 import { Dialog } from '@mui/material';
 import { RxCross1 } from 'react-icons/rx';
+import Paginations from '../Pagination/Paginations';
 
 const Items = () => {
     const navigate=useNavigate()
     const [showMenu, setShowMenu] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
-    const data = [
-      {
-        itemName: "Some Item",
-        description: "some item add ",
-        tax: 123 ,     
-        unit: "",
-        price:"100", 
-      },
-      {
-        itemName: "New Item",
-        description: "add new item ",
-        tax: 98,
-        unit: "2",
-        price:"80",
-      },
-      {
-        itemName: "Cap",
-        description: "Buy a new cap",
-        tax: 23,
-        unit: "5",
-        price:"200",
-      },
-      {
-        itemName: "Laptop",
-        description: "Buy new laptops",
-        tax: 18,
-        unit: "100",
-        price:"1081",
-      },
-      {
-        itemName: "Keyboard",
-        description: "Add keyboards",
-        tax: 23,
-        unit: "50",
-        price:"567",
-      
-      },
-    ];
+const [currentPage,setCurrentPage]=useState(1);
+const [data,setData]=useState( [
+  {
+    itemName: "Some Item",
+    description: "some item add ",
+    tax: 123 ,     
+    unit: "",
+    price:"100", 
+  },
+  {
+    itemName: "New Item",
+    description: "add new item ",
+    tax: 98,
+    unit: "2",
+    price:"80",
+  },
+  {
+    itemName: "Cap",
+    description: "Buy a new cap",
+    tax: 23,
+    unit: "5",
+    price:"200",
+  },
+  {
+    itemName: "Laptop",
+    description: "Buy new laptops",
+    tax: 18,
+    unit: "100",
+    price:"1081",
+  },
+  {
+    itemName: "Keyboard",
+    description: "Add keyboards",
+    tax: 23,
+    unit: "50",
+    price:"567",
   
+  },
+])
+    
+    const itemsPerPage=3;
+  const totalItems=Math.ceil(data.length/itemsPerPage)
     const handleMenuClick = (index) => {
       setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
     };
@@ -59,12 +62,18 @@ const Items = () => {
       navigate("/add-defects");
     };
   
-    const handleDelete = () => {
-      // Implement delete functionality
+    const handleDelete = (index) => {
+  const newData=[...data]
+  newData.splice(index,1)
+  setData(newData)
+  setShowMenu(null)
     };
     const handleClose = () => {
         setIsOpen(false);
       };
+      const handlePageChange=(newPage)=>{
+        setCurrentPage(newPage)
+      }
   return (
     <div>
     <Header />
@@ -116,7 +125,7 @@ const Items = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => {
+              {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                 return (
                   <tr>
                     <td>{item.itemName}</td>
@@ -139,7 +148,7 @@ const Items = () => {
                         </div>
                         {/* Menu */}
                         {showMenu === index && (
-                          <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div className="origin-top-right absolute z-10 right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div
                               className="py-1 px-2 "
                               role="menu"
@@ -171,6 +180,7 @@ const Items = () => {
             </tbody>
           </table>
         </div>
+        <Paginations onPageChange={handlePageChange} currentPage={currentPage} totalItems={totalItems}/>
       </div>
     </div>
     <Dialog open={isOpen} onClose={handleClose}>

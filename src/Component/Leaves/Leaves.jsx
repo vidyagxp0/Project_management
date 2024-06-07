@@ -9,13 +9,15 @@ import { FaCodePullRequest } from "react-icons/fa6";
 import { HiDocumentReport } from "react-icons/hi";
 import { Checkbox, Dialog } from "@mui/material";
 import { RxCross1 } from "react-icons/rx";
+import Paginations from "../Pagination/Paginations";
 
 const Leaves = () => {
   const navigate = useNavigate();
 
   const [showMenu, setShowMenu] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const data = [
+  const [currentPage,setCurrentPage]=useState(1)
+  const [data,setData]=useState( [
     {
       id: "abc001",
       user: "Pankaj Jat ",
@@ -61,8 +63,9 @@ const Leaves = () => {
       duration: "10 Days",
       status: "Rejected",
     },
-  ];
-
+  ])
+const itemsPerPage=3;
+const totalItems=Math.ceil(data.length/itemsPerPage)
   const handleMenuClick = (index) => {
     setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
   };
@@ -70,8 +73,14 @@ const Leaves = () => {
   const handleEdit = () => {};
 
   const handleDelete = () => {
-    // Implement delete functionality
+    const newData=[...data]
+    newData.splice(index,1)
+    setData(newData)
+    setShowMenu(null)
   };
+  const handlePageChange=(newPage)=>{
+    setCurrentPage(newPage)
+  }
   return (
     <div>
       <Header />
@@ -128,7 +137,7 @@ const Leaves = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
+                {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                   return (
                     <tr>
                       <td>{item.id}</td>
@@ -199,6 +208,7 @@ const Leaves = () => {
               </tbody>
             </table>
           </div>
+          <Paginations currentPage={currentPage} onPageChange={handlePageChange} totalItems={totalItems}/>
         </div>
       </div>
       <Dialog open={isOpen} onClose={() => setIsOpen(false)}>

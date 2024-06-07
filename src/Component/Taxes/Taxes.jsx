@@ -6,39 +6,41 @@ import { Dialog } from "@mui/material";
 import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import { RiAddFill } from "react-icons/ri";
+import Paginations from "../Pagination/Paginations";
 
 const Taxes = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
-  const data = [
-    {
-      id: "abc001",
-      taxName: "GST ",
-      taxRate: 23,
-    },
-    {
-      id: "abc002",
-      taxName: "Service Tax ",
-      taxRate: 6,
-    },
-    {
-      id: "abc003",
-      taxName: "SGST",
-      taxRate: 10,
-    },
-    {
-      id: "abc004",
-      taxName: "CGST",
-      taxRate: 6,
-    },
-    {
-      id: "abc005",
-      taxName: "VAT",
-      taxRate: 9,
-    },
-  ];
+const [currentPage,setCurrentPage]=useState(1)
+const[data,setData]=useState( [
+  {
+    id: "abc001",
+    taxName: "GST ",
+    taxRate: 23,
+  },
+  {
+    id: "abc002",
+    taxName: "Service Tax ",
+    taxRate: 6,
+  },
+  {
+    id: "abc003",
+    taxName: "SGST",
+    taxRate: 10,
+  },
+  {
+    id: "abc004",
+    taxName: "CGST",
+    taxRate: 6,
+  },
+  {
+    id: "abc005",
+    taxName: "VAT",
+    taxRate: 9,
+  },
+])
+  
 
   const handleMenuClick = (index) => {
     setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
@@ -48,12 +50,20 @@ const Taxes = () => {
     navigate("/add-defects");
   };
 
-  const handleDelete = () => {
-    // Implement delete functionality
+  const handleDelete = (index) => {
+const newData=[...data]
+newData.splice(index, 1)
+setData(newData)
+setShowMenu(null)
   };
   const handleClose = () => {
     setIsOpen(false);
   };
+  const handlePageChange=(newPage)=>{
+    setCurrentPage(newPage)
+  }
+  const itemsPerPage=3;
+  const totalItems=Math.ceil(data.length/itemsPerPage)
   return (
     <div>
       <Header />
@@ -102,7 +112,7 @@ const Taxes = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
+                {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                   return (
                     <tr>
                       <td>{index + 1}</td>
@@ -155,6 +165,7 @@ const Taxes = () => {
               </tbody>
             </table>
           </div>
+          <Paginations onPageChange={handlePageChange} totalItems={totalItems} currentPage={currentPage}/>
         </div>
       </div>
       <Dialog open={isOpen} onClose={handleClose}>

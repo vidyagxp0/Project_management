@@ -6,63 +6,65 @@
   import { useNavigate } from 'react-router-dom';
   import { VscSymbolMethod } from 'react-icons/vsc';
   import SideBar from '../SideBar/SideBar';
+import Paginations from '../Pagination/Paginations';
 
   const Payments = () => {
     const navigate=useNavigate()
     const [showMenu, setShowMenu] = useState(null);
+    const [currentPage,setCurrentPage]=useState(1)
+const [data,setData]=useState( [
+  {
+    id: "abc001",
+    payment:"PAY001",
+    client: "Pankaj ",
+    date: "22-05-2024",
+    paymentMode: "25-05-2024",
+    amount: 5,
+  
+    status: "Successful",
+  },
+  {
+    id: "abc002",
+    payment:"PAY005",
+    client: "Amit Patel ",
+    date: "22-05-2024",
+    paymentMode: "25-05-2024",
+    amount: 10,
+  
+    status: "Failed",
+  },
+  {
+    id: "abc003",
+    payment:"PAY002",
+    client: "Mayank",
+    date: "22-05-2024",
+    paymentMode: "25-05-2024",
+    amount: 25,
+  
+    status: "Successful",
+  },
+  {
+    id: "abc004",
+    payment:"PAY004",
+    client: "Gaurav",
+    date: "22-05-2024",
+    paymentMode: "25-05-2024",
+    amount: 50,
+  
+    status: "Successful",
+  },
+  {
+    id: "abc005",
+    payment:"PAY003",
+    client: "Shubham",
+    date: "22-05-2024",
+    paymentMode: "25-05-2024",
+    amount: 33,
 
-    const data = [
-      {
-        id: "abc001",
-        payment:"PAY001",
-        client: "Pankaj ",
-        date: "22-05-2024",
-        paymentMode: "25-05-2024",
-        amount: 5,
-      
-        status: "Successful",
-      },
-      {
-        id: "abc002",
-        payment:"PAY005",
-        client: "Amit Patel ",
-        date: "22-05-2024",
-        paymentMode: "25-05-2024",
-        amount: 10,
-      
-        status: "Failed",
-      },
-      {
-        id: "abc003",
-        payment:"PAY002",
-        client: "Mayank",
-        date: "22-05-2024",
-        paymentMode: "25-05-2024",
-        amount: 25,
-      
-        status: "Successful",
-      },
-      {
-        id: "abc004",
-        payment:"PAY004",
-        client: "Gaurav",
-        date: "22-05-2024",
-        paymentMode: "25-05-2024",
-        amount: 50,
-      
-        status: "Successful",
-      },
-      {
-        id: "abc005",
-        payment:"PAY003",
-        client: "Shubham",
-        date: "22-05-2024",
-        paymentMode: "25-05-2024",
-        amount: 33,
+    status: "Failed",
+  },
+])
     
-        status: "Failed",
-      },
-    ];
 
     const handleMenuClick = (index) => {
       setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
@@ -72,9 +74,17 @@
       navigate("/add-estimates");
     };
 
-    const handleDelete = () => {
-      // Implement delete functionality
+    const handleDelete = (index) => {
+    const newData=[...data]
+    newData.splice(index,1)
+    setData(newData)
+    setShowMenu(null)
     };
+    const handlePageChange=(newPage)=>{
+      setCurrentPage(newPage)
+    }
+    const itemsPerPage=3;
+    const totalItems=Math.ceil(data.length/itemsPerPage)
     return (
      
       
@@ -128,7 +138,7 @@
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
+                {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                   return (
                     <tr>
                       <td>{item.payment}</td>
@@ -170,7 +180,7 @@
                           </div>
                           {/* Menu */}
                           {showMenu === index && (
-                            <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <div
                                 className="py-1 px-2 "
                                 role="menu"
@@ -202,6 +212,7 @@
               </tbody>
             </table>
           </div>
+          <Paginations totalItems={totalItems} currentPage={currentPage} onPageChange={handlePageChange}/>
         </div>
       </div>
      

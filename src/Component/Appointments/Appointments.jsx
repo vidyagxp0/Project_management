@@ -7,50 +7,52 @@ import { RxCross1 } from 'react-icons/rx';
 import Header from '../Header/Header';
 import { SiHandshakeProtocol } from 'react-icons/si';
 import { useNavigate } from 'react-router-dom';
+import Paginations from '../Pagination/Paginations';
 
 const Appointments = () => {
     const navigate=useNavigate()
     const [showMenu, setShowMenu] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
-  
-    const data = [
-      {
-        title: "",
-        provider: "Pankaj Jat",
-        location: "Indore",
-        start: "14-06-2024",
-        end: "14-06-2024",
-        hours: "2.30",
-        status: "Scheduled",
-      },
-      {
-        title: "",
-        provider: "Amit Patel",
-        location: "Indore",
-        start: "04-06-2024",
-        end: "04-06-2024",
-        hours: "2",
-        status: "In Progress",
-      },
-      {
-        title: "",
-        provider: "Gaurav",
-        location: "Indore",
-        start: "24-06-2024",
-        end: "24-06-2024",
-        hours: "3",
-        status: "Completed",
-      },
-      {
-        title: "",
-        provider: "Mayank",
-        location: "Indore",
-        start: "",
-        end: "",
-        hours: "",
-        status: "Scheduled",
-      },
-    ];
+  const [currentPage,setCurrentPage]=useState()
+  const [data,setData]=useState( [
+    {
+      title: "",
+      provider: "Pankaj Jat",
+      location: "Indore",
+      start: "14-06-2024",
+      end: "14-06-2024",
+      hours: "2.30",
+      status: "Scheduled",
+    },
+    {
+      title: "",
+      provider: "Amit Patel",
+      location: "Indore",
+      start: "04-06-2024",
+      end: "04-06-2024",
+      hours: "2",
+      status: "In Progress",
+    },
+    {
+      title: "",
+      provider: "Gaurav",
+      location: "Indore",
+      start: "24-06-2024",
+      end: "24-06-2024",
+      hours: "3",
+      status: "Completed",
+    },
+    {
+      title: "",
+      provider: "Mayank",
+      location: "Indore",
+      start: "",
+      end: "",
+      hours: "",
+      status: "Scheduled",
+    },
+  ])
+   
     const handleMenuClick = (index) => {
       setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
     };
@@ -59,12 +61,20 @@ const Appointments = () => {
       navigate("/add-task");
     };
   
-    const handleDelete = () => {
-      // Implement delete functionality
+    const handleDelete = (index) => {
+      const newData=[...data]
+      newData.splice(index ,1)
+      setData(newData)
+      setShowMenu(null)
     };
+    const handlePageChange=(newPage)=>{
+      setCurrentPage(newPage)
+    }
     const handleClose = () => {
       setIsOpen(false);
     };
+    const itemsPerPage=3;
+    const totalItems=Math.ceil(data.length/itemsPerPage)
   return (
     <div>
     <Header />
@@ -173,7 +183,7 @@ const Appointments = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => {
+              {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                 return (
                   <tr>
                     <td>A00{index + 1}</td>
@@ -212,7 +222,7 @@ const Appointments = () => {
                         </div>
                         {/* Menu */}
                         {showMenu === index && (
-                          <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div
                               className="py-1 px-2 "
                               role="menu"
@@ -244,6 +254,7 @@ const Appointments = () => {
             </tbody>
           </table>
         </div>
+        <Paginations onPageChange={handlePageChange} totalItems={totalItems} currentPage={currentPage}/>
       </div>
     </div>
     <Dialog open={isOpen} onClose={handleClose}>

@@ -5,11 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { RiAddFill } from "react-icons/ri";
 import { Avatar, AvatarGroup, LinearProgress } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import Paginations from "../Pagination/Paginations";
 
 const Projects = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(null);
-  const data = [
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
+  const [data, setData] = useState([
     {
       id: "abc001",
       projectName: "CMS",
@@ -43,7 +46,7 @@ const Projects = () => {
       duration: { startDate: "22-05-2024", endDate: "25-05-2024" },
       progress: 50,
       creator: "",
-      assignTo: [ "",""     ],
+      assignTo: ["", ""],
       status: "Completed",
     },
     {
@@ -55,18 +58,26 @@ const Projects = () => {
       assignTo: [""],
       status: "Open",
     },
-  ];
+  ]);
 
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
   const handleMenuClick = (index) => {
-    setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
+    setShowMenu(index === showMenu ? null : index);    
   };
 
   const handleEdit = () => {
-  navigate('/add-projects')
+    navigate("/add-projects");
   };
 
-  const handleDelete = () => {
-    // Implement delete functionality
+  const handleDelete = (index) => {
+    const newData = [...data];
+    newData.splice(index, 1);
+    setData(newData);
+    setShowMenu(null);
   };
   return (
     <div>
@@ -77,7 +88,7 @@ const Projects = () => {
           <span>/</span>
           <span>Projects</span>
         </div>
-        <div className="p-4shadow-2xl">
+        <div className="p-4 shadow-2xl">
           <div className="flex justify-between p-2">
             <div className="text-[22px] font-semibold">Projects</div>
             <div className="flex gap-4">
@@ -88,7 +99,7 @@ const Projects = () => {
                 <FaUpload />
               </div>
               <div className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer">
-                <RiAddFill onClick={()=>navigate("/add-projects")} />
+                <RiAddFill onClick={() => navigate("/add-projects")} />
               </div>
             </div>
           </div>
@@ -178,77 +189,117 @@ const Projects = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
-                  return (
-                    <tr>
-                      <td>{item.id}</td>
-                      <td>{item.projectName}</td>
-                      <td>
-                        <div>
-                          Start :{" "}
-                          <span className="font-bold">
-                            {item.duration.startDate}
-                          </span>
-                        </div>
-                        <div>
-                          End :
-                          <span className="font-bold">
-                            {item.duration.endDate}
-                          </span>
-                        </div>
-                      </td>
-                      <td> <LinearProgress variant="determinate" value={item.progress} /></td>
-                      <td className="flex justify-center items-center">
-                        <Avatar src={item.creator}></Avatar>
-                      </td>
-                      <td >
-                        <AvatarGroup max={3} className="flex justify-center items-center">
+                {data
+                  .slice(
+                    (currentPage - 1) * itemsPerPage,
+                    currentPage * itemsPerPage
+                  )
+                  .map((item, index) => {
+                    return (
+                      <tr>
+                        <td>{item.id}</td>
+                        <td>{item.projectName}</td>
+                        <td>
+                          <div>
+                            Start :{" "}
+                            <span className="font-bold">
+                              {item.duration.startDate}
+                            </span>
+                          </div>
+                          <div>
+                            End :
+                            <span className="font-bold">
+                              {item.duration.endDate}
+                            </span>
+                          </div>
+                        </td>
+                        <td>
                           {" "}
-                          {item.assignTo.map((itm) => {
-                            return <Avatar src={itm}></Avatar>;
-                          })}
-                        </AvatarGroup>
-                      </td>
-                      <td><div className={` py-1 text-white min-w-10 rounded-full ${item.status==="In Progress" ? "bg-yellow-400":item.status==="Open"?"bg-cyan-500" :item.status==="Completed"?"bg-green-500":""}`}>{item.status}</div></td>
-                      <td>   <div className="relative inline-block text-left">
-                    <div>
-                      <button
-                        onClick={() => handleMenuClick(index)}
-                        type="button"
-                        className="flex items-center justify-center hover:border border-gray-200 rounded-full h-5 focus:outline-none"
-                      >
-                        <BsThreeDotsVertical />
-                      </button>
-                    </div>
-                    {/* Menu */}
-                    {showMenu === index && (
-                      <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <div className="py-1 px-2 " role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                          <button
-                            onClick={handleEdit}
-                            className="block w-full  px-4 py-2 rounded text-sm text-center text-gray-700 hover:bg-yellow-300 hover:text-white"
-                            role="menuitem"
+                          <LinearProgress
+                            variant="determinate"
+                            value={item.progress}
+                          />
+                        </td>
+                        <td className="flex justify-center items-center">
+                          <Avatar src={item.creator}></Avatar>
+                        </td>
+                        <td>
+                          <AvatarGroup
+                            max={3}
+                            className="flex justify-center items-center"
                           >
-                            Edit
-                          </button>
-                          <button
-                            onClick={handleDelete}
-                            className="block w-full text-center px-4 py-2 text-sm rounded text-gray-700 hover:bg-red-500 hover:text-white"
-                            role="menuitem"
+                            {" "}
+                            {item.assignTo.map((itm) => {
+                              return <Avatar src={itm}></Avatar>;
+                            })}
+                          </AvatarGroup>
+                        </td>
+                        <td>
+                          <div
+                            className={` py-1 text-white min-w-10 rounded-full ${
+                              item.status === "In Progress"
+                                ? "bg-yellow-400"
+                                : item.status === "Open"
+                                ? "bg-cyan-500"
+                                : item.status === "Completed"
+                                ? "bg-green-500"
+                                : ""
+                            }`}
                           >
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                      </td>
-                    </tr>
-                  );
-                })}
+                            {item.status}
+                          </div>
+                        </td>
+                        <td>
+                          {" "}
+                          <div className="relative inline-block text-left">
+                            <div>
+                              <button
+                                onClick={() => handleMenuClick(index)}
+                                type="button"
+                                className="flex items-center justify-center hover:border border-gray-200 rounded-full h-5 focus:outline-none"
+                              >
+                                <BsThreeDotsVertical />
+                              </button>
+                            </div>
+                            {/* Menu */}
+                            {showMenu === index && (
+                              <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <div
+                                  className="py-1 px-2 "
+                                  role="menu"
+                                  aria-orientation="vertical"
+                                  aria-labelledby="options-menu"
+                                >
+                                  <button
+                                    onClick={handleEdit}
+                                    className="block w-full  px-4 py-2 rounded text-sm text-center text-gray-700 hover:bg-yellow-300 hover:text-white"
+                                    role="menuitem"
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    onClick={handleDelete}
+                                    className="block w-full text-center px-4 py-2 text-sm rounded text-gray-700 hover:bg-red-500 hover:text-white"
+                                    role="menuitem"
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>
+          <Paginations
+            onPageChange={handlePageChange}
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
         </div>
       </div>
     </div>

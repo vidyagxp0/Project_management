@@ -5,11 +5,13 @@ import { FaHome } from "react-icons/fa";
 import { RiAddFill } from "react-icons/ri";
 import Header from "../Header/Header";
 import { useNavigate } from "react-router-dom";
+import Paginations from "../Pagination/Paginations";
 
 const Clients = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(null);
-  const data = [
+  const [currentPage,setCurrentPage]=useState(1)
+  const [data,setData]=useState( [
     {
       photo: "abc001",
       fristName: "Pankaj ",
@@ -61,7 +63,8 @@ const Clients = () => {
       department: "Sales Employee (Administration)",
       status: "InActive",
     },
-  ];
+  ])
+ 
 
   const handleMenuClick = (index) => {
     setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
@@ -71,9 +74,18 @@ const Clients = () => {
     navigate("/add-defects");
   };
 
-  const handleDelete = () => {
-    // Implement delete functionality
-  };
+  const handleDelete = (index) => {
+const newData=[...data]
+newData.splice(index,1)
+setData(newData)
+setShowMenu(null)  };
+
+const handlePageChange=(newPage)=>{
+  setCurrentPage(newPage)
+}
+
+const itemsPerPage=3;
+const totalItems=Math.ceil(data.length/itemsPerPage)
   return (
     <div>
       <Header />
@@ -122,7 +134,7 @@ const Clients = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
+                {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                   return (
                     <tr>
                       <td className="flex justify-center items-center">
@@ -166,7 +178,7 @@ const Clients = () => {
                           </div>
                           {/* Menu */}
                           {showMenu === index && (
-                            <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <div
                                 className="py-1 px-2 "
                                 role="menu"
@@ -198,6 +210,7 @@ const Clients = () => {
               </tbody>
             </table>
           </div>
+          <Paginations onPageChange={handlePageChange} currentPage={currentPage} totalItems={totalItems}/>
         </div>
       </div>
     </div>

@@ -5,9 +5,11 @@ import { RiAddFill, RiIndentIncrease } from "react-icons/ri";
 import { LiaTradeFederation } from "react-icons/lia";
 import { BsUiRadios, BsWindowStack } from "react-icons/bs";
 import { Avatar, AvatarGroup } from "@mui/material";
+import Paginations from "../Pagination/Paginations";
 
 const Reports = () => {
   const [isSelected, setIsSelected] = useState("project");
+  const [currentPage,setCurrentPage]=useState(1)
   const projects = [
     {
         id: 1,
@@ -88,7 +90,11 @@ const Reports = () => {
       client: "DEF Corp",
     },
   ];
-
+const itemsPerPage=3;
+const handlePageChange =(newPage)=>{
+  setCurrentPage(newPage)
+}
+const totalItems=Math.ceil(projects.length/itemsPerPage)
   return (
     <div>
       <Header />
@@ -162,7 +168,7 @@ const Reports = () => {
                 </tr>
               </thead>
               <tbody>
-  {projects.map((item) => (
+  {projects.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item) => (
     <tr key={item.id}>
       <td>{item.id}</td>
       <td>{item.projectName}</td>
@@ -208,6 +214,7 @@ const Reports = () => {
 
             </table>
           </div>
+          <Paginations currentPage={currentPage} onPageChange={handlePageChange} totalItems={totalItems}/>
         </div>
       </div>
     </div>

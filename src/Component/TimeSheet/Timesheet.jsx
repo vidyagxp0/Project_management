@@ -6,54 +6,56 @@ import { RiAddFill } from "react-icons/ri";
 import { RxCross1 } from "react-icons/rx";
 import Header from "../Header/Header";
 import { useNavigate } from "react-router-dom";
+import Paginations from "../Pagination/Paginations";
 
 const Timesheet = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
-  const data = [
-    {
-      project: "TMS",
-      entry: " ",
-      note: "",
-      startTime: "25-12-2023",
-      endTime: "25-12-2024",
-      hours: "880",
-    },
-    {
-      project: "QMS",
-      entry: " ",
-      note: "",
-      startTime: "12-02-2024",
-      endTime: "12-06-2024",
-      hours: "120",
-    },
-    {
-      project: "DMS",
-      entry: "",
-      note: "",
-      startTime: "09-06-2023",
-      endTime: "09-09-2023",
-      hours: "360",
-    },
-    {
-      project: "Ajio",
-      entry: "",
-      note: "",
-      startTime: "15-06-2022",
-      endTime: "18-08-2024",
-      hours: "880",
-    },
-    {
-      project: "Navin ",
-      entry: "",
-      note: "",
-      startTime: "12-12-2023",
-      endTime: "12-03-2024",
-      hours: "180",
-    },
-  ];
+const  [currentPage,setCurrentPage]=useState(1);
+const [data,setData]=useState( [
+  {
+    project: "TMS",
+    entry: " ",
+    note: "",
+    startTime: "25-12-2023",
+    endTime: "25-12-2024",
+    hours: "880",
+  },
+  {
+    project: "QMS",
+    entry: " ",
+    note: "",
+    startTime: "12-02-2024",
+    endTime: "12-06-2024",
+    hours: "120",
+  },
+  {
+    project: "DMS",
+    entry: "",
+    note: "",
+    startTime: "09-06-2023",
+    endTime: "09-09-2023",
+    hours: "360",
+  },
+  {
+    project: "Ajio",
+    entry: "",
+    note: "",
+    startTime: "15-06-2022",
+    endTime: "18-08-2024",
+    hours: "880",
+  },
+  {
+    project: "Navin ",
+    entry: "",
+    note: "",
+    startTime: "12-12-2023",
+    endTime: "12-03-2024",
+    hours: "180",
+  },
+])
+  
 
   const handleMenuClick = (index) => {
     setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
@@ -63,12 +65,20 @@ const Timesheet = () => {
     navigate("/add-defects");
   };
 
-  const handleDelete = () => {
-    // Implement delete functionality
+  const handleDelete = (index) => {
+    const newData=[...data]
+    newData.splice(index, 1)
+    setData(newData)
+    setShowMenu(null)
   };
   const handleClose = () => {
     setIsOpen(false);
   };
+  const itemsPerPage=3;
+  const totalItems=Math.ceil(data.length/itemsPerPage)
+  const handlePageChange=(newPage)=>{
+    setCurrentPage(newPage)
+  }
   return (
     <div>
       <Header />
@@ -149,7 +159,7 @@ const Timesheet = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
+                {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                   return (
                     <tr>
                       <td>{item.project}</td>
@@ -173,7 +183,7 @@ const Timesheet = () => {
                           </div>
                           {/* Menu */}
                           {showMenu === index && (
-                            <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <div
                                 className="py-1 px-2 "
                                 role="menu"
@@ -205,6 +215,7 @@ const Timesheet = () => {
               </tbody>
             </table>
           </div>
+          <Paginations onPageChange={handlePageChange} totalItems={totalItems} currentPage={currentPage}/>
         </div>
       </div>
       <Dialog open={isOpen} onClose={handleClose}>
