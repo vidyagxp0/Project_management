@@ -34,7 +34,7 @@ const Settings = () => {
           <div className="flex flex-wrap gap-3 justify-center items-center px-5">
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "companyDetails" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "companyDetails" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("companyDetails")}
             >
@@ -42,7 +42,7 @@ const Settings = () => {
             </div>
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "system" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "system" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("system")}
             >
@@ -50,7 +50,7 @@ const Settings = () => {
             </div>
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "slack" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "slack" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("slack")}
             >
@@ -58,7 +58,7 @@ const Settings = () => {
             </div>
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "email" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "email" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("email")}
             >
@@ -66,7 +66,7 @@ const Settings = () => {
             </div>
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "emailTemplates" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "emailTemplates" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("emailTemplates")}
             >
@@ -75,7 +75,7 @@ const Settings = () => {
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
                 isSelcted === "emailNotification"
-                  ? "bg-cyan-400 text-white"
+                  ? "bg-cyan-600 text-white"
                   : ""
               }`}
               onClick={() => setIsSelected("emailNotification")}
@@ -84,7 +84,7 @@ const Settings = () => {
             </div>
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "cronJob" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "cronJob" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("cronJob")}
             >
@@ -108,7 +108,7 @@ const Settings = () => {
             </div> */}
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "databaseBackups" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "databaseBackups" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("databaseBackups")}
             >
@@ -116,7 +116,7 @@ const Settings = () => {
             </div>
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "customFields" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "customFields" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("customFields")}
             >
@@ -124,7 +124,7 @@ const Settings = () => {
             </div>
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "translations" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "translations" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("translations")}
             >
@@ -133,7 +133,7 @@ const Settings = () => {
             </div>
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "estimate" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "estimate" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("estimate")}
             >
@@ -141,7 +141,7 @@ const Settings = () => {
             </div>
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "invoice" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "invoice" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("invoice")}
             >
@@ -150,7 +150,7 @@ const Settings = () => {
             </div>
             <div
               className={`bg-[#f3f5ff] flex items-center rounded-full px-3 py-2 text-cyan-500 hover:bg-cyan-400 hover:text-white ${
-                isSelcted === "paymentGateway" ? "bg-cyan-400 text-white" : ""
+                isSelcted === "paymentGateway" ? "bg-cyan-600 text-white" : ""
               }`}
               onClick={() => setIsSelected("paymentGateway")}
             >

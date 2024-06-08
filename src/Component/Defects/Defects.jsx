@@ -5,12 +5,14 @@ import { FaFile, FaHome, FaUpload } from 'react-icons/fa';
 import { RiAddFill } from 'react-icons/ri';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
+import Paginations from '../Pagination/Paginations';
 
 const Defects = () => {
     const navigate = useNavigate();
     const [showMenu, setShowMenu] = useState(null);
     const [isDark, setIsDark] = useState(false);
-    const data = [
+    const [currentPage,setCurrentPage]=useState(1)
+    const [data,setData]=useState( [
       {
         id: "abc001",
         defectName: "Fixed Unassigned placeholder translation issue in 6 pages. ",
@@ -61,7 +63,8 @@ const Defects = () => {
         severity: "Urjent",
         status: "Open",
       },
-    ];
+    ])
+   
   
     const handleMenuClick = (index) => {
       setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
@@ -71,9 +74,17 @@ const Defects = () => {
       navigate("/add-defects");
     };
   
-    const handleDelete = () => {
-      // Implement delete functionality
+    const handleDelete = (index) => {
+      const newData=[...data]
+      newData.splice(index,1)
+      setData(newData)
+      setShowMenu(null)
     };
+    const itemsPerPage=3;
+    const totalItems=Math.ceil(data.length/itemsPerPage)
+    const handlePageChange=(newPage)=>{
+      setCurrentPage(newPage)
+    }
   return (
     <div>
     <Header />
@@ -190,7 +201,7 @@ const Defects = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => {
+              {data.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage).map((item, index) => {
                 return (
                   <tr>
                     <td>{item.id}</td>
@@ -276,6 +287,7 @@ const Defects = () => {
             </tbody>
           </table>
         </div>
+        <Paginations onPageChange={handlePageChange} totalItems={totalItems} currentPage={currentPage}/>
       </div>
     </div>
   </div>
