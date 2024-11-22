@@ -9,7 +9,7 @@ const Login = () => {
   const handleLogin = () => {
     if (
       (username === "Pankaj" && password === "Pankaj") ||
-      (username === "Admin@vidyagxp.com" && password === "Amit@121")
+      (username === "Amit@vidyagxp.com" && password === "1")
     ) {
       navigate("/dashboard");
     } else {
