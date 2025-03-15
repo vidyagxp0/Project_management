@@ -51,7 +51,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
             <AiOutlineDashboard size={25} />
             Dashboard
           </div>
-
+{/* 
           <div
             className={`items-center pl-1 cursor-pointer ${
               isActive("/roles") ? "text-blue-500" : ""
@@ -223,7 +223,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                 </div>
               )}
             </div>
-          </div>
+          </div> */}
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
               "/project-planner"
@@ -233,7 +233,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
             <AiFillProduct size={25} />
             Project Planner
           </div>
-          <div
+          {/* <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
               "/projects"
             )}`}
@@ -304,7 +304,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           >
             <FaFile size={25} />
             File Manager
-          </div>
+          </div> */}
           <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
               "/reports"

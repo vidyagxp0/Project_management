@@ -1,36 +1,372 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import { FaHome } from "react-icons/fa";
-import { RiAddFill } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
-import { Avatar, LinearProgress } from "@mui/material";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+  TextField,
+} from "@mui/material";
+import Select from "react-select";
+import DataTable from "react-data-table-component";
+import { FaPlus } from "react-icons/fa";
+
+const weekOptions = [
+  { value: "Monday", label: "Monday" },
+  { value: "Tuesday", label: "Tuesday" },
+  { value: "Wednesday", label: "Wednesday" },
+  { value: "Thursday", label: "Thursday" },
+  { value: "Friday", label: "Friday" },
+  { value: "Saturday", label: "Saturday" },
+  { value: "Sunday", label: "Sunday" },
+];
+const customStyles = {
+  headCells: {
+    style: {
+      backgroundColor: "#f4f4f4", 
+      color: "#333", 
+      fontSize: "16px",
+      fontWeight: "bold",
+      textAlign: "center",
+    },
+  },
+  cells: {
+    style: {
+      fontSize: "14px", 
+      textAlign: "center", 
+    },
+  },
+};
 
 const ProjectDetail = () => {
   const navigate = useNavigate();
-  const [showMenu, setShowMenu] = useState(null);
-  const sprintData = [
+  const { id } = useParams();
+  const [project, setProject] = useState(null);
+  const [weekendData, setWeekendData] = useState([]);
+  const [holidayData, setHolidayData] = useState([]);
+  const [selectedWeekends, setSelectedWeekends] = useState([]);
+  const [isWeekendModalOpen, setIsWeekendModalOpen] = useState(false);
+  const [isHolidayModalOpen, setIsHolidayModalOpen] = useState(false);
+  const [data, setData] = useState([
     {
-      name: "Sprint 1",
-      type: "Sprint",
-      startDate: "",
-      endDate: "",
-      hours: "",
-      status: "Open",
+      sNo: 1,
+      phase: "Phase 1",
+      milestones: "Milestone A",
+      customerName: "Customer X",
+      vendorName: "Vendor Y",
+      projectDetails: "Project Description",
+      projectPhase: "Planning",
+      progress: "60%",
+      status: "Ongoing",
+      assign: "John Doe",
+      role: "Manager",
+      responsibility: "Supervision",
+      startDate: "2025-03-01",
+      endDate: "2025-06-01",
+      holidays: "5 Days",
+      supportingDocuments: "Document.pdf",
+      percentComplete: "60%",
+      remarks: "On Track",
+    },
+  ]);
+
+  const handleChange = (e, index, key) => {
+    const updatedData = [...data];
+    updatedData[index][key] = e.target.value;
+    setData(updatedData);
+  };
+
+  const columns = [
+    { name: "S.No", selector: (row) => row.sNo, sortable: true },
+    {
+      name: "Phase",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.phase}
+          onChange={(e) => handleChange(e, index, "phase")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Milestones",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.milestones}
+          onChange={(e) => handleChange(e, index, "milestones")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Customer Name",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.customerName}
+          onChange={(e) => handleChange(e, index, "customerName")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Vendor Name",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.vendorName}
+          onChange={(e) => handleChange(e, index, "vendorName")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Project Details",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.projectDetails}
+          onChange={(e) => handleChange(e, index, "projectDetails")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Project Phase",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.projectPhase}
+          onChange={(e) => handleChange(e, index, "projectPhase")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Progress",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.progress}
+          onChange={(e) => handleChange(e, index, "progress")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Status",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.status}
+          onChange={(e) => handleChange(e, index, "status")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Assign",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.assign}
+          onChange={(e) => handleChange(e, index, "assign")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Role",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.role}
+          onChange={(e) => handleChange(e, index, "role")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Responsibility",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.responsibility}
+          onChange={(e) => handleChange(e, index, "responsibility")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Start Date",
+      cell: (row, index) => (
+        <input
+          type="date"
+          value={row.startDate}
+          onChange={(e) => handleChange(e, index, "startDate")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "End Date",
+      cell: (row, index) => (
+        <input
+          type="date"
+          value={row.endDate}
+          onChange={(e) => handleChange(e, index, "endDate")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Holidays",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.holidays}
+          onChange={(e) => handleChange(e, index, "holidays")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Supporting Documents",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.supportingDocuments}
+          onChange={(e) => handleChange(e, index, "supportingDocuments")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "% Complete",
+      cell: (row, index) => (
+        <input
+          type="number"
+          value={row.percentComplete}
+          onChange={(e) => handleChange(e, index, "percentComplete")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+    },
+    {
+      name: "Remarks",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.remarks}
+          onChange={(e) => handleChange(e, index, "remarks")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
     },
   ];
 
-  const handleMenuClick = (index) => {
-    setShowMenu(index === showMenu ? null : index); // Toggle menu visibility
+  const addRow = () => {
+    setData((prevData) => [
+      ...prevData,
+      {
+        sNo: prevData.length + 1,
+        phase: "",
+        milestones: "",
+        customerName: "",
+        vendorName: "",
+        projectDetails: "",
+        projectPhase: "",
+        progress: "",
+        status: "",
+        assign: "",
+        role: "",
+        responsibility: "",
+        startDate: "",
+        endDate: "",
+        holidays: "",
+        supportingDocuments: "",
+        percentComplete: "",
+        remarks: "",
+      },
+    ]);
   };
 
-  const handleEdit = () => {
-    navigate("/add-task");
+  const [holidayForm, setHolidayForm] = useState({
+    startDate: "",
+    endDate: "",
+    reason: "",
+  });
+
+  useEffect(() => {
+    const savedProjects = JSON.parse(localStorage.getItem("projects")) || [];
+    const foundProject = savedProjects.find((proj) => proj.id === parseInt(id));
+    if (foundProject) {
+      setProject(foundProject);
+    }
+
+    setWeekendData(JSON.parse(localStorage.getItem("weekendDays")) || []);
+    setHolidayData(JSON.parse(localStorage.getItem("holidays")) || []);
+  }, [id]);
+
+  const handleSaveWeekendDays = () => {
+    if (!project) return;
+
+    const updatedWeekends = [
+      ...weekendData,
+      {
+        company: project.companyName,
+        year: project.year,
+        days: selectedWeekends,
+      },
+    ];
+    setWeekendData(updatedWeekends);
+    localStorage.setItem("weekendDays", JSON.stringify(updatedWeekends));
+
+    setIsWeekendModalOpen(false);
   };
 
-  const handleDelete = () => {
-    // Implement delete functionality
+  if (!project) {
+    return <p className="text-center text-gray-500">Project not found</p>;
+  }
+  const handleSaveHoliday = () => {
+    if (!holidayForm.startDate || !holidayForm.endDate || !holidayForm.reason) {
+      alert("All fields are required!");
+      return;
+    }
+
+    const newHoliday = {
+      ...holidayForm,
+      company: project.companyName,
+      year: project.year,
+    };
+    const updatedHolidays = [...holidayData, newHoliday];
+    localStorage.setItem("holidays", JSON.stringify(updatedHolidays));
+    setHolidayData(updatedHolidays);
+    setIsHolidayModalOpen(false);
   };
+
   return (
     <div>
       <Header />
@@ -38,427 +374,279 @@ const ProjectDetail = () => {
         <div className="flex gap-2 items-center text-cyan-500 cursor-pointer">
           <FaHome onClick={() => navigate("/dashboard")} />
           <span>/</span>
-          <span onClick={() => navigate("/project-planner")}>
+          <span
+            onClick={() => navigate("/project-planner")}
+            className="hover:underline">
             Project Planner
           </span>
           <span>/</span>
           <span>Detail</span>
         </div>
-        <div className="p-4 shadow-2xl">
-          <div className="flex justify-between p-2">
-            <div className="text-[18px] flex gap-2 font-medium">
-                <span className="text-cyan-400">P001</span>
-                <span>Pankaj Jat</span>
-            </div>
+
+        <div className="p-6 shadow-2xl mt-4 bg-white rounded-lg">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-semibold text-gray-800">
+              {project.companyName} - {project.year}
+            </h2>
+
             <div className="flex gap-4">
-              <div
-                className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer"
-                onClick={() => {}}
-              >
-                <RiAddFill />
-              </div>
+              <button
+                className="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
+                onClick={() => setIsWeekendModalOpen(true)}>
+                Weekend Days
+              </button>
+              <button
+                className="bg-green-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-700 transition"
+                onClick={() => setIsHolidayModalOpen(true)}>
+                Holidays
+              </button>
             </div>
           </div>
+
+          <p className="text-gray-600 mt-3">{project.description}</p>
+        </div>
+      </div>
+
+      {/* Weekend Days Modal - Full Screen Feel */}
+      <Dialog
+        open={isWeekendModalOpen}
+        onClose={() => setIsWeekendModalOpen(false)}
+        fullWidth
+        maxWidth="lg"
+        PaperProps={{
+          style: {
+            width: "80vw",
+            height: "75vh",
+            padding: "20px",
+            borderRadius: "12px",
+          },
+        }}>
+        <DialogTitle className="text-lg font-semibold bg-gray-100 p-4 border-b">
+          Select Weekend Days
+        </DialogTitle>
+        <DialogContent className="p-6">
+          <div className="grid grid-cols-2 gap-8">
+            {/* Company Name */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Company Name
+              </label>
+              <input
+                type="text"
+                value={project.companyName}
+                readOnly
+                className="w-full p-3 border rounded-lg bg-gray-100 text-gray-600"
+              />
+            </div>
+
+            {/* Year */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Year
+              </label>
+              <input
+                type="text"
+                // value={project.year}
+                // readOnly
+                className="w-full p-3 border rounded-lg bg-gray-100 text-gray-600"
+              />
+            </div>
+
+            {/* Multi-Select Dropdown */}
+            <div className="col-span-2">
+              <label className="block text-gray-700 font-medium mb-1">
+                Select Weekend Days
+              </label>
+              <Select
+                options={weekOptions}
+                isMulti
+                onChange={(selected) =>
+                  setSelectedWeekends(selected.map((s) => s.value))
+                }
+                className="w-full"
+                placeholder="Choose weekend days..."
+              />
+            </div>
+          </div>
+        </DialogContent>
+        <DialogActions className="p-4 border-t bg-gray-50">
+          <Button
+            onClick={() => setIsWeekendModalOpen(false)}
+            className="text-gray-600">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSaveWeekendDays}
+            color="primary"
+            variant="contained">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={isHolidayModalOpen}
+        onClose={() => setIsHolidayModalOpen(false)}
+        fullWidth
+        maxWidth="lg"
+        PaperProps={{
+          style: { maxHeight: "90vh", overflowY: "auto" }, // Enables scrolling when needed
+        }}>
+        <DialogTitle className="text-lg font-semibold bg-gray-100 p-4 border-b">
+          Add Holiday
+        </DialogTitle>
+
+        {/* Scrollable Content */}
+        <DialogContent dividers className="p-6">
+          <div className="grid grid-cols-2 gap-6">
+            <TextField
+              label="Company Name"
+              value={project.companyName}
+              fullWidth
+              InputProps={{ readOnly: true }}
+            />
+            <TextField
+              label="Year"
+              value={project.year}
+              fullWidth
+              InputProps={{ readOnly: true }}
+            />
+            <TextField
+              label="Start Date"
+              type="date"
+              fullWidth
+              value={holidayForm.startDate}
+              onChange={(e) =>
+                setHolidayForm({ ...holidayForm, startDate: e.target.value })
+              }
+              InputLabelProps={{ shrink: true }}
+            />
+            <TextField
+              label="End Date"
+              type="date"
+              fullWidth
+              value={holidayForm.endDate}
+              onChange={(e) =>
+                setHolidayForm({ ...holidayForm, endDate: e.target.value })
+              }
+              InputLabelProps={{ shrink: true }}
+            />
+
+            {/* Reason as a Proper Textarea */}
+            <div className="col-span-2">
+              <label className="block text-gray-700 font-medium mb-1">
+                Reason
+              </label>
+              <textarea
+                className="w-full p-3 border rounded-lg h-24 resize-y"
+                value={holidayForm.reason}
+                onChange={(e) =>
+                  setHolidayForm({ ...holidayForm, reason: e.target.value })
+                }
+                placeholder="Enter reason for holiday..."
+              />
+            </div>
+          </div>
+        </DialogContent>
+
+        <DialogActions className="p-4 border-t bg-gray-50">
+          <Button onClick={() => setIsHolidayModalOpen(false)}>Cancel</Button>
+          <Button
+            onClick={handleSaveHoliday}
+            color="primary"
+            variant="contained">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <div className="p-6 shadow-2xl mt-4 bg-white rounded-lg">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-semibold text-gray-800">
+            {project.companyName} - {project.year}
+          </h2>
         </div>
 
-        <div className="grid grid-cols-5 gap-5">
-          <div className="col-span-2 py-3">
-            <div className="p-3 shadow-2xl">
-              <div className="group-input">
-                <label>Version</label>
-                <input />
-              </div>
-              <div className="group-input">
-                <label>Created By</label>
-                <Avatar />
-              </div>
-              <div className="group-input">
-                <label>Assigned To</label>
-                <Avatar />
-              </div>
-
-              <div className="group-input">
-                <label>Completed</label>
-                <LinearProgress value={60} />
-              </div>
-            </div>
-
-            <div className="mt-3 p-3 shadow-2xl">
-              <div className="group-input">
-                <label>Client Name</label>
-                <input />
-              </div>
-              <div className="group-input">
-                <label>Start Date</label>
-                <input type="date" />
-              </div>
-              <div className="group-input">
-                <label>End Date</label>
-                <input />
-              </div>
-              <div className="group-input">
-                <label>Estimate Hours</label>
-                <input type="time" />
-              </div>
-              <div className="group-input">
-                <label>Actual Hours</label>
-                <input type="time" />
-              </div>
-              <div className="group-input">
-                <label>Demo URL</label>
-                <input />
-              </div>
-              <div className="group-input">
-                <label>Billing Type</label>
-                <input />
-              </div>
-              <div className="group-input">
-                <label>Budget</label>
-                <input />
-              </div>
-              <div className="group-input">
-                <label>Created</label>
-                <input />
-              </div>
-              <div className="group-input">
-                <label>Updated</label>
-                <input />
-              </div>
-            </div>
+        {/* 🏢 Project Details Form */}
+        <div className="grid grid-cols-2 gap-6 mt-4">
+          {/* Company Name */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">
+              Company Name
+            </label>
+            <input
+              type="text"
+              value={project.companyName}
+              readOnly
+              className="w-full p-3 border rounded-lg bg-gray-100 text-gray-600"
+            />
           </div>
 
-          <div className="col-span-3  py-3">
-            <div className="p-3 shadow-2xl">
-              <label className="text-[22px]  font-semibold">Description</label>
+          {/* Comments (Now Normal Input) */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">
+              Comments
+            </label>
+            <input
+              type="text"
+              className="w-full p-3 border rounded-lg"
+              placeholder="Enter comments..."
+            />
+          </div>
 
-              <div className="group-input pt-2">
-                <input />
-              </div>
-            </div>
+          {/* Document Upload */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">
+              Upload Document
+            </label>
+            <input
+              type="file"
+              className="w-full p-3 border rounded-lg bg-white"
+            />
+          </div>
 
-            <div className="p-3 shadow-2xl mt-3">
-              <div className="py-2 text-[22px] font-semibold ">
-                Custom Fields
-              </div>
-              <div className="flex gap-3">
-                <div className="group-input">
-                  <label>Milestone</label>
-                  <input />
-                </div>
-                <div className="group-input">
-                  <label>Milestone Target</label>
-                  <input />
-                </div>
-              </div>
-            </div>
-
-            <div className="p-3 shadow-2xl mt-3">
-              <div className="flex justify-between p-2">
-                <div className="text-[22px] font-semibold">Sprint</div>
-                <div className="flex gap-4">
-                  <div
-                    className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer"
-                    onClick={() => {}}
-                  >
-                    <RiAddFill />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Responsible</th>
-                      <th>Type</th>
-                      <th>Start Date</th>
-                      <th>End Date</th>
-                      <th>Hours</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sprintData?.map((item, index) => {
-                      return (
-                        <tr>
-                          <td> {item.name}</td>
-                          <td>
-                            <Avatar />
-                          </td>
-                          <td>{item.type}</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>
-                            {" "}
-                            <div
-                              className={` py-1 text-white min-w-10 rounded-full ${
-                                item.status === "In Progress"
-                                  ? "bg-yellow-400"
-                                  : item.status === "Open"
-                                  ? "bg-cyan-500"
-                                  : item.status === "Completed"
-                                  ? "bg-green-500"
-                                  : ""
-                              }`}
-                            >
-                              {item.status}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="relative inline-block text-left">
-                              <div>
-                                <button
-                                  onClick={() => handleMenuClick(index)}
-                                  type="button"
-                                  className="flex items-center justify-center hover:border border-gray-200 rounded-full h-5 focus:outline-none"
-                                >
-                                  <BsThreeDotsVertical />
-                                </button>
-                              </div>
-                              {/* Menu */}
-                              {showMenu === index && (
-                                <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                  <div
-                                    className="py-1 px-2 "
-                                    role="menu"
-                                    aria-orientation="vertical"
-                                    aria-labelledby="options-menu"
-                                  >
-                                    <button
-                                      onClick={handleEdit}
-                                      className="block w-full  px-4 py-2 rounded text-sm text-center text-gray-700 hover:bg-yellow-300 hover:text-white"
-                                      role="menuitem"
-                                    >
-                                      Edit
-                                    </button>
-                                    <button
-                                      onClick={handleDelete}
-                                      className="block w-full text-center px-4 py-2 text-sm rounded text-gray-700 hover:bg-red-500 hover:text-white"
-                                      role="menuitem"
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="p-3 shadow-2xl mt-3">
-              <div className="flex justify-between p-2">
-                <div className="text-[22px] font-semibold">Task</div>
-                <div className="flex gap-4">
-                  <div
-                    className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer"
-                    onClick={() => {}}
-                  >
-                    <RiAddFill />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Responsible</th>
-                      <th>Type</th>
-                      <th>Start Date</th>
-                      <th>End Date</th>
-                      <th>Hours</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sprintData?.map((item, index) => {
-                      return (
-                        <tr>
-                          <td> {item.name}</td>
-                          <td>
-                            <Avatar />
-                          </td>
-                          <td>{item.type}</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>
-                            {" "}
-                            <div
-                              className={` py-1 text-white min-w-10 rounded-full ${
-                                item.status === "In Progress"
-                                  ? "bg-yellow-400"
-                                  : item.status === "Open"
-                                  ? "bg-cyan-500"
-                                  : item.status === "Completed"
-                                  ? "bg-green-500"
-                                  : ""
-                              }`}
-                            >
-                              {item.status}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="relative inline-block text-left">
-                              <div>
-                                <button
-                                  onClick={() => handleMenuClick(index)}
-                                  type="button"
-                                  className="flex items-center justify-center hover:border border-gray-200 rounded-full h-5 focus:outline-none"
-                                >
-                                  <BsThreeDotsVertical />
-                                </button>
-                              </div>
-                              {/* Menu */}
-                              {showMenu === index && (
-                                <div className="origin-top-right z-10 absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                  <div
-                                    className="py-1 px-2 "
-                                    role="menu"
-                                    aria-orientation="vertical"
-                                    aria-labelledby="options-menu"
-                                  >
-                                    <button
-                                      onClick={handleEdit}
-                                      className="block w-full  px-4 py-2 rounded text-sm text-center text-gray-700 hover:bg-yellow-300 hover:text-white"
-                                      role="menuitem"
-                                    >
-                                      Edit
-                                    </button>
-                                    <button
-                                      onClick={handleDelete}
-                                      className="block w-full text-center px-4 py-2 text-sm rounded text-gray-700 hover:bg-red-500 hover:text-white"
-                                      role="menuitem"
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="p-3 shadow-2xl mt-3">
-              <div className="flex justify-between p-2">
-                <div className="text-[22px] font-semibold">Story</div>
-                <div className="flex gap-4">
-                  <div
-                    className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer"
-                    onClick={() => {}}
-                  >
-                    <RiAddFill />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Responsible</th>
-                      <th>Type</th>
-                      <th>Start Date</th>
-                      <th>End Date</th>
-                      <th>Hours</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sprintData?.map((item, index) => {
-                      return (
-                        <tr>
-                          <td> {item.name}</td>
-                          <td>
-                            <Avatar />
-                          </td>
-                          <td>{item.type}</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>
-                            {" "}
-                            <div
-                              className={` py-1 text-white min-w-10 rounded-full ${
-                                item.status === "In Progress"
-                                  ? "bg-yellow-400"
-                                  : item.status === "Open"
-                                  ? "bg-cyan-500"
-                                  : item.status === "Completed"
-                                  ? "bg-green-500"
-                                  : ""
-                              }`}
-                            >
-                              {item.status}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="relative inline-block text-left">
-                              <div>
-                                <button
-                                  onClick={() => handleMenuClick(index)}
-                                  type="button"
-                                  className="flex items-center justify-center hover:border border-gray-200 rounded-full h-5 focus:outline-none"
-                                >
-                                  <BsThreeDotsVertical />
-                                </button>
-                              </div>
-                              {/* Menu */}
-                              {showMenu === index && (
-                                <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                  <div
-                                    className="py-1 px-2 "
-                                    role="menu"
-                                    aria-orientation="vertical"
-                                    aria-labelledby="options-menu"
-                                  >
-                                    <button
-                                      onClick={handleEdit}
-                                      className="block w-full  px-4 py-2 rounded text-sm text-center text-gray-700 hover:bg-yellow-300 hover:text-white"
-                                      role="menuitem"
-                                    >
-                                      Edit
-                                    </button>
-                                    <button
-                                      onClick={handleDelete}
-                                      className="block w-full text-center px-4 py-2 text-sm rounded text-gray-700 hover:bg-red-500 hover:text-white"
-                                      role="menuitem"
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          {/* Remark (Now Normal Input) */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">
+              Remark
+            </label>
+            <input
+              type="text"
+              className="w-full p-3 border rounded-lg"
+              placeholder="Enter remark..."
+            />
           </div>
         </div>
+      </div>
+      {/* Data Table with Add Row */}
+      <div className="p-4 bg-white shadow-lg rounded-lg">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Project Details</h2>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<FaPlus />}
+            onClick={addRow}>
+            Add Row
+          </Button>
+        </div>
+
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          highlightOnHover
+          customStyles={customStyles}
+          noDataComponent="No data available"
+          onRowClicked={(row) => console.log(row)}
+          conditionalRowStyles={[
+            {
+              when: (row) => true,
+              style: {
+                backgroundColor: "white",
+              },
+            },
+          ]}
+        />
       </div>
     </div>
   );
