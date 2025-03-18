@@ -46,6 +46,7 @@ import Settings from "./Component/Settings/Settings";
 import FileManager from "./Component/FileManager/FileManager";
 import TaskBoards from "./Component/Tasks/TaskBoards";
 import ToDo from "./Component/ToDo/ToDo";
+import AddCompany from "./Component/AddCompany/AddCompany";
 
 function App() {
   return (
@@ -89,6 +90,7 @@ function App() {
             <Route path="/project-planner" element={<ProjectPlanner />} />
             {/* <Route path="/project-detail" element={<ProjectDetail />} /> */}
             <Route path="/project-detail/:id" element={<ProjectDetail />} />
+            <Route path="/add-company" element={<AddCompany />} />
 
             <Route path="/meetings" element={<Meetings />} />
             <Route path="/appointments" element={<Appointments />} />

@@ -233,6 +233,15 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
             <AiFillProduct size={25} />
             Project Planner
           </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/add-company"
+            )}`}
+            onClick={() => handleNavigation("/add-company")}
+          >
+            <AiFillProduct size={25} />
+            Add Company
+          </div>
           {/* <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
               "/projects"
