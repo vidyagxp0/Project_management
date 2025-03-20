@@ -66,13 +66,16 @@ const ProjectPlanner = () => {
   const handleSave = async () => {
 
     const selectedCompany = allcompany?.data.find(
-      (company) => company.company_id
+      (company) => company.name === formData.companyName
     );
 
     if (!formData.companyName || !formData.year || !formData.description) {
       toast.error("All fields are required!");
       return;
     }
+
+    console.log(selectedCompany);
+    
 
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/project-planner/companies/creaate-project-planner`, {

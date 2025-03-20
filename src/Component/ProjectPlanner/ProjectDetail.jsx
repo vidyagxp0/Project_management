@@ -214,12 +214,13 @@ const ProjectDetail = () => {
       const projectData = {
         description: projectDetails.description,
         comments: projectDetails.comments,
-        company_name: companies.name,
-        year: getWeekEnd.year,
+        // company_name: projectDetails.name,
+        // year: getWeekEnd.year,
 
         project_details: JSON.stringify(tableData), 
       };
 
+      console.log(projectData,'>>>>>>>>>>>>>>>>>');
       
 
       const response = await axios.put(
@@ -472,30 +473,64 @@ const ProjectDetail = () => {
     },
   ];
 
+  // const addRow = () => {
+  //   setTableData((prevData) => [
+  //     ...prevData,
+  //     {
+  //       sNo: prevData.length + 1,
+  //       phase: "",
+  //       milestones: "",
+  //       customerName: "",
+  //       vendorName: "",
+  //       projectDetails: "",
+  //       projectPhase: "",
+  //       progress: "",
+  //       status: "",
+  //       assign: "",
+  //       role: "",
+  //       responsibility: "",
+  //       startDate: "",
+  //       endDate: "",
+  //       holidays: "",
+  //       supportingDocuments: "",
+  //       percentComplete: "",
+  //       remarks: "",
+  //     },
+  //   ]);
+  // };
+  
   const addRow = () => {
-    setTableData((prevData) => [
-      ...prevData,
-      {
-        sNo: prevData.length + 1,
-        phase: "",
-        milestones: "",
-        customerName: "",
-        vendorName: "",
-        projectDetails: "",
-        projectPhase: "",
-        progress: "",
-        status: "",
-        assign: "",
-        role: "",
-        responsibility: "",
-        startDate: "",
-        endDate: "",
-        holidays: "",
-        supportingDocuments: "",
-        percentComplete: "",
-        remarks: "",
-      },
-    ]);
+    setTableData((prevData) => {
+      console.log("Previous Data:", prevData);
+  
+      if (!Array.isArray(prevData)) {
+        prevData = []; // Default empty array if prevData is invalid
+      }
+  
+      return [
+        ...prevData,
+        {
+          sNo: prevData.length + 1,
+          phase: "",
+          milestones: "",
+          customerName: "",
+          vendorName: "",
+          projectDetails: "",
+          projectPhase: "",
+          progress: "",
+          status: "",
+          assign: "",
+          role: "",
+          responsibility: "",
+          startDate: "",
+          endDate: "",
+          holidays: "",
+          supportingDocuments: "",
+          percentComplete: "",
+          remarks: "",
+        },
+      ];
+    });
   };
   
   const [holidayForm, setHolidayForm] = useState({
@@ -818,7 +853,9 @@ const ProjectDetail = () => {
 
         <DataTable
   columns={columns}
-  data={tableData|| []}
+  // data={ [tableData] || [] }
+  data={Array.isArray(tableData) ? tableData : []}
+
   pagination
   highlightOnHover
   customStyles={customStyles}
