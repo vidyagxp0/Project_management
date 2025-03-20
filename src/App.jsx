@@ -47,6 +47,8 @@ import FileManager from "./Component/FileManager/FileManager";
 import TaskBoards from "./Component/Tasks/TaskBoards";
 import ToDo from "./Component/ToDo/ToDo";
 import AddCompany from "./Component/AddCompany/AddCompany";
+import AddWeekEnds from "./Component/AddWeekEnd/AddWeekEnds";
+import AddHolidays from "./Component/AddHolidays/AddHolidays";
 
 function App() {
   return (
@@ -91,6 +93,8 @@ function App() {
             {/* <Route path="/project-detail" element={<ProjectDetail />} /> */}
             <Route path="/project-detail/:id" element={<ProjectDetail />} />
             <Route path="/add-company" element={<AddCompany />} />
+            <Route path="/add-weekend" element={<AddWeekEnds />} />
+            <Route path="/add-holiday" element={<AddHolidays />} />
 
             <Route path="/meetings" element={<Meetings />} />
             <Route path="/appointments" element={<Appointments />} />

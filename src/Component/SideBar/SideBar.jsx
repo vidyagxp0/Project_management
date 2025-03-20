@@ -242,6 +242,24 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
             <AiFillProduct size={25} />
             Add Company
           </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/add-weekend"
+            )}`}
+            onClick={() => handleNavigation("/add-weekend")}
+          >
+            <AiFillProduct size={25} />
+            Add Weekends
+          </div>
+          <div
+            className={`flex gap-3 items-center cursor-pointer ${isActive(
+              "/add-holiday"
+            )}`}
+            onClick={() => handleNavigation("/add-holiday")}
+          >
+            <AiFillProduct size={25} />
+            Add Holidays
+          </div>
           {/* <div
             className={`flex gap-3 items-center cursor-pointer ${isActive(
               "/projects"
