@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import {
   BsCircle,
@@ -18,13 +18,39 @@ import PieChart from "../Chart/PieChart";
 import { IoMdAdd } from "react-icons/io";
 import { Avatar, Checkbox } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import GanttChart from "../GanttChart/GanttChart";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [planners, setPlanners] = useState([]);
+
+  useEffect(() => {
+    const fetchPlanners = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/project-planner/get-all-project-planners", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+        setPlanners(data);
+      } catch (error) {
+        console.error("Error fetching planners:", error);
+      }
+    };
+
+    fetchPlanners();
+  }, []);
 
   return (
     <div className="w-full mt-[100px]">
       <div className="p-3">
+          <div>
+          <h2>Project Planner Gantt Chart</h2>
+          <GanttChart planners={planners} />
+          </div>
         <div className="grid grid-cols-4 gap-5">
           <div
             className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-lg shadow-xl cursor-pointer "
