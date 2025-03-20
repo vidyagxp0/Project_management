@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { motion } from "framer-motion";
-import { IoClose } from "react-icons/io5";
 
 const AddCompany = () => {
   const [companies, setCompanies] = useState([]);
@@ -38,6 +36,7 @@ const AddCompany = () => {
 
     try {
       await axios.post("http://127.0.0.1:8000/api/project-planner/companies", { name: companyName });
+
       toast.success("Company added successfully!");
       setCompanyName(""); // Clear input
       setIsModalOpen(false); // Close modal
@@ -55,26 +54,16 @@ const AddCompany = () => {
 
         {/* Company List */}
         <div className="bg-gray-100 p-4 rounded-lg mb-4">
-          <h3 className="text-lg font-semibold text-gray-700 mb-3">Company List</h3>
-          <div className="h-60 overflow-y-auto p-3 border rounded-lg bg-white shadow-md">
+          <h3 className="text-lg font-semibold text-gray-700">Company List</h3>
+          <div className="h-40 overflow-y-auto mt-2 p-2 border rounded-lg bg-white">
             {loading ? (
               <p className="text-center text-gray-500">Loading companies...</p>
             ) : companies.length > 0 ? (
-              <motion.div 
-                initial={{ opacity: 0 }} 
-                animate={{ opacity: 1 }} 
-                transition={{ duration: 0.5 }}
-                className="grid grid-cols-1 gap-3"
-              >
-                {companies.map((company) => (
-                  <div 
-                    key={company.id} 
-                    className="p-3 bg-blue-100 border-l-4 border-blue-600 rounded-lg shadow-sm hover:bg-blue-200 transition duration-300"
-                  >
-                    <p className="text-blue-800 font-semibold">{company.name}</p>
-                  </div>
-                ))}
-              </motion.div>
+              companies.map((company) => (
+                <p key={company.id} className="p-2 border-b last:border-0 text-gray-700">
+                  {company.name}
+                </p>
+              ))
             ) : (
               <p className="text-center text-gray-500">No companies found.</p>
             )}
@@ -92,19 +81,8 @@ const AddCompany = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative"
-          >
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
-            >
-              <IoClose size={24} />
-            </button>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Add Company</h2>
             <input
               type="text"
@@ -113,10 +91,10 @@ const AddCompany = () => {
               placeholder="Enter company name"
               className="w-full p-3 border rounded-lg mb-4 focus:ring-2 focus:ring-blue-400 outline-none"
             />
-            <div className="flex justify-end space-x-2">
+            <div className="flex justify-end">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition duration-300"
+                className="bg-gray-400 text-white px-4 py-2 rounded-lg mr-2 hover:bg-gray-500 transition duration-300"
               >
                 Cancel
               </button>
@@ -127,7 +105,7 @@ const AddCompany = () => {
                 Submit
               </button>
             </div>
-          </motion.div>
+          </div>
         </div>
       )}
     </div>
