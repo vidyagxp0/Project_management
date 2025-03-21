@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaTrash } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Dialog,
@@ -16,6 +16,7 @@ import { FaPlus } from "react-icons/fa";
 import axios from "axios";
 import { Spin } from "antd";
 import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 const weekOptions = [
   { value: "Monday", label: "Monday" },
@@ -67,19 +68,29 @@ const ProjectDetail = () => {
   const [getProject, setGetProject] = useState([]);
   const [getWeekEnd, setGetWeekEnd] = useState([]);
   const [getHolidays, setGetHolidays] = useState([]);
-  console.log(companies,"companies")
-  console.log(getProject,"getProject")
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // console.log(companies,"companies")
+  // console.log(getProject,"getProject")
   console.log(getWeekEnd,"getWeekEnd")
   console.log(getHolidays,"getHolidays")
-  console.log(getProject.company_name,"name name")
-  console.log(year,"year")
-
+  // console.log(getProject.company_name,"name name")
+  // console.log(year,"year")
+  
   const [loadingCompanies, setLoadingCompanies] = useState(false);
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [loadingWeekends, setLoadingWeekends] = useState(false);
   const [loadingHolidays, setLoadingHolidays] = useState(false);
     
   const [tableData, setTableData] = useState([ ]); // Store the table rows
+  useEffect(() => {
+    // Loader remains until tableData is available
+    if (tableData && tableData.length > 0) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [tableData]);
   console.log(tableData,"Tablke data")
   const [data, setData] = useState([
    
@@ -223,58 +234,26 @@ const ProjectDetail = () => {
   //   setTableData(updatedData);
   // };
 
-  const handleChange = (e, index, key) => {
-    const updatedData = [...tableData];
-    updatedData[index][key] = e.target.value;
+  // const handleChange = (e, index, key) => {
+  //   const updatedData = [...tableData];
+  //   updatedData[index][key] = e.target.value;
   
-    // If No of Days or Start Date changes, recalculate End Date
-    if (key === "noOfDays" || key === "startDate") {
-      const startDate = updatedData[index].startDate;
-      const noOfDays = parseInt(updatedData[index].noOfDays, 10);
+  //   // If No of Days or Start Date changes, recalculate End Date
+  //   if (key === "noOfDays" || key === "startDate") {
+  //     const startDate = updatedData[index].startDate;
+  //     const noOfDays = parseInt(updatedData[index].noOfDays, 10);
   
-      if (startDate && noOfDays > 0) {
-        const endDate = calculateEndDate(startDate, noOfDays, getHolidays, getWeekEnd.weekend_days);
-        updatedData[index]["endDate"] = endDate;
-      }
-    }
+  //     if (startDate && noOfDays > 0) {
+  //       const endDate = calculateEndDate(startDate, noOfDays, getHolidays, getWeekEnd.weekend_days);
+  //       updatedData[index]["endDate"] = endDate;
+  //     }
+  //   }
   
-    setTableData(updatedData);
-  };
+  //   setTableData(updatedData);
+  // };
   
   // Function to calculate end date by skipping holidays and weekends
-  const calculateEndDate = (startDate, numDays, holidays, weekends) => {
-    let currentDate = new Date(startDate);
-    let workingDaysCount = 0;
-  
-    // Convert holidays to a Set for quick lookup
-    const holidaySet = new Set();
-    holidays.forEach(holiday => {
-      let start = new Date(holiday.start_date);
-      let end = new Date(holiday.end_date || holiday.start_date); // Handle single-day holidays
-      while (start <= end) {
-        holidaySet.add(start.toISOString().split("T")[0]); // Store in YYYY-MM-DD format
-        start.setDate(start.getDate() + 1);
-      }
-    });
-  
-    // Loop until we count the required working days
-    while (workingDaysCount < numDays) {
-      let formattedDate = currentDate.toISOString().split("T")[0]; // YYYY-MM-DD format
-      let dayName = currentDate.toLocaleDateString("en-US", { weekday: "long" });
-  
-      // Check if it's a working day BEFORE moving forward
-      if (!weekends.includes(dayName) && !holidaySet.has(formattedDate)) {
-        workingDaysCount++; // Count only valid working days
-      }
-  
-      // Move to the next day AFTER checking
-      if (workingDaysCount < numDays) {
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-    }
-  
-    return currentDate.toISOString().split("T")[0]; // Return final end date
-  };
+ 
   
   
   
@@ -299,6 +278,7 @@ const ProjectDetail = () => {
       
       console.log('Project saved:', response.data); // Log the response from the server
       toast.success("Project updated successfully!");
+      navigate("/project-planner");
     } catch (error) {
       console.error('Error saving project:', error); // Handle errors
       toast.error("Failed to update project. Please try again.");
@@ -343,6 +323,19 @@ const roleOptions = [
       minWidth: "200px"
     },
     {
+      name: "Deliverables",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.deliverables}
+          onChange={(e) => handleChange(e, index, "deliverables")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+      minWidth: "200px"
+    },
+    {
       name: "Milestones",
       cell: (row, index) => (
         <input
@@ -356,25 +349,12 @@ const roleOptions = [
       minWidth: "200px"
     },
     {
-      name: "Customer Name",
+      name: "Pre-requisites",
       cell: (row, index) => (
         <input
           type="text"
-          value={row.customerName}
-          onChange={(e) => handleChange(e, index, "customerName")}
-          className="border p-1 rounded w-full w"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px"
-    },
-    {
-      name: "Vendor Name",
-      cell: (row, index) => (
-        <input
-          type="text"
-          value={row.vendorName}
-          onChange={(e) => handleChange(e, index, "vendorName")}
+          value={row.preRequisites}
+          onChange={(e) => handleChange(e, index, "preRequisites")}
           className="border p-1 rounded w-full"
         />
       ),
@@ -394,80 +374,6 @@ const roleOptions = [
       sortable: true,
       minWidth: "200px"
     },
-    {
-      name: "Responsibility",
-      cell: (row, index) => (
-        <input
-          type="text"
-          value={row.responsibility}
-          onChange={(e) => handleChange(e, index, "responsibility")}
-          className="border p-1 rounded w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px"
-    },
-    {
-      name: "Status",
-      cell: (row, index) => (
-        <Select
-          options={statusOptions}
-          value={statusOptions.find((option) => option.value === row.status)}
-          onChange={(selectedOption) =>
-            handleChange({ target: { value: selectedOption.value } }, index, "status")
-          }
-          className="w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px",
-    },
-  
-  
-    {
-      name: "Assignee",
-      cell: (row, index) => (
-        <Select
-          options={assigneeOptions}
-          value={assigneeOptions.find((option) => option.value === row.assignee)}
-          onChange={(selectedOption) =>
-            handleChange({ target: { value: selectedOption.value } }, index, "assignee")
-          }
-          className="w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px",
-    },
-    {
-      name: "Role",
-      cell: (row, index) => (
-        <Select
-          options={roleOptions}
-          value={roleOptions.find((option) => option.value === row.role)}
-          onChange={(selectedOption) =>
-            handleChange({ target: { value: selectedOption.value } }, index, "role")
-          }
-          className="w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px",
-    },
-    {
-      name: "Progress",
-      cell: (row, index) => (
-        <input
-          type="text"
-          value={row.progress}
-          onChange={(e) => handleChange(e, index, "progress")}
-          className="border p-1 rounded w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px"
-    },
- 
     {
       name: "No of Days",
       cell: (row, index) => (
@@ -535,11 +441,126 @@ const roleOptions = [
       minWidth: "200px"
     },
     {
-      name: "Supporting Documents",
+      name: "Priority",
+      cell: (row, index) => (
+        <select
+          value={row.priority}
+          onChange={(e) => handleChange(e, index, "priority")}
+          className="border p-1 rounded w-full bg-white cursor-pointer"
+        >
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+      ),
+      sortable: true,
+      minWidth: "200px"
+    },   
+    {
+      name: "Assignee",
+      cell: (row, index) => (
+        <select
+          value={row.assignee}
+          onChange={(e) => handleChange(e, index, "assignee")}
+          className="border p-1 rounded w-full bg-white cursor-pointer"
+        >
+          <option value="Nickshay">Nickshay</option>
+          <option value="Pankaj">Pankaj</option>
+          <option value="Farhan">Farhan</option>
+          <option value="Himanshu">Himanshu</option>
+          <option value="Gautam">Gautam</option>
+        </select>
+      ),
+      sortable: true,
+      minWidth: "200px"
+    }, 
+    {
+      name: "Role",
+      cell: (row, index) => (
+        <select
+          value={row.assignee}
+          onChange={(e) => handleChange(e, index, "role")}
+          className="border p-1 rounded w-full bg-white cursor-pointer"
+        >
+          <option value="Validation">Validation</option>
+          <option value="Configuration">Configuration</option>
+          <option value="Testing">Testing</option>
+          <option value="SME">SME</option>
+          <option value="PM">PM</option>
+          <option value="Steering Committee">Steering Committee</option>
+        </select>
+      ),
+      sortable: true,
+      minWidth: "200px"
+    },
+    {
+      name: "Responsibility",
       cell: (row, index) => (
         <input
           type="text"
-          value={row.supportingDocuments}
+          value={row.responsibility}
+          onChange={(e) => handleChange(e, index, "responsibility")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+      minWidth: "200px"
+    },
+
+    {
+      name: "Status",
+      cell: (row, index) => (
+        <select
+          value={row.status}
+          onChange={(e) => handleChange(e, index, "status")}
+          className="border p-1 rounded w-full bg-white cursor-pointer"
+        >
+          <option value="Started">Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Completed">Completed</option>
+        </select>
+      ),
+      sortable: true,
+      minWidth: "200px"
+    },
+  
+   
+  
+    {
+      name: "Progress",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.progress}
+          onChange={(e) => handleChange(e, index, "progress")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+      minWidth: "200px"
+    },
+ 
+  
+    {
+      name: "Delay Justification",
+      cell: (row, index) => (
+        <input
+          type="text"
+          value={row.delayJustification}
+          onChange={(e) => handleChange(e, index, "delayJustification")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+      minWidth: "200px"
+    },
+    {
+      name: "Supporting Documents",
+      cell: (row, index) => (
+        <input
+          type="file"
+          // value={row.supportingDocuments}
           onChange={(e) => handleChange(e, index, "supportingDocuments")}
           className="border p-1 rounded w-full"
         />
@@ -561,8 +582,26 @@ const roleOptions = [
       sortable: true,
       minWidth: "200px"
     },
+    {
+      name: "Action",
+      cell: (row, index) => (
+        <button
+          onClick={() => handleDelete(index)}
+          className="text-red-600 hover:text-red-800 p-2"
+        >
+          <FaTrash />
+        </button>
+      ),
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+      minWidth: "100px",
+    },
   ];
 
+  const handleDelete = (index) => {
+    setTableData((prevData) => prevData.filter((_, i) => i !== index));
+  };
   // const addRow = () => {
   //   setTableData((prevData) => [
   //     ...prevData,
@@ -589,13 +628,46 @@ const roleOptions = [
   //   ]);
   // };
   
+  // const addRow = () => {
+  //   setTableData((prevData) => {
+  //     console.log("Previous Data:", prevData);
+  
+  //     if (!Array.isArray(prevData)) {
+  //       prevData = []; // Default empty array if prevData is invalid
+  //     }
+  
+  //     return [
+  //       ...prevData,
+  //       {
+  //         sNo: prevData.length + 1,
+  //         phase: "",
+  //         milestones: "",
+  //         customerName: "",
+  //         vendorName: "",
+  //         projectDetails: "",
+  //         progress: "",
+  //         status: "",
+  //         assignee: "",
+  //         role: "",
+  //         responsibility: "",
+  //         startDate: "",
+  //         endDate: "",
+  //         noOfDays: "",
+  //         actualStartDate:"",
+  //         actualEndDate:"",
+  //         supportingDocuments: "",
+  //         remarks: "",
+  //       },
+  //     ];
+  //   });
+  // };
+  
   const addRow = () => {
     setTableData((prevData) => {
-      console.log("Previous Data:", prevData);
+      if (!Array.isArray(prevData)) prevData = [];
   
-      if (!Array.isArray(prevData)) {
-        prevData = []; // Default empty array if prevData is invalid
-      }
+      const lastRow = prevData[prevData.length - 1];
+      const newStartDate = lastRow?.endDate ? getNextWorkingDay(lastRow.endDate) : "";
   
       return [
         ...prevData,
@@ -611,11 +683,11 @@ const roleOptions = [
           assignee: "",
           role: "",
           responsibility: "",
-          startDate: "",
+          startDate: newStartDate,
           endDate: "",
           noOfDays: "",
-          actualStartDate:"",
-          actualEndDate:"",
+          actualStartDate: "",
+          actualEndDate: "",
           supportingDocuments: "",
           remarks: "",
         },
@@ -628,6 +700,81 @@ const roleOptions = [
     endDate: '',
     reason: '',
   });
+
+
+  const calculateEndDate = (startDate, noOfDays) => {
+    if (!startDate || !noOfDays) return "";
+  
+    let currentDate = new Date(startDate); // Start from the given date
+    let daysAdded = 0;
+  
+    while (daysAdded < noOfDays) {
+      const dayName = currentDate.toLocaleDateString("en-US", { weekday: "long" });
+  
+      // Check if it's a weekend
+      const isWeekend = Array.isArray(getWeekEnd?.weekend_days) && getWeekEnd.weekend_days.includes(dayName);
+  
+      // Check if it's a holiday
+      const formattedDate = currentDate.toISOString().split("T")[0];
+      const isHoliday = Array.isArray(getHolidays) && getHolidays.some(holiday =>
+        formattedDate >= holiday.start_date && formattedDate <= holiday.end_date
+      );
+  
+      // Only count if it's not a weekend and not a holiday
+      if (!isWeekend && !isHoliday) {
+        daysAdded++; // Only count valid working days
+      }
+  
+      if (daysAdded < noOfDays) {
+        currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+      }
+    }
+  
+    return currentDate.toISOString().split("T")[0]; // Return the correct end date
+  };
+  
+    
+  
+  
+  
+  
+  const getNextWorkingDay = (prevEndDate) => {
+    if (!prevEndDate) return "";
+  
+    let currentDate = new Date(prevEndDate);
+    
+    while (true) {
+      currentDate.setDate(currentDate.getDate() + 1);
+      const dayName = currentDate.toLocaleDateString("en-US", { weekday: "long" });
+      const formattedDate = currentDate.toISOString().split("T")[0];
+  
+      const isWeekend = getWeekEnd?.weekend_days.includes(dayName);
+      const isHoliday = getHolidays?.some(holiday => formattedDate >= holiday.start_date && formattedDate <= holiday.end_date);
+  
+      if (!isWeekend && !isHoliday) {
+        return formattedDate; // Return first valid working day
+      }
+    }
+  };
+  
+  const handleChange = (e, index, key) => {
+    const value = e.target.value;
+    setTableData((prevData) => {
+      const updatedData = [...prevData];
+      updatedData[index][key] = value;
+  
+      if (key === "startDate" || key === "noOfDays") {
+        const startDate = updatedData[index].startDate;
+        const noOfDays = updatedData[index].noOfDays;
+        
+        if (startDate && noOfDays) {
+          updatedData[index].endDate = calculateEndDate(startDate, noOfDays);
+        }
+      }
+      return updatedData;
+    });
+  };
+  
 
 
 
@@ -645,10 +792,12 @@ const roleOptions = [
       );
 
       console.log('API response:', response.data); 
+      toast.success("Weekend days saved successfully! 🎉");
 
       setIsWeekendModalOpen(false);
     } catch (error) {
       console.error('Error saving weekend days:', error); 
+      toast.error("Failed to save weekend days. Please try again! ❌");
     }
   };
 
@@ -669,11 +818,13 @@ const roleOptions = [
       );
 
       console.log('Holiday saved:', response.data); // Log the response from the server
+      toast.success("Holidays saved successfully!");
 
       // Optionally, close the modal after saving
       setIsHolidayModalOpen(false);
     } catch (error) {
       console.error('Error saving holiday:', error); // Handle any errors
+      toast.error("Failed to save Holidays. Please try again!");
     }
   };
 
@@ -900,13 +1051,33 @@ const roleOptions = [
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Comments</label>
+            <label className="block text-gray-700 font-medium mb-1">Remark</label>
             <input
               type="text"
               className="w-full p-3 border rounded-lg"
-              placeholder="Enter comments..."
-              value={getProject.comments}
-              onChange={(e) => setProjectDetails({ ...projectDetails, comments: e.target.value })}
+              placeholder="Enter remark..."
+              value={getProject.description}
+              onChange={(e) => setProjectDetails({ ...projectDetails, description: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Customer Name</label>
+            <input
+              type="text"
+              className="w-full p-3 border rounded-lg"
+              placeholder="Enter Customer Name..."
+              value={getProject.customer_name}
+              onChange={(e) => setProjectDetails({ ...projectDetails, customer_name: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Vendore Name</label>
+            <input
+              type="text"
+              className="w-full p-3 border rounded-lg"
+              placeholder="Enter Vendor Name..."
+              value={getProject.vendore_name}
+              onChange={(e) => setProjectDetails({ ...projectDetails, vendore_name: e.target.value })}
             />
           </div>
 
@@ -916,13 +1087,13 @@ const roleOptions = [
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Remark</label>
+            <label className="block text-gray-700 font-medium mb-1">Comments</label>
             <input
               type="text"
               className="w-full p-3 border rounded-lg"
-              placeholder="Enter remark..."
-              value={getProject.description}
-              onChange={(e) => setProjectDetails({ ...projectDetails, description: e.target.value })}
+              placeholder="Enter comments..."
+              value={getProject.comments}
+              onChange={(e) => setProjectDetails({ ...projectDetails, comments: e.target.value })}
             />
           </div>
         </div>
@@ -940,6 +1111,13 @@ const roleOptions = [
             Add Row
           </Button>
         </div>
+
+        {isLoading ? (
+        <div className="flex flex-col justify-center items-center h-64 space-y-4">
+          <ClipLoader color="#007BFF" size={60} speedMultiplier={1.5} />
+          <p className="mt-3 text-gray-600 text-lg font-semibold">Please wait...</p>
+        </div>
+      ) : (
 
         <DataTable
   columns={columns}
@@ -962,8 +1140,8 @@ const roleOptions = [
     },
   ]}
 />
-
-      </div>
+)}
+</div>
       <div className="fixed top-3/4 right-0 z-10 flex flex-col">
   <button
             className="
