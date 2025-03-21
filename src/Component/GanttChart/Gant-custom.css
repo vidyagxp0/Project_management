@@ -1,0 +1,36 @@
+/* Custom Gantt Chart Styling */
+.gantt_task_line {
+    background-color: #4a90e2 !important; /* Primary Blue */
+    border-radius: 4px;
+    border: none;
+  }
+  
+  .gantt_task_progress {
+    background: rgba(255, 193, 7, 0.8) !important; /* Yellow for Progress */
+  }
+  
+  .gantt_grid_head_cell,
+  .gantt_grid_data .gantt_row {
+    background: #f8f9fa !important; /* Light Grey Background */
+    color: #333; 
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .gantt_grid_head_cell {
+    font-weight: bold;
+    color: #222;
+  }
+  
+  .gantt_grid_scale .gantt_grid_head_cell {
+    background: #007bff !important; /* Blue Header */
+    color: white;
+  }
+  
+  .gantt_selected {
+    background: rgba(0, 123, 255, 0.1) !important; /* Light Blue Selection */
+  }
+  
+  .gantt_task_row:hover {
+    background: rgba(0, 123, 255, 0.1) !important;
+  }
+  
