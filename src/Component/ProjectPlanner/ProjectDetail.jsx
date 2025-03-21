@@ -14,6 +14,7 @@ import Select from "react-select";
 import DataTable from "react-data-table-component";
 import { FaPlus } from "react-icons/fa";
 import axios from "axios";
+import { Spin } from "antd";
 
 const weekOptions = [
   { value: "Monday", label: "Monday" },
@@ -72,7 +73,10 @@ const ProjectDetail = () => {
   console.log(getProject.company_name,"name name")
   console.log(year,"year")
 
-  
+  const [loadingCompanies, setLoadingCompanies] = useState(false);
+  const [loadingProjects, setLoadingProjects] = useState(false);
+  const [loadingWeekends, setLoadingWeekends] = useState(false);
+  const [loadingHolidays, setLoadingHolidays] = useState(false);
     
   const [tableData, setTableData] = useState([ ]); // Store the table rows
   console.log(tableData,"Tablke data")
@@ -82,59 +86,123 @@ const ProjectDetail = () => {
 
   useEffect(() => {
     const fetchCompanies = async () => {
+      setLoadingCompanies(true);
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}`);
-        setCompanies(response.data); // Ensure response is an array
+        setCompanies(response.data);
       } catch (error) {
         console.error("Error fetching companies:", error);
         toast.error("Failed to load companies. Please try again.");
+      } finally {
+        setLoadingCompanies(false);
       }
     };
-
     fetchCompanies();
-  }, [])
+  }, [id]);
 
   useEffect(() => {
-    const fetchCompanies = async () => {
+    const fetchProjects = async () => {
+      setLoadingProjects(true);
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}/project-planner`);
-        setGetProject(response.data); // Ensure response is an array
+        setGetProject(response.data);
       } catch (error) {
-        console.error("Error fetching companies:", error);
-        toast.error("Failed to load companies. Please try again.");
+        console.error("Error fetching projects:", error);
+        toast.error("Failed to load projects. Please try again.");
+      } finally {
+        setLoadingProjects(false);
       }
     };
-
-    fetchCompanies();
-  }, [])
+    fetchProjects();
+  }, [id]);
 
   useEffect(() => {
-    const fetchCompanies = async () => {
+    const fetchWeekends = async () => {
+      setLoadingWeekends(true);
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}/weekends`);
-        setGetWeekEnd(response.data); // Ensure response is an array
+        setGetWeekEnd(response.data);
       } catch (error) {
-        console.error("Error fetching companies:", error);
-        toast.error("Failed to load companies. Please try again.");
+        console.error("Error fetching weekends:", error);
+        toast.error("Failed to load weekends. Please try again.");
+      } finally {
+        setLoadingWeekends(false);
       }
     };
-
-    fetchCompanies();
-  }, [])
+    fetchWeekends();
+  }, [id]);
 
   useEffect(() => {
-    const fetchCompanies = async () => {
+    const fetchHolidays = async () => {
+      setLoadingHolidays(true);
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}/holidays`);
-        setGetHolidays(response.data); // Ensure response is an array
+        setGetHolidays(response.data);
       } catch (error) {
-        console.error("Error fetching companies:", error);
-        toast.error("Failed to load companies. Please try again.");
+        console.error("Error fetching holidays:", error);
+        toast.error("Failed to load holidays. Please try again.");
+      } finally {
+        setLoadingHolidays(false);
       }
     };
+    fetchHolidays();
+  }, [id]);
 
-    fetchCompanies();
-  }, [])
+  // useEffect(() => {
+  //   const fetchCompanies = async () => {
+  //     try {
+  //       const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}`);
+  //       setCompanies(response.data); // Ensure response is an array
+  //     } catch (error) {
+  //       console.error("Error fetching companies:", error);
+  //       toast.error("Failed to load companies. Please try again.");
+  //     }
+  //   };
+
+  //   fetchCompanies();
+  // }, [])
+
+  // useEffect(() => {
+  //   const fetchCompanies = async () => {
+  //     try {
+  //       const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}/project-planner`);
+  //       setGetProject(response.data); // Ensure response is an array
+  //     } catch (error) {
+  //       console.error("Error fetching companies:", error);
+  //       toast.error("Failed to load companies. Please try again.");
+  //     }
+  //   };
+
+  //   fetchCompanies();
+  // }, [])
+
+  // useEffect(() => {
+  //   const fetchCompanies = async () => {
+  //     try {
+  //       const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}/weekends`);
+  //       setGetWeekEnd(response.data); // Ensure response is an array
+  //     } catch (error) {
+  //       console.error("Error fetching companies:", error);
+  //       toast.error("Failed to load companies. Please try again.");
+  //     }
+  //   };
+
+  //   fetchCompanies();
+  // }, [])
+
+  // useEffect(() => {
+  //   const fetchCompanies = async () => {
+  //     try {
+  //       const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}/holidays`);
+  //       setGetHolidays(response.data); // Ensure response is an array
+  //     } catch (error) {
+  //       console.error("Error fetching companies:", error);
+  //       toast.error("Failed to load companies. Please try again.");
+  //     }
+  //   };
+
+  //   fetchCompanies();
+  // }, [])
 
   useEffect(() => {
     if (getProject?.project_details) {
@@ -233,7 +301,28 @@ const ProjectDetail = () => {
       console.error('Error saving project:', error); // Handle errors
     }
   };
-
+  const statusOptions = [
+    { value: "Started", label: "Started" },
+    { value: "In Progress", label: "In Progress" },
+    { value: "Cancelled", label: "Cancelled" },
+    { value: "Completed", label: "Completed" },
+  ];
+  const assigneeOptions = [
+    { value: "Pankaj", label: "Pankaj" },
+    { value: "Farhan", label: "Farhan" },
+    { value: "Himanshu", label: "Himanshu" },
+    { value: "Nikshay", label: "Nikshay" },
+    { value: "Gautam", label: "Gautam" },
+  ];
+  
+const roleOptions = [
+  { value: "Validation", label: "Validation" },
+  { value: "Configuration", label: "Configuration" },
+  { value: "Testing", label: "Testing" },
+  { value: "SME", label: "SME" },
+  { value: "PM", label: "PM" },
+  { value: "Steering Committee", label: "Steering Committee" },
+];
   const columns = [
     { name: "S.No", selector: (row) => row.sNo, sortable: true },
     {
@@ -302,17 +391,64 @@ const ProjectDetail = () => {
       minWidth: "200px"
     },
     {
-      name: "Project Phase",
+      name: "Responsibility",
       cell: (row, index) => (
         <input
           type="text"
-          value={row.projectPhase}
-          onChange={(e) => handleChange(e, index, "projectPhase")}
+          value={row.responsibility}
+          onChange={(e) => handleChange(e, index, "responsibility")}
           className="border p-1 rounded w-full"
         />
       ),
       sortable: true,
       minWidth: "200px"
+    },
+    {
+      name: "Status",
+      cell: (row, index) => (
+        <Select
+          options={statusOptions}
+          value={statusOptions.find((option) => option.value === row.status)}
+          onChange={(selectedOption) =>
+            handleChange({ target: { value: selectedOption.value } }, index, "status")
+          }
+          className="w-full"
+        />
+      ),
+      sortable: true,
+      minWidth: "200px",
+    },
+  
+  
+    {
+      name: "Assignee",
+      cell: (row, index) => (
+        <Select
+          options={assigneeOptions}
+          value={assigneeOptions.find((option) => option.value === row.assignee)}
+          onChange={(selectedOption) =>
+            handleChange({ target: { value: selectedOption.value } }, index, "assignee")
+          }
+          className="w-full"
+        />
+      ),
+      sortable: true,
+      minWidth: "200px",
+    },
+    {
+      name: "Role",
+      cell: (row, index) => (
+        <Select
+          options={roleOptions}
+          value={roleOptions.find((option) => option.value === row.role)}
+          onChange={(selectedOption) =>
+            handleChange({ target: { value: selectedOption.value } }, index, "role")
+          }
+          className="w-full"
+        />
+      ),
+      sortable: true,
+      minWidth: "200px",
     },
     {
       name: "Progress",
@@ -327,58 +463,7 @@ const ProjectDetail = () => {
       sortable: true,
       minWidth: "200px"
     },
-    {
-      name: "Status",
-      cell: (row, index) => (
-        <input
-          type="text"
-          value={row.status}
-          onChange={(e) => handleChange(e, index, "status")}
-          className="border p-1 rounded w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px"
-    },
-    {
-      name: "Assign",
-      cell: (row, index) => (
-        <input
-          type="text"
-          value={row.assign}
-          onChange={(e) => handleChange(e, index, "assign")}
-          className="border p-1 rounded w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px"
-    },
-    {
-      name: "Role",
-      cell: (row, index) => (
-        <input
-          type="text"
-          value={row.role}
-          onChange={(e) => handleChange(e, index, "role")}
-          className="border p-1 rounded w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px"
-    },
-    {
-      name: "Responsibility",
-      cell: (row, index) => (
-        <input
-          type="text"
-          value={row.responsibility}
-          onChange={(e) => handleChange(e, index, "responsibility")}
-          className="border p-1 rounded w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px"
-    },
+ 
     {
       name: "No of Days",
       cell: (row, index) => (
@@ -420,12 +505,25 @@ const ProjectDetail = () => {
       
     },
     {
-      name: "Holidays",
+      name: "Actual Start Date",
       cell: (row, index) => (
         <input
-          type="text"
-          value={row.holidays}
-          onChange={(e) => handleChange(e, index, "holidays")}
+          type="date"
+          value={row.actualStartDate}
+          onChange={(e) => handleChange(e, index, "actualStartDate")}
+          className="border p-1 rounded w-full"
+        />
+      ),
+      sortable: true,
+      minWidth: "200px"
+    },
+    {
+      name: "Actual End Date",
+      cell: (row, index) => (
+        <input
+          type="date"
+          value={row.actualEndDate}
+          onChange={(e) => handleChange(e, index, "actualEndDate")}
           className="border p-1 rounded w-full"
         />
       ),
@@ -445,19 +543,7 @@ const ProjectDetail = () => {
       sortable: true,
       minWidth: "220px"
     },
-    {
-      name: "% Complete",
-      cell: (row, index) => (
-        <input
-          type="number"
-          value={row.percentComplete}
-          onChange={(e) => handleChange(e, index, "percentComplete")}
-          className="border p-1 rounded w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px"
-    },
+ 
     {
       name: "Remarks",
       cell: (row, index) => (
@@ -516,17 +602,17 @@ const ProjectDetail = () => {
           customerName: "",
           vendorName: "",
           projectDetails: "",
-          projectPhase: "",
           progress: "",
           status: "",
-          assign: "",
+          assignee: "",
           role: "",
           responsibility: "",
           startDate: "",
           endDate: "",
-          holidays: "",
+          noOfDays: "",
+          actualStartDate:"",
+          actualEndDate:"",
           supportingDocuments: "",
-          percentComplete: "",
           remarks: "",
         },
       ];
