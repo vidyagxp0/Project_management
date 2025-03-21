@@ -47,8 +47,10 @@ import FileManager from "./Component/FileManager/FileManager";
 import TaskBoards from "./Component/Tasks/TaskBoards";
 import ToDo from "./Component/ToDo/ToDo";
 import AddCompany from "./Component/AddCompany/AddCompany";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddWeekend from "./Component/AddWeekend/AddWeekend";
 
 
 function App() {
@@ -95,6 +97,7 @@ function App() {
             {/* <Route path="/project-detail" element={<ProjectDetail />} /> */}
             <Route path="/project-detail/:id" element={<ProjectDetail />} />
             <Route path="/add-company" element={<AddCompany />} />
+            <Route path="/add-weekend" element={<AddWeekend />} />
 
             <Route path="/meetings" element={<Meetings />} />
             <Route path="/appointments" element={<Appointments />} />

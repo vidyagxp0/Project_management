@@ -362,19 +362,6 @@ const roleOptions = [
       minWidth: "200px"
     },
     {
-      name: "Project Details",
-      cell: (row, index) => (
-        <input
-          type="text"
-          value={row.projectDetails}
-          onChange={(e) => handleChange(e, index, "projectDetails")}
-          className="border p-1 rounded w-full"
-        />
-      ),
-      sortable: true,
-      minWidth: "200px"
-    },
-    {
       name: "No of Days",
       cell: (row, index) => (
         <input
@@ -734,10 +721,6 @@ const roleOptions = [
   };
   
     
-  
-  
-  
-  
   const getNextWorkingDay = (prevEndDate) => {
     if (!prevEndDate) return "";
   
@@ -757,24 +740,52 @@ const roleOptions = [
     }
   };
   
-  const handleChange = (e, index, key) => {
+  // const handleChange = (e, index, key) => {
+  //   const value = e.target.value;
+  //   setTableData((prevData) => {
+  //     const updatedData = [...prevData];
+  //     updatedData[index][key] = value;
+  
+  //     if (key === "startDate" || key === "noOfDays") {
+  //       const startDate = updatedData[index].startDate;
+  //       const noOfDays = updatedData[index].noOfDays;
+        
+  //       if (startDate && noOfDays) {
+  //         updatedData[index].endDate = calculateEndDate(startDate, noOfDays);
+  //       }
+  //     }
+  //     return updatedData;
+  //   });
+  // };
+  
+  const handleChange = (e, index, field) => {
     const value = e.target.value;
     setTableData((prevData) => {
-      const updatedData = [...prevData];
-      updatedData[index][key] = value;
-  
-      if (key === "startDate" || key === "noOfDays") {
-        const startDate = updatedData[index].startDate;
-        const noOfDays = updatedData[index].noOfDays;
-        
-        if (startDate && noOfDays) {
-          updatedData[index].endDate = calculateEndDate(startDate, noOfDays);
+        let updatedData = [...prevData];
+
+        if (field === "noOfDays" || field === "startDate") {
+            // Recalculate end date for this row
+            let startDate = field === "startDate" ? value : updatedData[index].startDate;
+            let noOfDays = field === "noOfDays" ? parseInt(value, 10) : updatedData[index].noOfDays;
+
+            if (startDate && noOfDays) {
+                updatedData[index].endDate = calculateEndDate(startDate, noOfDays);
+            }
+
+            // Update subsequent rows' start dates
+            for (let i = index + 1; i < updatedData.length; i++) {
+                updatedData[i].startDate = getNextWorkingDay(updatedData[i - 1].endDate);
+                if (updatedData[i].noOfDays) {
+                    updatedData[i].endDate = calculateEndDate(updatedData[i].startDate, updatedData[i].noOfDays);
+                }
+            }
         }
-      }
-      return updatedData;
+
+        updatedData[index][field] = value;
+        return updatedData;
     });
-  };
-  
+};
+
 
 
 
@@ -1071,7 +1082,7 @@ const roleOptions = [
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Vendore Name</label>
+            <label className="block text-gray-700 font-medium mb-1">Vendor Name</label>
             <input
               type="text"
               className="w-full p-3 border rounded-lg"
@@ -1115,7 +1126,7 @@ const roleOptions = [
         {isLoading ? (
         <div className="flex flex-col justify-center items-center h-64 space-y-4">
           <ClipLoader color="#007BFF" size={60} speedMultiplier={1.5} />
-          <p className="mt-3 text-gray-600 text-lg font-semibold">Please wait...</p>
+          <p className="mt-3 text-gray-600 text-lg font-semibold">Add Row...</p>
         </div>
       ) : (
 
