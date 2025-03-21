@@ -15,6 +15,7 @@ import DataTable from "react-data-table-component";
 import { FaPlus } from "react-icons/fa";
 import axios from "axios";
 import { Spin } from "antd";
+import { toast } from "react-toastify";
 
 const weekOptions = [
   { value: "Monday", label: "Monday" },
@@ -50,7 +51,7 @@ const ProjectDetail = () => {
   // const navigate = useNavigate()
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id)
+  console.log(id,"idididid")
   const [projectDetails, setProjectDetails] = useState({
     description: '',
     comments: '',
@@ -297,8 +298,11 @@ const ProjectDetail = () => {
       );
       
       console.log('Project saved:', response.data); // Log the response from the server
+      toast.success("Project updated successfully!");
     } catch (error) {
       console.error('Error saving project:', error); // Handle errors
+      toast.error("Failed to update project. Please try again.");
+
     }
   };
   const statusOptions = [

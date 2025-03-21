@@ -47,10 +47,14 @@ import FileManager from "./Component/FileManager/FileManager";
 import TaskBoards from "./Component/Tasks/TaskBoards";
 import ToDo from "./Component/ToDo/ToDo";
 import AddCompany from "./Component/AddCompany/AddCompany";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function App() {
   return (
     <>
+        <ToastContainer position="top-right" autoClose={3000} />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />

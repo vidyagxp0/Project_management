@@ -8,11 +8,13 @@ import { RxCross1 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { ClipLoader } from "react-spinners";
 
 const ProjectPlanner = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({
     companyName: "",
     year: "",
@@ -28,11 +30,14 @@ const ProjectPlanner = () => {
       } catch (error) {
         console.error("Error fetching companies:", error);
         toast.error("Failed to load companies. Please try again.");
+      }finally{
+        setIsLoading(false);
       }
     };
 
     fetchCompanies();
   }, [])
+  
 
 
   // Load projects from Local Storage
@@ -67,15 +72,13 @@ const ProjectPlanner = () => {
 
     const selectedCompany = allcompany?.data.find(
       (company) => company.name === formData.companyName
+      // (company) => company.company_id
     );
 
     if (!formData.companyName || !formData.year || !formData.description) {
       toast.error("All fields are required!");
       return;
     }
-
-    console.log(selectedCompany);
-    
 
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/project-planner/companies/creaate-project-planner`, {
@@ -245,6 +248,13 @@ const ProjectPlanner = () => {
             </div>
           ))}
         </div> */}
+              <div className="p-4">
+      {isLoading ? (
+        <div className="flex flex-col justify-center items-center h-96 space-y-4">
+          <ClipLoader color="#007BFF" size={60} speedMultiplier={1.5} />
+          <p className="mt-3 text-gray-600 text-lg font-semibold">Please wait...</p>
+        </div>
+      ) : (
         <div className="grid grid-cols-2 gap-5 py-3">
           {companies.map((company) => (
             <div key={company.company_id} className="p-8 shadow-2xl flex flex-col gap-2">
@@ -267,7 +277,10 @@ const ProjectPlanner = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div> 
+      )}
+    </div>
+        
       </div>
     </div>
   );
