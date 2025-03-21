@@ -1123,12 +1123,12 @@ const roleOptions = [
           </Button>
         </div>
 
-        {isLoading ? (
+        {/* {isLoading ? (
         <div className="flex flex-col justify-center items-center h-64 space-y-4">
           <ClipLoader color="#007BFF" size={60} speedMultiplier={1.5} />
           <p className="mt-3 text-gray-600 text-lg font-semibold">Add Row...</p>
         </div>
-      ) : (
+      ) : ( */}
 
         <DataTable
   columns={columns}
@@ -1142,6 +1142,7 @@ const roleOptions = [
   onRowClicked={(row) => console.log(row)}
   fixedHeader // Ensures header is always visible
   fixedHeaderScrollHeight="400px" // Adjust height as needed
+  persistTableHead
   conditionalRowStyles={[
     {
       when: (row) => true,
@@ -1151,7 +1152,7 @@ const roleOptions = [
     },
   ]}
 />
-)}
+{/* )} */}
 </div>
       <div className="fixed top-3/4 right-0 z-10 flex flex-col">
   <button
