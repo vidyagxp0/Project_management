@@ -99,8 +99,9 @@ const ProjectPlanner = () => {
       }
 
       const newProject = await response.json();
+      setCompanies((prevCompanies) => [...prevCompanies, newProject]);
 
-      setProjects((prevProjects) => [...prevProjects, newProject]);
+      // setProjects((prevProjects) => [...prevProjects, newProject]);
 
       toast.success("Project saved successfully!");
 
@@ -131,12 +132,14 @@ const ProjectPlanner = () => {
           <div className="flex justify-between p-2">
             <div className="text-[22px] font-semibold">Project Planner</div>
             <div className="flex gap-4">
-              <div
-                className="bg-emerald-100 p-2 rounded text-emerald-500 cursor-pointer"
-                onClick={() => setIsOpen(true)}
-              >
-                <RiAddFill />
-              </div>
+            <button
+  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-500 to-gray-900 text-white font-semibold rounded-lg shadow-md hover:scale-105 transition-all duration-300 hover:shadow-lg"
+  onClick={() => setIsOpen(true)}
+>
+  <RiAddFill size={20} />
+  <span>Add Project Planner</span>
+</button>
+
             </div>
           </div>
 
@@ -247,40 +250,47 @@ const ProjectPlanner = () => {
               </div>
             </div>
           ))}
-        </div> */}
-              <div className="p-4">
+        </div> */}    
+        <div className="p-6">
       {isLoading ? (
         <div className="flex flex-col justify-center items-center h-96 space-y-4">
           <ClipLoader color="#007BFF" size={60} speedMultiplier={1.5} />
           <p className="mt-3 text-gray-600 text-lg font-semibold">Please wait...</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-5 py-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6">
           {companies.map((company) => (
-            <div key={company.company_id} className="p-8 shadow-2xl flex flex-col gap-2">
-              <div className="flex gap-3">
-                <span className="text-cyan-500 cursor-pointer">#000{company.id}</span>
-              </div>
-              
-                <span>- {company.company_name}</span>
-                <span>- {company.year}</span>
-                <span>- {company.description}</span>
-
-              <div className="flex justify-between mt-3">
+            <div
+              key={company.company_id}
+              className="bg-white/80 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-200 hover:shadow-2xl transition-all duration-300"
+            >
+              <div className="flex justify-between items-center">
+                <span className="text-cyan-500 font-bold text-lg cursor-pointer">
+                  #000{company.id}
+                </span>
                 <Avatar />
+              </div>
+
+              <div className="mt-4 space-y-1">
+                <h2 className="text-xl font-semibold text-gray-800">{company.company_name}</h2>
+                <p className="text-gray-500 text-sm">Year: <span className="font-medium">{company.year}</span></p>
+                <p className="text-gray-500 text-sm">Description: <span className="font-medium">{company.description}</span></p>
+              </div>
+
+              <div className="flex justify-end mt-5">
                 <button
-                  className="bg-cyan-400 px-3 py-1 hover:bg-cyan-700 text-white rounded"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
                   onClick={() => navigate(`/project-detail/${company.id}`)}
                 >
-                  View More
+                  View More →
                 </button>
               </div>
             </div>
           ))}
-        </div> 
+        </div>
       )}
     </div>
-        
+
       </div>
     </div>
   );
