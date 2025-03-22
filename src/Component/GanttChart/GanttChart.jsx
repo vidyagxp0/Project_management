@@ -45,7 +45,8 @@ const GanttChart = ({ planners }) => {
     gantt.init("gantt-container");
 
     gantt.config.columns = [
-      { name: "text", label: "Task Name", tree: true, width: "*" },
+      { name: "phase", label: "Phase", tree: true, width: "*" },
+      { name: "milestones", label: "MileStone", tree: true, width: "*" },
       { name: "start_date", label: "Start Date", align: "center" },
       { name: "end_date", label: "End Date", align: "center" }  // Show End Date
     ];

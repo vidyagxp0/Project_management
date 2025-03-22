@@ -52,6 +52,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddWeekend from "./Component/AddWeekend/AddWeekend";
 import AddHoliday from "./Component/AddHoliday/AddHoliday";
+import GanrChart from "./Component/GanttChart/GanrChart";
 
 
 function App() {
@@ -100,6 +101,7 @@ function App() {
             <Route path="/add-company" element={<AddCompany />} />
             <Route path="/add-weekend" element={<AddWeekend />} />
             <Route path="/add-holiday" element={<AddHoliday />} />
+            <Route path="/gntt-chart/:id" element={<GanrChart />} />
 
             <Route path="/meetings" element={<Meetings />} />
             <Route path="/appointments" element={<Appointments />} />

@@ -17,6 +17,9 @@ import axios from "axios";
 import { Spin } from "antd";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import { BiBarChartAlt2 } from "react-icons/bi";
+import { MdAnalytics } from "react-icons/md";
+import { HiOutlineChartBar } from "react-icons/hi";
 
 const weekOptions = [
   { value: "Monday", label: "Monday" },
@@ -160,62 +163,7 @@ const ProjectDetail = () => {
     fetchHolidays();
   }, [id]);
 
-  // useEffect(() => {
-  //   const fetchCompanies = async () => {
-  //     try {
-  //       const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}`);
-  //       setCompanies(response.data); // Ensure response is an array
-  //     } catch (error) {
-  //       console.error("Error fetching companies:", error);
-  //       toast.error("Failed to load companies. Please try again.");
-  //     }
-  //   };
-
-  //   fetchCompanies();
-  // }, [])
-
-  // useEffect(() => {
-  //   const fetchCompanies = async () => {
-  //     try {
-  //       const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}/project-planner`);
-  //       setGetProject(response.data); // Ensure response is an array
-  //     } catch (error) {
-  //       console.error("Error fetching companies:", error);
-  //       toast.error("Failed to load companies. Please try again.");
-  //     }
-  //   };
-
-  //   fetchCompanies();
-  // }, [])
-
-  // useEffect(() => {
-  //   const fetchCompanies = async () => {
-  //     try {
-  //       const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}/weekends`);
-  //       setGetWeekEnd(response.data); // Ensure response is an array
-  //     } catch (error) {
-  //       console.error("Error fetching companies:", error);
-  //       toast.error("Failed to load companies. Please try again.");
-  //     }
-  //   };
-
-  //   fetchCompanies();
-  // }, [])
-
-  // useEffect(() => {
-  //   const fetchCompanies = async () => {
-  //     try {
-  //       const response = await axios.get(`http://127.0.0.1:8000/api/project-planner/companies/${id}/holidays`);
-  //       setGetHolidays(response.data); // Ensure response is an array
-  //     } catch (error) {
-  //       console.error("Error fetching companies:", error);
-  //       toast.error("Failed to load companies. Please try again.");
-  //     }
-  //   };
-
-  //   fetchCompanies();
-  // }, [])
-
+  
   useEffect(() => {
     if (getProject?.project_details) {
       try {
@@ -228,45 +176,19 @@ const ProjectDetail = () => {
   }, [getProject]);
 
 
-  // const handleChange = (e, index, key) => {
-  //   const updatedData = [...tableData];
-  //   updatedData[index][key] = e.target.value;
-  //   setTableData(updatedData);
-  // };
-
-  // const handleChange = (e, index, key) => {
-  //   const updatedData = [...tableData];
-  //   updatedData[index][key] = e.target.value;
-  
-  //   // If No of Days or Start Date changes, recalculate End Date
-  //   if (key === "noOfDays" || key === "startDate") {
-  //     const startDate = updatedData[index].startDate;
-  //     const noOfDays = parseInt(updatedData[index].noOfDays, 10);
-  
-  //     if (startDate && noOfDays > 0) {
-  //       const endDate = calculateEndDate(startDate, noOfDays, getHolidays, getWeekEnd.weekend_days);
-  //       updatedData[index]["endDate"] = endDate;
-  //     }
-  //   }
-  
-  //   setTableData(updatedData);
-  // };
-  
-  // Function to calculate end date by skipping holidays and weekends
- 
   
   
   
   const handleSaveProject = async () => {
 
-    const isValid = tableData.every(row => 
-      Object.values(row).every(value => value !== "" && value !== null)
-    );
+    // const isValid = tableData.every(row => 
+    //   Object.values(row).every(value => value !== "" && value !== null)
+    // );
   
-    if (!isValid) {
-      toast.error("All fields in the grid are required!");
-      return;
-    }
+    // if (!isValid) {
+    //   toast.error("All fields in the grid are required!");
+    //   return;
+    // }
     try {
       const projectData = {
         description: projectDetails.description,
@@ -472,9 +394,10 @@ const roleOptions = [
     }, 
     {
       name: "Role",
+
       cell: (row, index) => (
         <select
-          value={row.assignee}
+          value={row.role}
           onChange={(e) => handleChange(e, index, "role")}
           className="border p-1 rounded w-full bg-white cursor-pointer"
         >
@@ -877,6 +800,13 @@ const roleOptions = [
 
             <div className="flex gap-4">
               <button
+      className="flex items-center gap-2 text-black text-lg font-medium hover:text-gray-700 transition"
+      onClick={() => navigate(`/gntt-chart/${id}`)}
+    >
+      <HiOutlineChartBar size={28} className="text-black" /> {/* Larger Black Icon */}
+      
+    </button>
+              <button
                 className="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
                 onClick={() => setIsWeekendModalOpen(true)}>
                 Weekend Days
@@ -886,6 +816,8 @@ const roleOptions = [
                 onClick={() => setIsHolidayModalOpen(true)}>
                 Holidays
               </button>
+
+
             </div>
           </div>
 
