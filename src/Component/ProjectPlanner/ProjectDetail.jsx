@@ -258,6 +258,15 @@ const ProjectDetail = () => {
   
   
   const handleSaveProject = async () => {
+
+    const isValid = tableData.every(row => 
+      Object.values(row).every(value => value !== "" && value !== null)
+    );
+  
+    if (!isValid) {
+      toast.error("All fields in the grid are required!");
+      return;
+    }
     try {
       const projectData = {
         description: projectDetails.description,

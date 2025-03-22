@@ -1,160 +1,110 @@
-import React, { useState, useEffect } from "react";
-import { Select, Input, Button } from "antd";
+import React, { useEffect, useState } from "react";
+import { Modal, Button, Table, Spin } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import HoliDayList from "./HoliDayList"; // Import form component
 
-const { Option } = Select;
-
-const AddHoliday = () => {
-  const [formData, setFormData] = useState({
-    companyId: null,
-    year: new Date().getFullYear(), // Default to current year
-    startDate: "",
-    endDate: "",
-    reason: "",
-  });
-
-  const [allCompanies, setAllCompanies] = useState([]);
+const AddHolidayModal = () => {
+  const [loading, setLoading] = useState(true);
+  const [holidays, setHolidays] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const fetchCompanies = async () => {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/project-planner/get-all-companies"
-        );
-        setAllCompanies(response.data || []); // Ensure it's an array
-      } catch (error) {
-        console.error("Error fetching companies:", error);
-        toast.error("Failed to load companies. Please try again.");
-      }
-    };
-    fetchCompanies();
+    fetchHolidays();
   }, []);
 
-  // Handle input changes dynamically
-  const handleChange = (key, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const handleSave = async () => {
-    const { companyId, startDate, endDate, reason } = formData;
-
-    if (!companyId || !startDate || !endDate || !reason) {
-      toast.error("All fields are required!");
-      return;
-    }
-
-    const requestData = {
-      start_date: startDate,
-      end_date: endDate,
-      reason,
-    };
-
+  const fetchHolidays = async () => {
+    setLoading(true);
     try {
-      const response = await axios.post(
-        `http://127.0.0.1:8000/api/project-planner/companies/${companyId}/holidays`,
-        requestData
-      );
-
-      toast.success("Holiday saved successfully!");
-      console.log("Response:", response.data);
-
-      // Reset form after successful submission
-      setFormData({
-        companyId: null,
-        year: new Date().getFullYear(),
-        startDate: "",
-        endDate: "",
-        reason: "",
-      });
+      const response = await axios.get("http://127.0.0.1:8000/api/project-planner/get-all-holidays");
+      setHolidays(response.data || []);
     } catch (error) {
-      console.error("Error saving holiday:", error);
-      toast.error("Failed to save holiday.");
+      console.error("Error fetching holidays:", error);
+      toast.error("Failed to load holidays. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
+
+  const columns = [
+    { 
+      title: "Company Name", 
+      dataIndex: "company_name", 
+      key: "company_name", 
+      align: "center", 
+      width: 200 
+    },
+    { 
+      title: "Start Date", 
+      dataIndex: "start_date", 
+      key: "start_date", 
+      align: "center", 
+      width: 150 
+    },
+    { 
+      title: "End Date", 
+      dataIndex: "end_date", 
+      key: "end_date", 
+      align: "center", 
+      width: 150 
+    },
+    { 
+      title: "Reason", 
+      dataIndex: "reason", 
+      key: "reason", 
+      align: "center", 
+      width: 250 
+    }
+  ];
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-green-100 to-green-300 p-6">
-      <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-lg">
-        <h2 className="text-2xl font-semibold text-center text-gray-700 mb-4">Add Holiday</h2>
+    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-100">
+      <div className="w-[80vw] max-w-7xl bg-white p-8 shadow-lg rounded-lg">
+        <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">Company Holiday Management</h2>
 
-        {/* Company Dropdown */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-1">Select Company</label>
-          <Select
-            placeholder="Select company"
-            value={formData.companyId}
-            onChange={(value) => handleChange("companyId", value)}
-            className="w-full"
-          >
-            {allCompanies.map((company) => (
-              <Option key={company.company_id} value={company.company_id}>
-                {company.name}
-              </Option>
-            ))}
-          </Select>
-        </div>
-
-        {/* Year Input (Prefilled) */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-1">Year</label>
-          <Input
-            type="number"
-            value={formData.year}
-            readOnly
-            className="w-full p-2 border rounded-lg bg-gray-100 cursor-not-allowed"
+        {loading ? (
+          <div className="flex justify-center">
+            <Spin size="large" />
+          </div>
+        ) : (
+          <Table 
+            columns={columns} 
+            dataSource={holidays} 
+            rowKey="id"  // ✅ Using 'id' from API response
+            pagination={{ pageSize: 5 }} 
+            bordered 
+            className="shadow-md"
           />
-        </div>
-
-        {/* Start Date */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-1">Start Date</label>
-          <Input
-            type="date"
-            value={formData.startDate}
-            onChange={(e) => handleChange("startDate", e.target.value)}
-            className="w-full p-2 border rounded-lg"
-          />
-        </div>
-
-        {/* End Date */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-1">End Date</label>
-          <Input
-            type="date"
-            value={formData.endDate}
-            onChange={(e) => handleChange("endDate", e.target.value)}
-            className="w-full p-2 border rounded-lg"
-          />
-        </div>
-
-        {/* Reason */}
-        <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-1">Reason</label>
-          <Input.TextArea
-            placeholder="Enter reason"
-            value={formData.reason}
-            onChange={(e) => handleChange("reason", e.target.value)}
-            className="w-full p-2 border rounded-lg"
-            rows={3}
-          />
-        </div>
-
-        {/* Submit Button */}
-        <Button
-          type="primary"
-          className="w-full bg-gradient-to-r from-green-500 to-green-700 text-white p-2 rounded-lg hover:scale-105 transition-transform duration-300"
-          onClick={handleSave}
-        >
-          Save Holiday
-        </Button>
+        )}
       </div>
+
+      {/* Button to open modal */}
+      <Button
+        type="primary"
+        className="mt-6 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg text-lg transition-transform transform hover:scale-105"
+        onClick={() => setIsModalOpen(true)}
+      >
+        <PlusOutlined className="text-xl" /> Add Holiday
+      </Button>
+
+      {/* Professionally styled modal */}
+      <Modal
+        title={<h2 className="text-xl font-semibold text-gray-700 text-center">Add Holiday</h2>}
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+        centered
+        width={700}
+        bodyStyle={{ padding: "20px" }}
+      >
+        <div className="p-4">
+          <HoliDayList onClose={() => setIsModalOpen(false)} fetchHolidays={fetchHolidays} />
+        </div>
+      </Modal>
     </div>
   );
 };
 
-export default AddHoliday;
+export default AddHolidayModal;
