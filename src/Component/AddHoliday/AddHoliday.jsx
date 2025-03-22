@@ -41,14 +41,24 @@ const AddHolidayModal = () => {
       dataIndex: "start_date", 
       key: "start_date", 
       align: "center", 
-      width: 150 
+      width: 150,
+      render: (date) => new Date(date).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      }).replace(",", "") // Removes extra comma
     },
     { 
       title: "End Date", 
       dataIndex: "end_date", 
       key: "end_date", 
       align: "center", 
-      width: 150 
+      width: 150,
+      render: (date) => new Date(date).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      }).replace(",", "")
     },
     { 
       title: "Reason", 

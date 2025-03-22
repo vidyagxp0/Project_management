@@ -80,6 +80,16 @@ const ProjectPlanner = () => {
       return;
     }
 
+    const existingProject = companies.find(
+      (project) => project.company_name === formData.companyName
+    );
+    
+    if (existingProject) {
+      toast.error("This company already has a project plan. You cannot create another.");
+      return;
+    }
+    
+
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/project-planner/companies/creaate-project-planner`, {
         method: "POST",
