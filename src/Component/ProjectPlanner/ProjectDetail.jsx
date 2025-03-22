@@ -1046,15 +1046,15 @@ const roleOptions = [
     </Dialog>
       <div className="p-6 shadow-2xl mt-4 bg-white rounded-lg">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-semibold text-gray-800">
+          {/* <h2 className="text-2xl font-semibold text-gray-800">
             {companies.name}
-          </h2>
+          </h2> */}
         </div>
 
         {/* Project Details Form */}
       <div className="p-6 shadow-2xl mt-4 bg-white rounded-lg">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-semibold text-gray-800"> {companies.name}</h2>
+          {/* <h2 className="text-2xl font-semibold text-gray-800"> {companies.name}</h2> */}
         </div>
 
         {/* 🏢 Project Details Form */}
