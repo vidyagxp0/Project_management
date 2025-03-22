@@ -140,6 +140,7 @@ const SideBar = ({ sidebarOpen }) => {
             { path: "/project-planner", label: "Project Planner", Icon: RiProjector2Line },
             { path: "/add-company", label: "Add Company", Icon: FaBuilding },
             { path: "/add-weekend", label: "Add Weekend", Icon: FaCalendarAlt },
+            { path: "/add-holiday", label: "Add Holidays", Icon: FaCalendarAlt },
             { path: "/reports", label: "Reports", Icon: TbReport },
             { path: "/settings", label: "Settings", Icon: IoSettingsSharp },
           ].map(({ path, label, Icon }) => (

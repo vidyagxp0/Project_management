@@ -51,6 +51,7 @@ import AddCompany from "./Component/AddCompany/AddCompany";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddWeekend from "./Component/AddWeekend/AddWeekend";
+import AddHoliday from "./Component/AddHoliday/AddHoliday";
 
 
 function App() {
@@ -98,6 +99,7 @@ function App() {
             <Route path="/project-detail/:id" element={<ProjectDetail />} />
             <Route path="/add-company" element={<AddCompany />} />
             <Route path="/add-weekend" element={<AddWeekend />} />
+            <Route path="/add-holiday" element={<AddHoliday />} />
 
             <Route path="/meetings" element={<Meetings />} />
             <Route path="/appointments" element={<Appointments />} />
