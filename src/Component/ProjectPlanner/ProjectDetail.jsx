@@ -705,7 +705,7 @@ const ProjectDetail = () => {
         <div className="p-6 shadow-2xl mt-4 bg-white rounded-lg">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-semibold text-gray-800">
-              {companies.name}
+              {companies.company_name}
             </h2>
 
             <div className="flex gap-4">
