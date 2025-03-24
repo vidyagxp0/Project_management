@@ -829,13 +829,13 @@ const ProjectDetail = () => {
               label="Company Name"
               fullWidth
               InputProps={{ readOnly: true }}
-              value={companies.name} // Display company ID or name here
+              value={companies.name} 
             />
             <TextField
               label="Year"
               fullWidth
               InputProps={{ readOnly: true }}
-              value={new Date().getFullYear()} // You can set the current year or dynamically pass it
+              value={new Date().getFullYear()} 
             />
             <TextField
               label="Start Date"
