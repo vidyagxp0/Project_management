@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import gantt from "dhtmlx-gantt";
-import "../GanttChart/Gant-custom.css"; // Ensure you have this CSS file
+import "../GanttChart/Gant-custom.css"; 
 
 const GanttChart = ({ planners }) => {
   const [tasks, setTasks] = useState([]);
@@ -15,13 +15,12 @@ const GanttChart = ({ planners }) => {
         projectDetails.forEach((task) => {
           let startDate = task.startDate && task.startDate !== "0002-03-20"
             ? new Date(task.startDate)
-            : new Date(); // Default to today if invalid
+            : new Date(); 
 
           let duration = task.noOfDays ? parseInt(task.noOfDays) : 1;
           let endDate = new Date(startDate);
-          endDate.setDate(endDate.getDate() + duration - 1); // Calculate end date
+          endDate.setDate(endDate.getDate() + duration - 1); 
 
-          // Format to "DD-MM-YYYY"
           let formattedStartDate = startDate.toLocaleDateString("en-GB").replace(/\//g, "-");
           let formattedEndDate = endDate.toLocaleDateString("en-GB").replace(/\//g, "-");
 
@@ -29,7 +28,7 @@ const GanttChart = ({ planners }) => {
             id: `${planner.id}-${task.sNo}`,
             text: task.milestones || "Unnamed Task",
             start_date: formattedStartDate, 
-            end_date: formattedEndDate,  // Adding End Date
+            end_date: formattedEndDate,  
             duration: duration,
             parent: 0, 
           });
@@ -41,14 +40,14 @@ const GanttChart = ({ planners }) => {
   }, [planners]);
 
   useEffect(() => {
-    gantt.config.date_format = "%d-%m-%Y";  // Ensure correct date parsing
+    gantt.config.date_format = "%d-%m-%Y"; 
     gantt.init("gantt-container");
 
     gantt.config.columns = [
       { name: "phase", label: "Phase", tree: true, width: "*" },
       { name: "milestones", label: "MileStone", tree: true, width: "*" },
       { name: "start_date", label: "Start Date", align: "center" },
-      { name: "end_date", label: "End Date", align: "center" }  // Show End Date
+      { name: "end_date", label: "End Date", align: "center" } 
     ];
 
     gantt.parse({ data: tasks });

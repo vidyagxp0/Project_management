@@ -20,8 +20,8 @@ const GanttChart = () => {
 
           const formattedTasks = projectDetails.map((task, index) => ({
             id: index + 1,
-            phase: task.phase, // Separate Phase column
-            milestones: task.milestones, // Separate Milestone column
+            phase: task.phase,
+            milestones: task.milestones, 
             start_date: task.startDate,
             end_date: task.endDate,
             duration: task.noOfDays ? parseInt(task.noOfDays) : 1,
@@ -38,9 +38,9 @@ const GanttChart = () => {
   }, [id]);
 
   useEffect(() => {
-    gantt.config.date_format = "%Y-%m-%d"; // Correct date format
-    gantt.config.grid_width = 600; // Wider grid for better visibility
-    gantt.config.scale_height = 50; // Adjust scale height for clarity
+    gantt.config.date_format = "%Y-%m-%d"; 
+    gantt.config.grid_width = 600; 
+    gantt.config.scale_height = 50; 
 
     // Define columns for Phase & Milestone separately
     gantt.config.columns = [

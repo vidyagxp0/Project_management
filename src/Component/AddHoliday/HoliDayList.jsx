@@ -6,7 +6,7 @@ import axios from "axios";
 
 const { Option } = Select;
 
-const AddHoliday = () => {
+const AddHoliday = ({onClose}) => {
   const [formData, setFormData] = useState({
     companyId: null,
     year: new Date().getFullYear(), // Default to current year
@@ -59,7 +59,7 @@ const AddHoliday = () => {
         `http://127.0.0.1:8000/api/project-planner/companies/${companyId}/holidays`,
         requestData
       );
-
+      onClose();
       toast.success("Holiday saved successfully!");
       console.log("Response:", response.data);
 

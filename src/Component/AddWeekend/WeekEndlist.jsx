@@ -11,7 +11,7 @@ const weekOptions = [
   "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
 ];
 
-const AddWeekend = () => {
+const AddWeekend = ({onClose}) => {
   const [formData, setFormData] = useState({
     companyId: null,
     year: "",
@@ -24,7 +24,7 @@ const AddWeekend = () => {
     const fetchCompanies = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/project-planner/get-all-companies");
-        setAllCompanies(response.data || []); // Ensure it's an array
+        setAllCompanies(response.data || []); 
       } catch (error) {
         console.error("Error fetching companies:", error);
         toast.error("Failed to load companies. Please try again.");
@@ -33,7 +33,6 @@ const AddWeekend = () => {
     fetchCompanies();
   }, []);
 
-  // Handle input changes dynamically
   const handleChange = (key, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -59,7 +58,7 @@ const AddWeekend = () => {
         `http://127.0.0.1:8000/api/project-planner/companies/${companyId}/weekends`,
         requestData
       );
-
+      onClose()
       toast.success("Weekend days saved successfully!");
       console.log("Response:", response.data);
 
