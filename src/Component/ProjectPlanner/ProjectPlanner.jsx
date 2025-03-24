@@ -22,13 +22,15 @@ const ProjectPlanner = () => {
   });
 
   const [companies, setCompanies] = useState([]);
+  console.log(companies, "companies");
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
         const response = await axios.get(
           "http://127.0.0.1:8000/api/project-planner/get-all-project-planners"
         );
-        setCompanies(response.data);
+        setCompanies(response.data.reverse());
+        // console.log(companies,"compnies")
       } catch (error) {
         console.error("Error fetching companies:", error);
         toast.error("Failed to load companies. Please try again.");
@@ -163,7 +165,7 @@ const ProjectPlanner = () => {
                     className="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-400">
                     <option value="">-- Select Company --</option>
                     {allcompany?.data?.map((company) => (
-                      <option key={company.company_id} value={company.name}>
+                      <option key={company.id} value={company.name}>
                         {company.name}
                       </option>
                     ))}
@@ -224,7 +226,7 @@ const ProjectPlanner = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6">
               {companies.map((company) => (
                 <div
-                  key={company.company_id}
+                  key={company.id}
                   className="bg-white/80 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-200 hover:shadow-2xl transition-all duration-300">
                   <div className="flex justify-between items-center">
                     <span className="text-cyan-500 font-bold text-lg cursor-pointer">
@@ -249,7 +251,13 @@ const ProjectPlanner = () => {
                   <div className="flex justify-end mt-5">
                     <button
                       className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
-                      onClick={() => navigate(`/project-detail/${company.id}`)}>
+                      onClick={() => {
+                        console.log(
+                          "Navigating to project with ID:",
+                          company.id
+                        );
+                        navigate(`/project-detail/${company.id}`);
+                      }}>
                       View More →
                     </button>
                   </div>

@@ -26,7 +26,6 @@ const AddWeekend = ({onClose}) => {
         const response = await axios.get("http://127.0.0.1:8000/api/project-planner/get-all-companies");
         setAllCompanies(response.data || []); 
       } catch (error) {
-        console.error("Error fetching companies:", error);
         toast.error("Failed to load companies. Please try again.");
       }
     };
@@ -60,13 +59,11 @@ const AddWeekend = ({onClose}) => {
       );
       onClose()
       toast.success("Weekend days saved successfully!");
-      console.log("Response:", response.data);
 
       // Reset form after successful submission
       setFormData({ companyId: null, year: "", selectedWeekends: [] });
 
     } catch (error) {
-      console.error("Error saving weekends:", error);
       toast.error("Failed to save weekend days.");
     }
   };

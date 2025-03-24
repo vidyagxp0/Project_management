@@ -25,7 +25,6 @@ const AddHoliday = ({onClose}) => {
         );
         setAllCompanies(response.data || []); // Ensure it's an array
       } catch (error) {
-        console.error("Error fetching companies:", error);
         toast.error("Failed to load companies. Please try again.");
       }
     };
@@ -61,7 +60,6 @@ const AddHoliday = ({onClose}) => {
       );
       onClose();
       toast.success("Holiday saved successfully!");
-      console.log("Response:", response.data);
 
       // Reset form after successful submission
       setFormData({
@@ -72,7 +70,6 @@ const AddHoliday = ({onClose}) => {
         reason: "",
       });
     } catch (error) {
-      console.error("Error saving holiday:", error);
       toast.error("Failed to save holiday.");
     }
   };

@@ -59,6 +59,8 @@ const ProjectDetail = () => {
     comments: "",
     company_name: "",
     year: "",
+    vendore_name:"",
+    customer_name:"",
   });
   const [weekendData, setWeekendData] = useState([]);
   const [holidayData, setHolidayData] = useState([]);
@@ -99,11 +101,10 @@ const ProjectDetail = () => {
       setLoadingCompanies(true);
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/project-planner/companies/${id}`
+          `http://127.0.0.1:8000/api/project-planner/companies/${id}/project-planner`
         );
         setCompanies(response.data);
       } catch (error) {
-        console.error("Error fetching companies:", error);
         toast.error("Failed to load companies. Please try again.");
       } finally {
         setLoadingCompanies(false);
@@ -121,7 +122,6 @@ const ProjectDetail = () => {
         );
         setGetProject(response.data);
       } catch (error) {
-        console.error("Error fetching projects:", error);
         toast.error("Failed to load projects. Please try again.");
       } finally {
         setLoadingProjects(false);
@@ -139,7 +139,6 @@ const ProjectDetail = () => {
         );
         setGetWeekEnd(response.data);
       } catch (error) {
-        console.error("Error fetching weekends:", error);
         toast.error("Failed to load weekends. Please try again.");
       } finally {
         setLoadingWeekends(false);
@@ -157,7 +156,6 @@ const ProjectDetail = () => {
         );
         setGetHolidays(response.data);
       } catch (error) {
-        console.error("Error fetching holidays:", error);
         toast.error("Failed to load holidays. Please try again.");
       } finally {
         setLoadingHolidays(false);
@@ -171,7 +169,6 @@ const ProjectDetail = () => {
       try {
         setTableData(JSON.parse(getProject.project_details)); // Parse the JSON string
       } catch (error) {
-        console.error("Error parsing project details:", error);
         setTableData([]);
       }
     }
@@ -190,6 +187,8 @@ const ProjectDetail = () => {
       const projectData = {
         description: projectDetails.description,
         comments: projectDetails.comments,
+        vendore_name: projectDetails.vendore_name,
+        customer_name: projectDetails.customer_name,
         // company_name: projectDetails.name,
         // year: getWeekEnd.year,
 
@@ -204,7 +203,6 @@ const ProjectDetail = () => {
       toast.success("Project updated successfully!");
       navigate("/project-planner");
     } catch (error) {
-      console.error("Error saving project:", error);
       toast.error("Failed to update project. Please try again.");
     }
   };
@@ -661,7 +659,6 @@ const ProjectDetail = () => {
 
       setIsWeekendModalOpen(false);
     } catch (error) {
-      console.error("Error saving weekend days:", error);
       toast.error("Failed to save weekend days. Please try again! ❌");
     }
   };
@@ -685,7 +682,6 @@ const ProjectDetail = () => {
 
       setIsHolidayModalOpen(false);
     } catch (error) {
-      console.error("Error saving holiday:", error);
       toast.error("Failed to save Holidays. Please try again!");
     }
   };
@@ -914,7 +910,7 @@ const ProjectDetail = () => {
                     company_name: e.target.value,
                   })
                 }
-                value={companies.name}
+                value={companies.company_name}
               />
             </div>
 
@@ -926,7 +922,7 @@ const ProjectDetail = () => {
                 type="text"
                 className="w-full p-3 border rounded-lg"
                 placeholder="Enter remark..."
-                value={getProject.description}
+                value={companies.description}
                 onChange={(e) =>
                   setProjectDetails({
                     ...projectDetails,
@@ -943,7 +939,7 @@ const ProjectDetail = () => {
                 type="text"
                 className="w-full p-3 border rounded-lg"
                 placeholder="Enter Customer Name..."
-                value={getProject.customer_name}
+                value={companies.customer_name}
                 onChange={(e) =>
                   setProjectDetails({
                     ...projectDetails,
@@ -960,7 +956,7 @@ const ProjectDetail = () => {
                 type="text"
                 className="w-full p-3 border rounded-lg"
                 placeholder="Enter Vendor Name..."
-                value={getProject.vendore_name}
+                value={companies.vendore_name}
                 onChange={(e) =>
                   setProjectDetails({
                     ...projectDetails,

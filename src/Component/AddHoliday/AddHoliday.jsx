@@ -23,7 +23,6 @@ const AddHolidayModal = () => {
       );
       setHolidays(response.data || []);
     } catch (error) {
-      console.error("Error fetching holidays:", error);
       toast.error("Failed to load holidays. Please try again.");
     } finally {
       setLoading(false);
