@@ -20,6 +20,7 @@ import { ClipLoader } from "react-spinners";
 import { BiBarChartAlt2 } from "react-icons/bi";
 import { MdAnalytics } from "react-icons/md";
 import { HiOutlineChartBar } from "react-icons/hi";
+import ImportExport from "../ImportExport/ImportExport";
 
 const weekOptions = [
   { value: "Monday", label: "Monday" },
@@ -73,7 +74,7 @@ const ProjectDetail = () => {
   const [getWeekEnd, setGetWeekEnd] = useState([]);
   const [getHolidays, setGetHolidays] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+const [departments,setDepartments]=useState([])
   // console.log(companies,"companies")
   // console.log(getProject,"getProject")
   // console.log(getWeekEnd,"getWeekEnd")
@@ -139,7 +140,7 @@ const ProjectDetail = () => {
         );
         setGetWeekEnd(response.data);
       } catch (error) {
-        toast.error("Failed to load weekends. Please try again.");
+        // toast.error("Failed to load weekends. Please try again.");
       } finally {
         setLoadingWeekends(false);
       }
@@ -592,7 +593,7 @@ const ProjectDetail = () => {
       });
       const formattedDate = currentDate.toISOString().split("T")[0];
 
-      const isWeekend = getWeekEnd?.weekend_days.includes(dayName);
+      const isWeekend = getWeekEnd?.weekend_days?.includes(dayName);
       const isHoliday = getHolidays?.some(
         (holiday) =>
           formattedDate >= holiday.start_date &&
@@ -705,7 +706,7 @@ const ProjectDetail = () => {
         <div className="p-6 shadow-2xl mt-4 bg-white rounded-lg">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-semibold text-gray-800">
-              {companies.name}
+              {companies.company_name}
             </h2>
 
             <div className="flex gap-4">
@@ -714,7 +715,7 @@ const ProjectDetail = () => {
                 onClick={() => navigate(`/gntt-chart/${id}`)}>
                 <HiOutlineChartBar size={28} className="text-black" />
               </button>
-              <button
+              {/* <button
                 className="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
                 onClick={() => setIsWeekendModalOpen(true)}>
                 Weekend Days
@@ -723,7 +724,7 @@ const ProjectDetail = () => {
                 className="bg-green-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-700 transition"
                 onClick={() => setIsHolidayModalOpen(true)}>
                 Holidays
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -1000,6 +1001,20 @@ const ProjectDetail = () => {
       <div className="p-4 bg-white shadow-lg rounded-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Project Details</h2>
+          <div className="flex items-center gap-x-4">
+
+          <ImportExport
+              data={tableData}
+          setData={(importedData) => {
+            const updatedData = importedData.map((item, index) => ({
+              ...item,
+              srNo: `${tableData.length + index + 1}.`, // Continue SR.NO.
+            }));
+            setTableData((prev) => [...prev, ...updatedData]); // Append data
+          }}
+          fileName="Department_Master"
+          sheetNumbers={0}
+          />
           <Button
             variant="contained"
             color="primary"
@@ -1008,6 +1023,7 @@ const ProjectDetail = () => {
             Add Row
           </Button>
         </div>
+        </div>
 
         {/* {isLoading ? (
         <div className="flex flex-col justify-center items-center h-64 space-y-4">
@@ -1015,6 +1031,7 @@ const ProjectDetail = () => {
           <p className="mt-3 text-gray-600 text-lg font-semibold">Add Row...</p>
         </div>
       ) : ( */}
+     
 
         <DataTable
           columns={columns}

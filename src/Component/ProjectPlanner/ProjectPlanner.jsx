@@ -134,7 +134,8 @@ const ProjectPlanner = () => {
             <div className="flex gap-4">
               <button
                 className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-500 to-gray-900 text-white font-semibold rounded-lg shadow-md hover:scale-105 transition-all duration-300 hover:shadow-lg"
-                onClick={() => setIsOpen(true)}>
+                onClick={() => setIsOpen(true)}
+              >
                 <RiAddFill size={20} />
                 <span>Add Project Planner</span>
               </button>
@@ -162,7 +163,8 @@ const ProjectPlanner = () => {
                     name="companyName"
                     value={formData.companyName}
                     onChange={handleChange}
-                    className="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-400">
+                    className="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-400"
+                  >
                     <option value="">-- Select Company --</option>
                     {allcompany?.data?.map((company) => (
                       <option key={company.id} value={company.name}>
@@ -201,12 +203,14 @@ const ProjectPlanner = () => {
               <div className="p-4 border-t border-gray-300 flex justify-end space-x-3">
                 <button
                   className="border border-gray-400 rounded-full px-4 py-2 hover:bg-gray-100"
-                  onClick={() => setIsOpen(false)}>
+                  onClick={() => setIsOpen(false)}
+                >
                   Cancel
                 </button>
                 <button
                   className="bg-green-500 text-white rounded-full px-4 py-2 hover:bg-green-700"
-                  onClick={handleSave}>
+                  onClick={handleSave}
+                >
                   Save
                 </button>
               </div>
@@ -224,45 +228,57 @@ const ProjectPlanner = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6">
-              {companies.map((company) => (
-                <div
-                  key={company.id}
-                  className="bg-white/80 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-200 hover:shadow-2xl transition-all duration-300">
-                  <div className="flex justify-between items-center">
-                    <span className="text-cyan-500 font-bold text-lg cursor-pointer">
-                      #000{company.id}
-                    </span>
-                    <Avatar />
-                  </div>
+              {companies.length > 0 ? (
+                companies.map((company) => (
+                  <div
+                    key={company.id}
+                    className="bg-white/80 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-200 hover:shadow-2xl transition-all duration-300"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="text-cyan-500 font-bold text-lg cursor-pointer">
+                        #000{company.id}
+                      </span>
+                      <Avatar />
+                    </div>
 
-                  <div className="mt-4 space-y-1">
-                    <h2 className="text-xl font-semibold text-gray-800">
-                      {company.company_name}
-                    </h2>
-                    <p className="text-gray-500 text-sm">
-                      Year: <span className="font-medium">{company.year}</span>
-                    </p>
-                    <p className="text-gray-500 text-sm">
-                      Description:{" "}
-                      <span className="font-medium">{company.description}</span>
-                    </p>
-                  </div>
+                    <div className="mt-4 space-y-1">
+                      <h2 className="text-xl font-semibold text-gray-800">
+                        {company.company_name}
+                      </h2>
+                      <p className="text-gray-500 text-sm">
+                        Year:{" "}
+                        <span className="font-medium">{company.year}</span>
+                      </p>
+                      <p className="text-gray-500 text-sm">
+                        Description:{" "}
+                        <span className="font-medium">
+                          {company.description}
+                        </span>
+                      </p>
+                    </div>
 
-                  <div className="flex justify-end mt-5">
-                    <button
-                      className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
-                      onClick={() => {
-                        console.log(
-                          "Navigating to project with ID:",
-                          company.id
-                        );
-                        navigate(`/project-detail/${company.id}`);
-                      }}>
-                      View More →
-                    </button>
+                    <div className="flex justify-end mt-5">
+                      <button
+                        className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
+                        onClick={() => {
+                          console.log(
+                            "Navigating to project with ID:",
+                            company.id
+                          );
+                          navigate(`/project-detail/${company.id}`);
+                        }}
+                      >
+                        View More →
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div className="flex justify-center items-center h-64 text-gray-600 text-lg font-semibold">
+  No Project Planner available at this time
+</div>
+
+              )}
             </div>
           )}
         </div>
