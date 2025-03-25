@@ -53,6 +53,13 @@ import "react-toastify/dist/ReactToastify.css";
 import AddWeekend from "./Component/AddWeekend/AddWeekend";
 import AddHoliday from "./Component/AddHoliday/AddHoliday";
 import GanrChart from "./Component/GanttChart/GanrChart";
+import AdminDashboard from "./Component/Admin/Pages/AdminDashboard";
+import ManageUsers from "./Component/Admin/Pages/ManageUsers";
+import ManageAdmins from "./Component/Admin/Pages/ManageAdmins";
+import RolesPermissions from "./Component/Admin/Pages/RolesPermissions";
+import AdminReports from "./Component/Admin/Pages/AdminReports";
+import AdminSettings from "./Component/Admin/Pages/AdminSettings";
+import AdminWrapper from "./Component/Admin/AdminWrapper";
 
 
 function App() {
@@ -62,6 +69,29 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
+
+
+
+
+
+
+
+          <Route path="/admin/*" element={<AdminWrapper />} >
+          
+
+          <Route path="admin-dashboard" element={<AdminDashboard />} />
+      <Route path="manage-users" element={<ManageUsers />} />
+      <Route path="manage-admins" element={<ManageAdmins />} />
+      <Route path="roles-permissions" element={<RolesPermissions />} />
+      <Route path="admin-reports" element={<AdminReports />} />
+      <Route path="admin-settings" element={<AdminSettings />} />
+</Route>
+
+
+
+
+
+
           <Route path="/" element={<Wrapper />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/calendar" element={<MyCalendar />} />
