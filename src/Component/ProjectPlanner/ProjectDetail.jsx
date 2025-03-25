@@ -188,7 +188,7 @@ const [departments,setDepartments]=useState([])
       const projectData = {
         description: projectDetails.description,
         comments: projectDetails.comments,
-        vendore_name: projectDetails.vendore_name,
+        vendor_name: projectDetails.vendore_name,
         customer_name: projectDetails.customer_name,
         // company_name: projectDetails.name,
         // year: getWeekEnd.year,
@@ -957,7 +957,7 @@ const [departments,setDepartments]=useState([])
                 type="text"
                 className="w-full p-3 border rounded-lg"
                 placeholder="Enter Vendor Name..."
-                value={companies.vendore_name}
+                value={companies.vendor_name}
                 onChange={(e) =>
                   setProjectDetails({
                     ...projectDetails,
