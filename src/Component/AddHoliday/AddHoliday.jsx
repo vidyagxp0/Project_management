@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HoliDayList from "./HoliDayList"; // Import form component
+import config from "../../../config";
 
 const AddHolidayModal = () => {
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ const AddHolidayModal = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/project-planner/get-all-holidays"
+        `${config.BASE_URL}/api/project-planner/get-all-holidays`
       );
       setHolidays(response.data || []);
     } catch (error) {

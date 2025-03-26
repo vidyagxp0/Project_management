@@ -4,6 +4,7 @@ import { Select, Input, Button } from "antd";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import config from "../../../config";
 
 const { Option } = Select;
 
@@ -23,7 +24,7 @@ const AddWeekend = ({onClose}) => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/project-planner/get-all-companies");
+        const response = await axios.get(`${config.BASE_URL}/api/project-planner/get-all-companies`);
         setAllCompanies(response.data || []); 
       } catch (error) {
         toast.error("Failed to load companies. Please try again.");
@@ -54,7 +55,7 @@ const AddWeekend = ({onClose}) => {
 
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/project-planner/companies/${companyId}/weekends`,
+        `${config.BASE_URL}/api/project-planner/companies/${companyId}/weekends`,
         requestData
       );
       onClose()

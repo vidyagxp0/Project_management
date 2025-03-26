@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
+import config from "../../../config";
 
 const ProjectPlanner = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const ProjectPlanner = () => {
     const fetchCompanies = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/project-planner/get-all-project-planners"
+          `${config.BASE_URL}/api/project-planner/get-all-project-planners`
         );
         setCompanies(response.data.reverse());
         // console.log(companies,"compnies")
@@ -54,7 +55,7 @@ const ProjectPlanner = () => {
   useEffect(() => {
     const getAllcompnies = async () => {
       const data = await axios.get(
-        "http://127.0.0.1:8000/api/project-planner/get-all-companies"
+        `${config.BASE_URL}/api/project-planner/get-all-companies`
       );
       setAllcomapany(data);
     };
@@ -85,7 +86,7 @@ const ProjectPlanner = () => {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/project-planner/companies/creaate-project-planner`,
+        `${config.BASE_URL}/api/project-planner/companies/creaate-project-planner`,
         {
           method: "POST",
           headers: {

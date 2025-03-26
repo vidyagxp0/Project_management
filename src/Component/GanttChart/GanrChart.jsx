@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import gantt from "dhtmlx-gantt";
 import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
+import config from "../../../config";
 
 const GanttChart = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const GanttChart = () => {
     const fetchPlanners = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/project-planner/companies/${id}/project-planner`
+          `${config.BASE_URL}/api/project-planner/companies/${id}/project-planner`
         );
         const data = await response.json();
 

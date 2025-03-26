@@ -21,6 +21,7 @@ import { BiBarChartAlt2 } from "react-icons/bi";
 import { MdAnalytics } from "react-icons/md";
 import { HiOutlineChartBar } from "react-icons/hi";
 import ImportExport from "../ImportExport/ImportExport";
+import config from "../../../config";
 
 const weekOptions = [
   { value: "Monday", label: "Monday" },
@@ -102,7 +103,7 @@ const [departments,setDepartments]=useState([])
       setLoadingCompanies(true);
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/project-planner/companies/${id}/project-planner`
+          `${config.BASE_URL}/api/project-planner/companies/${id}/project-planner`
         );
         setCompanies(response.data);
       } catch (error) {
@@ -119,7 +120,7 @@ const [departments,setDepartments]=useState([])
       setLoadingProjects(true);
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/project-planner/companies/${id}/project-planner`
+          `${config.BASE_URL}/api/project-planner/companies/${id}/project-planner`
         );
         setGetProject(response.data);
       } catch (error) {
@@ -136,7 +137,7 @@ const [departments,setDepartments]=useState([])
       setLoadingWeekends(true);
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/project-planner/companies/${id}/weekends`
+          `${config.BASE_URL}/api/project-planner/companies/${id}/weekends`
         );
         setGetWeekEnd(response.data);
       } catch (error) {
@@ -153,7 +154,7 @@ const [departments,setDepartments]=useState([])
       setLoadingHolidays(true);
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/project-planner/companies/${id}/holidays`
+          `${config.BASE_URL}/api/project-planner/companies/${id}/holidays`
         );
         setGetHolidays(response.data);
       } catch (error) {
@@ -197,7 +198,7 @@ const [departments,setDepartments]=useState([])
       };
 
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/project-planner/project-planner/${id}`,
+        `${config.BASE_URL}/api/project-planner/project-planner/${id}`,
         projectData
       );
 
@@ -652,7 +653,7 @@ const [departments,setDepartments]=useState([])
 
       // Make POST request to the API
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/project-planner/companies/${id}/weekends`,
+        `${config.BASE_URL}/api/project-planner/companies/${id}/weekends`,
         weekendData
       );
 
@@ -675,7 +676,7 @@ const [departments,setDepartments]=useState([])
 
       // Send POST request to the API
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/project-planner/companies/${id}/holidays`,
+        `${config.BASE_URL}/api/project-planner/companies/${id}/holidays`,
         holidayData
       );
 

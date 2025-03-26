@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddWeekend from "./WeekEndlist";
+import config from "../../../config";
 
 const AddWeekendModal = () => {
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ const AddWeekendModal = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/project-planner/companies-with-weekends"
+        `${config.BASE_URL}/api/project-planner/companies-with-weekends`
       );
       setCompanies(response.data || []);
     } catch (error) {

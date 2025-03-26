@@ -19,6 +19,7 @@ import { IoMdAdd } from "react-icons/io";
 import { Avatar, Checkbox } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import GanttChart from "../GanttChart/GanttChart";
+import config from "../../../config";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchPlanners = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/project-planner/get-all-project-planners", {
+        const response = await fetch(`${config.BASE_URL}/api/project-planner/get-all-project-planners`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

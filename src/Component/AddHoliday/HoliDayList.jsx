@@ -3,6 +3,7 @@ import { Select, Input, Button } from "antd";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import config from "../../../config";
 
 const { Option } = Select;
 
@@ -21,7 +22,7 @@ const AddHoliday = ({onClose}) => {
     const fetchCompanies = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/project-planner/get-all-companies"
+          `${config.BASE_URL}/api/project-planner/get-all-companies`
         );
         setAllCompanies(response.data || []); // Ensure it's an array
       } catch (error) {
@@ -55,7 +56,7 @@ const AddHoliday = ({onClose}) => {
 
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/project-planner/companies/${companyId}/holidays`,
+        `${config.BASE_URL}/api/project-planner/companies/${companyId}/holidays`,
         requestData
       );
       onClose();

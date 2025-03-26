@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import config from "../../../config";
 
 const AddCompany = () => {
   const [companies, setCompanies] = useState([]);
@@ -13,7 +14,7 @@ const AddCompany = () => {
   const fetchCompanies = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/project-planner/get-all-companies");
+      const response = await axios.get(`${config.BASE_URL}/api/project-planner/get-all-companies`);
       setCompanies(response.data);
     } catch (error) {
       console.error("Error fetching companies:", error);
@@ -35,7 +36,7 @@ const AddCompany = () => {
     }
 
     try {
-      await axios.post("http://127.0.0.1:8000/api/project-planner/companies", { name: companyName });
+      await axios.post(`${config.BASE_URL}/api/project-planner/companies`, { name: companyName });
 
       toast.success("Company added successfully!");
       setCompanyName(""); // Clear input
