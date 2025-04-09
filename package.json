@@ -17,6 +17,7 @@
     "antd": "^5.24.4",
     "axios": "^1.8.3",
     "chart.js": "^4.4.3",
+    "date-fns": "^4.1.0",
     "dhtmlx-gantt": "^9.0.6",
     "react": "^18.2.0",
     "react-big-calendar": "^1.12.2",
@@ -30,8 +31,8 @@
     "react-select": "^5.10.1",
     "react-spinners": "^0.15.0",
     "react-toastify": "^11.0.5",
-    "xlsx": "^0.18.5",
-    "recharts": "^2.15.1"
+    "recharts": "^2.15.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

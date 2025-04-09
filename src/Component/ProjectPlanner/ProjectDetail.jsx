@@ -230,6 +230,20 @@ const [departments,setDepartments]=useState([])
     { value: "PM", label: "PM" },
     { value: "Steering Committee", label: "Steering Committee" },
   ];
+  const convertExcelDateToDDMMYYYY = (serial) => {
+    if (typeof serial === "number") {
+      const excelEpoch = new Date(1899, 11, 30);
+      const jsDate = new Date(excelEpoch.getTime() + serial * 24 * 60 * 60 * 1000);
+  
+      const day = String(jsDate.getDate()).padStart(2, '0');
+      const month = String(jsDate.getMonth() + 1).padStart(2, '0');
+      const year = jsDate.getFullYear();
+  
+      return `${day}-${month}-${year}`; 
+    }
+    return serial;
+  };
+    
   const columns = [
     { name: "S.No", selector: (row) => row.sNo, sortable: true },
     {
@@ -297,31 +311,47 @@ const [departments,setDepartments]=useState([])
       sortable: true,
       minWidth: "200px",
     },
+    // {
+    //   name: "Start Date",
+    //   cell: (row, index) => (
+    //     <input
+    //       type="date"
+    //       value={row.startDate}
+    //       onChange={(e) => handleChange(e, index, "startDate")}
+    //       className="border p-1 rounded w-full"
+    //     />
+    //   ),
+    //   sortable: true,
+    //   minWidth: "200px",
+    // },
     {
       name: "Start Date",
-      cell: (row, index) => (
-        <input
-          type="date"
-          value={row.startDate}
-          onChange={(e) => handleChange(e, index, "startDate")}
-          className="border p-1 rounded w-full"
-        />
-      ),
+      selector: (row) =>
+        typeof row.startDate === "number"
+          ? convertExcelDateToDDMMYYYY(row.startDate)
+          : row.startDate,
       sortable: true,
-      minWidth: "200px",
     },
+    // {
+    //   name: "End Date",
+    //   cell: (row, index) => (
+    //     <input
+    //       type="date"
+    //       value={row.endDate}
+    //       onChange={(e) => handleChange(e, index, "endDate")}
+    //       className="border p-1 rounded w-full"
+    //     />
+    //   ),
+    //   sortable: true,
+    //   minWidth: "200px",
+    // },
     {
       name: "End Date",
-      cell: (row, index) => (
-        <input
-          type="date"
-          value={row.endDate}
-          onChange={(e) => handleChange(e, index, "endDate")}
-          className="border p-1 rounded w-full"
-        />
-      ),
+      selector: (row) =>
+        typeof row.endDate === "number"
+          ? convertExcelDateToDDMMYYYY(row.endDate)
+          : row.endDate,
       sortable: true,
-      minWidth: "200px",
     },
     {
       name: "Actual Start Date",
@@ -1004,9 +1034,11 @@ const [departments,setDepartments]=useState([])
           <h2 className="text-xl font-semibold">Project Details</h2>
           <div className="flex items-center gap-x-4">
 
-          <ImportExport
+          {/* <ImportExport
               data={tableData}
           setData={(importedData) => {
+                console.log("Imported Data:", importedData); // Add console log here
+
             const updatedData = importedData.map((item, index) => ({
               ...item,
               srNo: `${tableData.length + index + 1}.`, // Continue SR.NO.
@@ -1015,7 +1047,39 @@ const [departments,setDepartments]=useState([])
           }}
           fileName="Department_Master"
           sheetNumbers={0}
-          />
+          /> */}
+          <ImportExport
+  data={tableData}
+  setData={(importedData) => {
+    console.log("Imported Data:", importedData); // Check raw import
+
+    // Convert Excel Serial Date to dd-MM-yyyy
+    const convertExcelDateToDDMMYYYY = (serial) => {
+      if (typeof serial === "number") {
+        const excelEpoch = new Date(1899, 11, 30);
+        const jsDate = new Date(excelEpoch.getTime() + serial * 24 * 60 * 60 * 1000);
+
+        const day = String(jsDate.getDate()).padStart(2, '0');
+        const month = String(jsDate.getMonth() + 1).padStart(2, '0');
+        const year = jsDate.getFullYear();
+
+        return `${day}-${month}-${year}`; // Format dd-MM-yyyy
+      }
+      return serial; // If already in correct format
+    };
+
+    const updatedData = importedData.map((item, index) => ({
+      ...item,
+      srNo: `${tableData.length + index + 1}.`,
+      startDate: convertExcelDateToDDMMYYYY(item.startDate), // Convert date
+    }));
+
+    setTableData((prev) => [...prev, ...updatedData]); // Update State
+  }}
+  fileName="Department_Master"
+  sheetNumbers={0}
+/>
+
           <Button
             variant="contained"
             color="primary"
